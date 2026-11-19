@@ -3363,6 +3363,591 @@ function auroraConfirmNoteDelete() {
   draw();
 })();
 </script>
+  
+<!-- AURORA_AI_FIRST_DESIGN_V2 -->
+<style>
+:root{
+  --a2-ink:#30234f;
+  --a2-glass:rgba(41,28,83,.78);
+}
+
+body{
+  background:
+    radial-gradient(
+      circle at 13% 12%,
+      #f6b7d9 0%,
+      transparent 44%
+    ),
+    radial-gradient(
+      circle at 94% 80%,
+      #8cbbfb 0%,
+      transparent 52%
+    ),
+    linear-gradient(
+      140deg,
+      #e69bda,
+      #a786db 52%,
+      #7faef2
+    ) fixed !important;
+}
+
+header{
+  padding:17px 21px 12px!important;
+  align-items:center;
+}
+
+header .logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:20px!important;
+}
+
+.a2-mark{
+  width:36px;
+  height:36px;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  color:#41265d;
+  background:linear-gradient(
+    135deg,#ffe0f0,#b9ceff
+  );
+  font-size:21px;
+  box-shadow:0 8px 22px #604a9340;
+}
+
+.a2-brand{
+  display:flex;
+  flex-direction:column;
+  line-height:1.1;
+}
+
+.a2-brand small{
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.07em;
+  margin-top:5px;
+}
+
+header #avatar{
+  box-shadow:0 0 0 3px #ffffff38;
+  cursor:pointer;
+}
+
+main{
+  padding:5px 18px 105px!important;
+}
+
+/* ГЛАВНЫЙ ЭКРАН AI */
+
+#auroraAi{
+  height:calc(100dvh - 164px);
+  min-height:320px;
+  display:flex;
+  flex-direction:column;
+  max-width:720px!important;
+  padding-bottom:0!important;
+}
+
+#auroraAi.hidden{
+  display:none!important;
+}
+
+#auroraAi #aiBack{
+  display:none!important;
+}
+
+.a2-toolbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin:4px 0 10px;
+}
+
+.a2-chip{
+  color:#fff;
+  font-size:11px;
+  letter-spacing:.08em;
+  font-weight:900;
+  border:1px solid #ffffff55;
+  background:#ffffff24;
+  padding:9px 12px;
+  border-radius:999px;
+}
+
+.a2-tools-link{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  border:1px solid #ffffff6a;
+  background:rgba(255,255,255,.23);
+  color:white;
+  border-radius:15px;
+  padding:9px 13px;
+  font-size:13px;
+  font-weight:900;
+}
+
+#auroraAi>h1{
+  font-size:clamp(27px,7.5vw,37px)!important;
+  line-height:1.1;
+  margin:7px 0 7px;
+}
+
+#auroraAi>.sub{
+  font-size:13px!important;
+  margin:0 0 14px;
+  line-height:1.4;
+}
+
+#auroraAi .ai-panel{
+  display:flex;
+  flex:1;
+  flex-direction:column;
+  min-height:0;
+  padding:16px!important;
+  margin:0;
+  overflow:hidden;
+  border-radius:27px!important;
+  border:1px solid #ffffff57!important;
+  background:var(--a2-glass)!important;
+  box-shadow:0 14px 38px #2d18533b!important;
+  backdrop-filter:blur(22px);
+}
+
+#auroraAi .ai-top{
+  flex-shrink:0;
+  margin-bottom:6px!important;
+}
+
+#auroraAi .ai-top strong{
+  font-size:15px!important;
+  letter-spacing:.01em;
+}
+
+#auroraAi .ai-clear{
+  border-radius:13px!important;
+  font-weight:800!important;
+}
+
+#auroraAi .ai-messages{
+  flex:1;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  scrollbar-width:thin;
+  padding:12px 2px 18px!important;
+  gap:13px!important;
+}
+
+#auroraAi .ai-msg{
+  border:1px solid #ffffff22;
+  border-radius:19px!important;
+  padding:12px 15px!important;
+  font-size:14px!important;
+  line-height:1.5!important;
+}
+
+#auroraAi .ai-msg.bot{
+  background:rgba(
+    255,255,255,.16
+  )!important;
+  border-bottom-left-radius:6px!important;
+}
+
+#auroraAi .ai-msg.user{
+  background:linear-gradient(
+    110deg,
+    #ffdcf0,
+    #b9d7ff
+  )!important;
+  border:0;
+  color:var(--a2-ink)!important;
+  border-bottom-right-radius:6px!important;
+}
+
+#auroraAi .ai-compose{
+  flex-shrink:0;
+  align-items:flex-end;
+  margin-top:9px!important;
+  gap:10px;
+}
+
+#auroraAi #aiInput{
+  background:rgba(
+    255,255,255,.97
+  )!important;
+  min-height:52px!important;
+  max-height:112px!important;
+  border-radius:17px!important;
+  box-shadow:inset 0 0 0 1px #ffffff90;
+  font-size:16px!important;
+}
+
+#auroraAi #aiSend{
+  height:52px!important;
+  min-width:52px!important;
+  border-radius:17px!important;
+  box-shadow:0 7px 18px #170d3b32;
+  background:linear-gradient(
+    130deg,#ffd6eb,#b5d8ff
+  )!important;
+}
+
+#auroraAi .ai-status{
+  flex-shrink:0;
+  font-size:11px!important;
+  margin:9px 3px 0!important;
+  color:#f6e7ff!important;
+}
+
+/* РАЗДЕЛ ИНСТРУМЕНТОВ */
+
+#home>h1{
+  font-size:31px!important;
+  margin-top:12px;
+}
+
+#home>.sub{
+  font-size:14px!important;
+}
+
+#home .cards{
+  margin-top:17px!important;
+  gap:12px!important;
+}
+
+#home .cards .card{
+  min-height:140px!important;
+  padding:19px!important;
+  border-radius:24px!important;
+  background:rgba(
+    45,28,85,.74
+  )!important;
+  box-shadow:0 12px 28px #472a7b22!important;
+}
+
+#home .cards .card strong{
+  font-size:16px!important;
+}
+
+#home .cards .card small{
+  font-size:12px!important;
+}
+
+.a2-tools-intro{
+  border:1px solid #ffffff66;
+  border-radius:23px;
+  background:#ffffff29;
+  padding:16px 17px;
+  margin:16px 0 5px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+
+.a2-tools-intro strong{
+  font-size:14px;
+}
+
+.a2-tools-intro p{
+  font-size:12px;
+  color:#fff;
+  margin:5px 0 0;
+  opacity:.9;
+}
+
+.a2-tools-intro button{
+  border:0;
+  border-radius:12px;
+  padding:11px;
+  background:#ffdcf2;
+  color:#41285b;
+  font-size:13px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+/* НИЖНЯЯ НАВИГАЦИЯ */
+
+body>nav{
+  z-index:90!important;
+  padding:
+    10px 12px
+    calc(12px + env(safe-area-inset-bottom,0px))
+    !important;
+  border-radius:22px 22px 0 0;
+  box-shadow:0 -9px 27px #37225b33;
+}
+
+body>nav button{
+  display:flex!important;
+  flex-direction:column;
+  gap:4px;
+  align-items:center;
+  justify-content:center;
+  min-height:50px;
+  font-size:11px!important;
+}
+
+body>nav .aurora-nav-text{
+  display:block!important;
+  color:#ede0ff!important;
+  font-size:10px;
+  font-weight:800;
+}
+
+body>nav button.active .aurora-nav-icon,
+body>nav button.active .aurora-nav-text{
+  color:#ffd5ed!important;
+}
+
+@media(max-height:660px){
+  #auroraAi{
+    height:calc(100dvh - 153px);
+  }
+
+  #auroraAi>h1{
+    font-size:26px!important;
+  }
+
+  #auroraAi .ai-panel{
+    padding:12px!important;
+  }
+}
+</style>
+
+<script>
+(() => {
+
+  if (document.getElementById('a2Toolbar')) {
+    return;
+  }
+
+  const ai = document.getElementById('auroraAi');
+  const home = document.getElementById('home');
+  const nav = document.querySelector('body > nav');
+
+  if (
+    !ai ||
+    !home ||
+    !nav ||
+    typeof window.openPage !== 'function'
+  ) {
+    return;
+  }
+
+  // Отдельный экран инструментов
+
+  const homeTitle = home.querySelector('h1');
+  const homeSub = home.querySelector('.sub');
+
+  if (homeTitle) {
+    homeTitle.textContent = 'Инструменты';
+  }
+
+  if (homeSub) {
+    homeSub.textContent =
+      'Всё полезное в одном месте';
+  }
+
+  const intro = document.createElement('div');
+
+  intro.className = 'a2-tools-intro';
+
+  intro.innerHTML = `
+    <div>
+      <strong>Твоя коллекция</strong>
+      <p>
+        Галерея, заметки,
+        калькулятор и финансы
+      </p>
+    </div>
+    <button type="button">
+      ✦ К чату
+    </button>
+  `;
+
+  const cards = home.querySelector('.cards');
+
+  if (cards) {
+    home.insertBefore(intro, cards);
+  }
+
+  intro.querySelector('button').onclick = () => {
+    window.openPage('auroraAi');
+  };
+
+  // Используем существующий работающий чат
+
+  const toolbar = document.createElement('div');
+
+  toolbar.id = 'a2Toolbar';
+  toolbar.className = 'a2-toolbar';
+
+  toolbar.innerHTML = `
+    <span class="a2-chip">
+      ✦ AURORA AI
+    </span>
+
+    <button
+      type="button"
+      class="a2-tools-link">
+      ▦ Инструменты
+    </button>
+  `;
+
+  ai.insertBefore(toolbar, ai.querySelector('h1'));
+
+  toolbar.querySelector('button').onclick = () => {
+    window.openPage('home');
+  };
+
+  const aiTitle = ai.querySelector('h1');
+  const aiSub = ai.querySelector('.sub');
+
+  if (aiTitle) {
+    aiTitle.textContent = 'Чем помочь сегодня?';
+  }
+
+  if (aiSub) {
+    aiSub.textContent =
+      'Напиши вопрос — и я помогу разобраться ✨';
+  }
+
+  const chatTitle = ai.querySelector('.ai-top strong');
+
+  if (chatTitle) {
+    chatTitle.textContent = 'Наш диалог';
+  }
+
+  const clear = ai.querySelector('#aiClear');
+
+  if (clear) {
+    clear.textContent = 'Новый чат';
+  }
+
+  // Обновление логотипа Авроры
+
+  const logo = document.querySelector('header .logo');
+
+  if (logo) {
+    logo.innerHTML = `
+      <span class="a2-mark">✦</span>
+      <span class="a2-brand">
+        Аврора
+        <small>ТВОЁ ПРОСТРАНСТВО</small>
+      </span>
+    `;
+  }
+
+  const avatar = document.getElementById('avatar');
+
+  if (avatar) {
+    avatar.onclick = () => window.openPage('profile');
+  }
+
+  // Нижнее меню:
+  // Чат / Инструменты / Профиль
+
+  const chatTab = nav.querySelector('#nav-home');
+  const toolsTab = nav.querySelector('#nav-gallery');
+  const profileTab = nav.querySelector('#nav-profile');
+
+  if (chatTab && toolsTab && profileTab) {
+
+    chatTab.innerHTML = `
+      <span class="aurora-nav-icon">
+        <svg viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M20 11.5a8 8 0 0 1-8 8H5l-2 2v-9a9 9 0 1 1 17-1z"/>
+        </svg>
+      </span>
+      <span class="aurora-nav-text">Чат</span>
+    `;
+
+    toolsTab.innerHTML = `
+      <span class="aurora-nav-icon">
+        <svg viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round">
+          <rect x="3" y="3"
+            width="7" height="7" rx="2"/>
+          <rect x="14" y="3"
+            width="7" height="7" rx="2"/>
+          <rect x="3" y="14"
+            width="7" height="7" rx="2"/>
+          <rect x="14" y="14"
+            width="7" height="7" rx="2"/>
+        </svg>
+      </span>
+      <span class="aurora-nav-text">
+        Инструменты
+      </span>
+    `;
+
+    const profileLabel =
+      profileTab.querySelector('.aurora-nav-text');
+
+    if (profileLabel) {
+      profileLabel.textContent = 'Профиль';
+    }
+
+    toolsTab.id = 'nav-tools';
+
+    chatTab.onclick = () => {
+      window.openPage('auroraAi');
+    };
+
+    toolsTab.onclick = () => {
+      window.openPage('home');
+    };
+  }
+
+  // Управление активной вкладкой
+
+  const oldOpenPage = window.openPage;
+
+  window.openPage = function(page) {
+
+    oldOpenPage(page);
+
+    if (chatTab && toolsTab && profileTab) {
+
+      const current =
+        page === 'auroraAi'
+          ? chatTab
+          : page === 'profile'
+            ? profileTab
+            : toolsTab;
+
+      [chatTab, toolsTab, profileTab].forEach(button => {
+        button.classList.toggle(
+          'active',
+          button === current
+        );
+      });
+    }
+  };
+
+  // При запуске открывается AI-чат
+
+  window.openPage('auroraAi');
+
+})();
+</script>
 </body>
 </html>
   
