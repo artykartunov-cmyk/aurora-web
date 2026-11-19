@@ -2979,6 +2979,56 @@ function auroraConfirmNoteDelete() {
 })();
 
 </script>
+  
+<style>
+/* Исправление размеров раздела Финансы */
+
+#auroraFinance,
+#auroraFinance * {
+  box-sizing: border-box;
+}
+
+#auroraFinance .fin-panel {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+#auroraFinance .fin-field {
+  width: 100%;
+  min-width: 0;
+}
+
+#auroraFinance input,
+#auroraFinance select {
+  display: block;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+#auroraFinance input[type="date"] {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  font-size: 16px;
+}
+
+#auroraFinance input[type="date"]::-webkit-date-and-time-value {
+  min-width: 0;
+  text-align: center;
+}
+
+#auroraFinance .fin-cols,
+#auroraFinance .fin-entry {
+  min-width: 0;
+}
+
+#auroraFinance {
+  padding-bottom: 110px;
+}
+</style>
 </body>
 </html>
   
