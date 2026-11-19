@@ -3948,6 +3948,678 @@ body>nav button.active .aurora-nav-text{
 
 })();
 </script>
+  
+<!-- AURORA V3 / LUMINA -->
+<style id="aurora-v3-lumina">
+:root{
+  --v3-dark:#30234c;
+  --v3-panel:rgba(52,39,94,.91);
+  --v3-stroke:rgba(255,255,255,.23);
+  --v3-light:#fff8ff;
+  --v3-gradient:linear-gradient(
+    120deg,
+    #ffe0ed 0%,
+    #dcc7ff 52%,
+    #b8ddff 100%
+  );
+}
+
+html{
+  width:100%;
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+  touch-action:pan-x pan-y;
+}
+
+body{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+  touch-action:pan-x pan-y;
+  background:
+    radial-gradient(
+      ellipse 105% 35% at 5% 5%,
+      rgba(255,209,229,.91),
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 90% 55% at 105% 95%,
+      rgba(145,200,255,.78),
+      transparent 76%
+    ),
+    linear-gradient(
+      155deg,
+      #c58bd2 0%,
+      #a08bdc 52%,
+      #85b7f3 100%
+    ) fixed!important;
+}
+
+body,body *{
+  box-sizing:border-box;
+}
+
+button,input,textarea,select{
+  font-family:inherit;
+}
+
+input,textarea,select{
+  font-size:16px!important;
+  -webkit-text-size-adjust:100%;
+}
+
+button{
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible{
+  outline:2px solid #fff8ff;
+  outline-offset:3px;
+}
+
+/* ШАПКА */
+
+header{
+  padding:12px 18px 9px!important;
+  min-width:0;
+}
+
+header .logo{
+  gap:10px;
+  font-size:19px!important;
+}
+
+header .a2-mark{
+  width:39px;
+  height:39px;
+  border-radius:14px;
+  background:var(--v3-gradient);
+  color:#49316d;
+  box-shadow:0 6px 22px #5b376d22;
+}
+
+header .a2-brand small{
+  font-size:9px;
+  letter-spacing:.15em;
+  opacity:.83;
+}
+
+header #avatar{
+  width:43px;
+  height:43px;
+  border:2px solid #ffffff73;
+  flex-shrink:0;
+}
+
+main{
+  width:100%;
+  max-width:760px;
+  margin:0 auto;
+  padding:2px 16px 105px!important;
+}
+
+/* ГЛАВНЫЙ ЭКРАН AI */
+
+#auroraAi{
+  height:calc(100dvh - 155px)!important;
+  min-height:310px;
+  max-height:980px;
+  max-width:720px!important;
+  padding:0!important;
+  gap:0;
+}
+
+#auroraAi.hidden{
+  display:none!important;
+}
+
+#auroraAi .a2-toolbar{
+  margin:5px 0 11px;
+  gap:10px;
+}
+
+#auroraAi .a2-chip{
+  display:flex;
+  align-items:center;
+  min-height:38px;
+  background:#ffffff29;
+  border:1px solid #ffffff60;
+  padding:9px 13px;
+  font-size:11px;
+  letter-spacing:.08em;
+  box-shadow:inset 0 1px #ffffff32;
+}
+
+#auroraAi .a2-tools-link{
+  min-height:38px;
+  padding:9px 13px;
+  background:#ffffff28;
+  border:1px solid #ffffff70;
+  border-radius:14px;
+  font-size:12px;
+  box-shadow:inset 0 1px #ffffff2a;
+}
+
+#auroraAi>h1{
+  font-size:clamp(24px,6.5vw,31px)!important;
+  letter-spacing:-.035em;
+  line-height:1.12!important;
+  margin:2px 0 6px!important;
+}
+
+#auroraAi>.sub{
+  font-size:12px!important;
+  line-height:1.45!important;
+  color:#fff!important;
+  opacity:.93;
+  margin:0 0 13px!important;
+}
+
+/* КАРТОЧКА ЧАТА */
+
+#auroraAi .ai-panel{
+  flex:1!important;
+  min-height:0!important;
+  padding:14px!important;
+  margin:0!important;
+  border-radius:24px!important;
+  background:var(--v3-panel)!important;
+  border:1px solid var(--v3-stroke)!important;
+  box-shadow:
+    0 16px 38px rgba(46,31,80,.20),
+    inset 0 1px #ffffff19!important;
+  -webkit-backdrop-filter:blur(23px);
+  backdrop-filter:blur(23px);
+}
+
+#auroraAi .ai-top{
+  align-items:center;
+  margin:0 0 5px!important;
+}
+
+#auroraAi .ai-top strong{
+  font-size:15px!important;
+  letter-spacing:-.01em;
+}
+
+#auroraAi .ai-clear{
+  border:1px solid #ffffff47!important;
+  background:#ffffff19!important;
+  color:white!important;
+  border-radius:13px!important;
+  padding:10px 13px!important;
+  font-size:12px!important;
+  font-weight:700!important;
+}
+
+/* СООБЩЕНИЯ */
+
+#auroraAi .ai-messages{
+  flex:1!important;
+  min-height:0!important;
+  max-height:none!important;
+  padding:11px 1px 15px!important;
+  gap:11px!important;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+
+#auroraAi .ai-msg{
+  max-width:94%!important;
+  width:fit-content;
+  font-size:14px!important;
+  line-height:1.48!important;
+  overflow-wrap:anywhere;
+  white-space:pre-wrap;
+  padding:12px 14px!important;
+  border-radius:18px!important;
+}
+
+#auroraAi .ai-msg.bot{
+  background:rgba(255,255,255,.15)!important;
+  border:1px solid #ffffff25!important;
+  color:#fff!important;
+  border-bottom-left-radius:6px!important;
+}
+
+#auroraAi .ai-msg.user{
+  color:#392858!important;
+  background:var(--v3-gradient)!important;
+  border:none!important;
+  border-bottom-right-radius:6px!important;
+}
+
+/* ПОЛЕ ВВОДА */
+
+#auroraAi .ai-compose{
+  display:flex!important;
+  gap:9px!important;
+  margin-top:5px!important;
+  align-items:end!important;
+  flex-shrink:0;
+}
+
+#auroraAi #aiInput{
+  min-height:51px!important;
+  max-height:102px!important;
+  padding:13px 15px!important;
+  min-width:0!important;
+  width:100%!important;
+  border:1px solid #ffffff45!important;
+  border-radius:16px!important;
+  box-shadow:none!important;
+  color:#3a2c58!important;
+  background:var(--v3-light)!important;
+  font-size:16px!important;
+}
+
+#auroraAi #aiSend{
+  flex:0 0 51px;
+  width:51px!important;
+  min-width:51px!important;
+  height:51px!important;
+  padding:0!important;
+  border-radius:16px!important;
+  background:var(--v3-gradient)!important;
+  color:#40305c!important;
+  box-shadow:none!important;
+}
+
+#auroraAi .ai-status{
+  font-size:11px!important;
+  min-height:15px;
+  margin:7px 2px 0!important;
+}
+
+/* ИНСТРУМЕНТЫ */
+
+#home{
+  max-width:720px;
+  margin:0 auto;
+  padding-bottom:20px;
+}
+
+#home>h1{
+  font-size:29px!important;
+  letter-spacing:-.03em;
+  margin:7px 0!important;
+}
+
+#home>.sub{
+  font-size:13px!important;
+  opacity:.94;
+}
+
+#home .a2-tools-intro{
+  border-radius:20px!important;
+  padding:14px!important;
+  margin:14px 0 13px!important;
+  background:rgba(255,255,255,.21)!important;
+  border:1px solid #ffffff70!important;
+}
+
+#home .a2-tools-intro button{
+  border-radius:12px;
+  background:var(--v3-gradient);
+  color:#3e2c5d;
+  padding:10px 12px;
+}
+
+#home .cards{
+  display:grid!important;
+  grid-template-columns:
+    repeat(2,minmax(0,1fr))!important;
+  gap:11px!important;
+  margin:12px 0!important;
+}
+
+#home .cards>.card{
+  width:100%!important;
+  min-width:0!important;
+  min-height:142px!important;
+  margin:0!important;
+  padding:16px 13px!important;
+  border:1px solid #ffffff30!important;
+  border-radius:21px!important;
+  background:rgba(56,41,101,.86)!important;
+  box-shadow:0 8px 21px #35214e20!important;
+  overflow-wrap:anywhere;
+  transition:
+    transform .17s ease,
+    background .17s ease;
+}
+
+#home .cards>.card:active{
+  transform:scale(.98);
+  background:rgba(68,49,123,.96)!important;
+}
+
+#home .cards>.card strong{
+  font-size:15px!important;
+  line-height:1.2!important;
+}
+
+#home .cards>.card small{
+  font-size:11px!important;
+  line-height:1.35!important;
+}
+
+#home .cards>.card .emoji{
+  font-size:29px!important;
+}
+
+/* ИСПРАВЛЕНИЕ ФИНАНСОВ */
+
+#auroraFinance,
+#auroraFinance *{
+  box-sizing:border-box!important;
+}
+
+#auroraFinance{
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  padding-bottom:35px;
+}
+
+#auroraFinance .fin-panel{
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  padding:17px 15px!important;
+  border-radius:22px!important;
+  overflow:hidden!important;
+}
+
+#auroraFinance .fin-field,
+#auroraFinance .fin-cols,
+#auroraFinance .fin-entry{
+  max-width:100%!important;
+  min-width:0!important;
+}
+
+#auroraFinance input,
+#auroraFinance select,
+#auroraFinance textarea{
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  height:auto;
+  min-height:48px;
+  border-radius:13px!important;
+  font-size:16px!important;
+}
+
+#auroraFinance input[type="date"]{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  height:52px!important;
+  padding:10px 12px!important;
+  -webkit-appearance:none;
+  appearance:none;
+}
+
+#auroraFinance
+input[type="date"]::-webkit-date-and-time-value{
+  min-width:0;
+  text-align:center;
+}
+
+#auroraFinance .fin-cols{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  gap:12px!important;
+}
+
+/* НИЖНЕЕ МЕНЮ */
+
+body>nav{
+  position:fixed!important;
+  bottom:0!important;
+  left:0!important;
+  width:100%!important;
+  border-top:1px solid #ffffff25!important;
+  background:rgba(38,27,74,.96)!important;
+  -webkit-backdrop-filter:blur(24px);
+  backdrop-filter:blur(24px);
+  padding:
+    8px max(12px,env(safe-area-inset-right))
+    calc(9px + env(safe-area-inset-bottom,0px))
+    max(12px,env(safe-area-inset-left))!important;
+  border-radius:20px 20px 0 0!important;
+  box-shadow:0 -8px 24px #2d214b26!important;
+  z-index:100!important;
+}
+
+body>nav button{
+  min-width:0!important;
+  flex:1!important;
+  min-height:48px!important;
+  gap:4px!important;
+}
+
+body>nav .aurora-nav-icon svg{
+  display:block;
+  width:23px!important;
+  height:23px!important;
+}
+
+body>nav .aurora-nav-text{
+  font-size:10px!important;
+  line-height:1.15!important;
+  letter-spacing:.01em;
+}
+
+body>nav button.active .aurora-nav-text,
+body>nav button.active .aurora-nav-icon{
+  color:#ffd8f0!important;
+}
+
+/* МАЛЕНЬКИЕ ЭКРАНЫ */
+
+@media(max-width:355px){
+  #home .cards{
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+
+  #auroraAi .a2-chip{
+    font-size:10px;
+    padding:8px 9px;
+  }
+
+  #auroraAi .a2-tools-link{
+    font-size:11px;
+    padding:8px 10px;
+  }
+
+  #auroraAi>h1{
+    font-size:23px!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  #home .cards>.card{
+    transition:none;
+  }
+}
+</style>
+
+<script id="aurora-v3-behavior">
+(() => {
+  'use strict';
+
+  if(window.__auroraV3Lumina) return;
+  window.__auroraV3Lumina = true;
+
+  // ОГРАНИЧЕНИЕ МАСШТАБИРОВАНИЯ
+
+  const meta =
+    document.querySelector(
+      'meta[name="viewport"]'
+    ) ||
+    document.head.appendChild(
+      document.createElement('meta')
+    );
+
+  meta.name='viewport';
+
+  meta.content =
+    'width=device-width,' +
+    'initial-scale=1,' +
+    'maximum-scale=1,' +
+    'user-scalable=no,' +
+    'viewport-fit=cover';
+
+  [
+    'gesturestart',
+    'gesturechange',
+    'gestureend'
+  ].forEach(name => {
+    document.addEventListener(
+      name,
+      event => event.preventDefault(),
+      {passive:false}
+    );
+  });
+
+  document.addEventListener(
+    'touchmove',
+    event => {
+      if(
+        event.touches &&
+        event.touches.length > 1
+      ){
+        event.preventDefault();
+      }
+    },
+    {passive:false}
+  );
+
+  // УДАЛЕНИЕ КНОПКИ НАПОМИНАНИЯ
+
+  const isReminder = text => {
+    const label = String(text || '')
+      .toLowerCase()
+      .replace(/[^a-zа-яё]+/g,' ')
+      .trim();
+
+    return [
+      'напоминание',
+      'напоминания',
+      'напоминаний',
+      'reminder',
+      'reminders'
+    ].includes(label);
+  };
+
+  function hideReminder(){
+
+    const cards =
+      document.querySelector('#home .cards');
+
+    if(cards){
+      [...cards.children].forEach(card => {
+
+        const title = card.querySelector(
+          'strong,h2,h3,h4,.card-title'
+        );
+
+        if(
+          title &&
+          isReminder(title.textContent)
+        ){
+          card.remove();
+        }
+
+      });
+    }
+
+    document.querySelectorAll(
+      '#home button,#home a'
+    ).forEach(button => {
+
+      if(isReminder(button.textContent)){
+        button.remove();
+      }
+
+    });
+  }
+
+  hideReminder();
+
+  // ОБНОВЛЕНИЕ ТЕКСТОВ
+
+  const intro =
+    document.querySelector(
+      '#home .a2-tools-intro'
+    );
+
+  if(intro){
+
+    const title =
+      intro.querySelector('strong');
+
+    const description =
+      intro.querySelector('p');
+
+    if(title){
+      title.textContent =
+        'Всё нужное — под рукой';
+    }
+
+    if(description){
+      description.textContent =
+        'Один экран для повседневных задач';
+    }
+  }
+
+  const title =
+    document.querySelector('#auroraAi>h1');
+
+  if(title){
+    title.textContent = 'С чего начнём?';
+  }
+
+  const subtitle =
+    document.querySelector('#auroraAi>.sub');
+
+  if(subtitle){
+    subtitle.textContent =
+      'Аврора рядом — спроси о чём угодно ✦';
+  }
+
+  // СОХРАНЯЕМ РАБОТУ НАВИГАЦИИ
+
+  if(typeof window.openPage === 'function'){
+
+    const previousOpenPage = window.openPage;
+
+    window.openPage = function(page,...args){
+
+      const result = previousOpenPage.call(
+        this,page,...args
+      );
+
+      if(page === 'home'){
+        hideReminder();
+      }
+
+      return result;
+    };
+  }
+
+})();
+</script>
 </body>
 </html>
   
