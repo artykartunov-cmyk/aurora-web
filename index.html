@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Аврора</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0e1018;color:white;font-family:-apple-system,Arial,sans-serif}
+header{padding:30px 22px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:24px;font-weight:800}
+.avatar{background:#7567ec;border-radius:50%;width:42px;height:42px;display:grid;place-items:center}
+main{padding:0 20px 100px}
+h1{font-size:29px}
+.sub{color:#9b9bab;font-size:14px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px}
+.card{background:#1c1e2b;border:1px solid #2a2d3d;border-radius:22px;padding:20px 15px;min-height:150px;text-align:left;color:white}
+.emoji{font-size:32px;display:block;margin-bottom:20px}
+.card strong{display:block;font-size:16px}
+.card small{display:block;color:#999bad;margin-top:6px}
+.back{border:0;color:#aaaac2;background:none;padding:12px 0}
+.action{background:#7668ef;color:white;border:0;padding:15px;border-radius:15px}
+.empty{background:#1c1e2b;padding:35px 18px;border-radius:20px;text-align:center;margin-top:25px}
+nav{position:fixed;bottom:0;left:0;width:100%;display:flex;justify-content:space-around;background:#171924;padding:16px 8px 24px}
+nav button{border:0;background:none;color:#aaaac0}
+nav button.active{color:#aa9fff}
+.hidden{display:none}
+</style>
+
+<style>
+/* AURORA_PASTEL_THEME_V1 */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --pink: #f3a1cd;
+  --purple: #ac7ddd;
+  --blue: #69a5f3;
+}
+
+html, body {
+  min-height: 100%;
+}
+
+body {
+  font-family: 'Manrope', -apple-system,
+    BlinkMacSystemFont, sans-serif !important;
+  background: linear-gradient(
+    130deg,
+    #f3a1cd 0%,
+    #bb83dc 35%,
+    #927cdd 62%,
+    #69a5f3 100%
+  ) fixed !important;
+  color: white !important;
+}
+
+main, #home, #gallery, #profile {
+  background: transparent !important;
+}
+
+h1, h2, h3 {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800 !important;
+  letter-spacing: -1px;
+  color: white;
+}
+
+.sub, small {
+  color: rgba(255,255,255,.82) !important;
+}
+
+.cards {
+  gap: 14px !important;
+}
+
+.card, .empty {
+  background: rgba(37, 28, 73, .72) !important;
+  border: 1px solid rgba(255,255,255,.24) !important;
+  border-radius: 23px !important;
+  box-shadow: 0 10px 28px rgba(53,32,100,.16);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  color: white !important;
+}
+
+.card:active {
+  transform: scale(.98);
+}
+
+.card strong {
+  color: white;
+  font-weight: 800;
+}
+
+button {
+  font-family: 'Manrope', sans-serif !important;
+}
+
+.action, #addAlbumPhoto {
+  background: linear-gradient(
+    110deg, #ffd3e9, #d4bdff, #a3d9ff
+  ) !important;
+  color: #30234f !important;
+  border: none !important;
+  border-radius: 15px !important;
+  font-weight: 800 !important;
+  box-shadow: 0 6px 20px rgba(84,55,145,.18);
+}
+
+.back {
+  color: white !important;
+  font-weight: 700;
+}
+
+nav {
+  background: rgba(30, 23, 63, .90) !important;
+  border-top: 1px solid rgba(255,255,255,.18);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+}
+
+nav button {
+  color: rgba(255,255,255,.74) !important;
+  font-weight: 700;
+}
+
+nav button.active {
+  color: #ffd1ec !important;
+}
+
+#photoPreview img {
+  border-radius: 14px !important;
+  box-shadow: 0 5px 18px rgba(30,20,70,.25);
+}
+</style>
+
+
+<style>
+/* AURORA_ICON_FONT_V2 */
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap');
+
+body, button, input {
+  font-family: 'Nunito', 'Avenir Next',
+  sans-serif !important;
+}
+
+h1, h2, h3, .card strong {
+  font-family: 'Comfortaa',
+  'Avenir Next Rounded',
+  sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: -1px;
+}
+
+.aurora-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 17px;
+  background: rgba(255,255,255,.17);
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.aurora-icon svg {
+  width: 31px;
+  height: 31px;
+}
+
+.card:nth-child(1) .aurora-icon {
+  background: #d883c0;
+}
+.card:nth-child(2) .aurora-icon {
+  background: #9c80dc;
+}
+.card:nth-child(3) .aurora-icon {
+  background: #8099e5;
+}
+.card:nth-child(4) .aurora-icon {
+  background: #74ade4;
+}
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* AURORA_PREVIEW_LOOK_V3 */
+body, button, input, textarea {
+  font-family: 'Nunito', 'Avenir Next', sans-serif !important;
+}
+h1, h2, h3, .card strong {
+  font-family: 'Nunito', sans-serif !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.7px !important;
+}
+.card .aurora-icon {
+  display: flex !important;
+  width: 33px !important;
+  height: 33px !important;
+  margin-bottom: 20px !important;
+  color: #f6c9e8 !important;
+  background: transparent !important;
+  align-items: center;
+}
+.card .aurora-icon svg {
+  width: 31px;
+  height: 31px;
+}
+nav {
+  display: flex !important;
+  justify-content: space-around !important;
+  align-items: center !important;
+}
+nav button {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 1;
+}
+.aurora-nav-icon {
+  display: flex;
+  width: 27px;
+  height: 27px;
+  color: #ffffff;
+}
+.aurora-nav-icon svg {
+  width: 100%;
+  height: 100%;
+}
+nav button.active .aurora-nav-icon {
+  color: #f6c9e8 !important;
+}
+.aurora-nav-text {
+  display: none !important;
+}
+</style>
+
+
+<style>
+/* AURORA_ALBUM_MODAL_V1 */
+.aurora-modal-shade {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  box-sizing: border-box;
+  background: rgba(18,12,42,.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.aurora-modal {
+  width: 100%;
+  max-width: 390px;
+  padding: 26px 22px;
+  box-sizing: border-box;
+  border-radius: 28px;
+  border: 1px solid #ffffff66;
+  background: linear-gradient(
+    140deg,#865caf,#4d65a6
+  );
+  box-shadow: 0 24px 70px #20144588;
+  color: white;
+  font-family: 'Nunito',sans-serif;
+}
+
+.aurora-modal-icon {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 19px;
+  background: linear-gradient(
+    135deg,#f1a9d7,#a9b5fc
+  );
+  margin-bottom: 18px;
+}
+
+.aurora-modal h2 {
+  font-size: 25px;
+  font-weight: 900;
+  margin: 0 0 8px;
+  color: white;
+}
+
+.aurora-modal p {
+  font-size: 14px;
+  color: #eee1fa;
+  margin: 0 0 24px;
+}
+
+.aurora-modal label {
+  display: block;
+  margin-bottom: 9px;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.aurora-modal input {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  padding: 15px;
+  border: 2px solid transparent;
+  border-radius: 15px;
+  background: white;
+  color: #32234f;
+  font: 600 16px 'Nunito',sans-serif;
+  outline: none;
+}
+
+.aurora-modal input:focus {
+  border-color: #ffc8e8;
+}
+
+.aurora-modal-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.aurora-modal-buttons button {
+  border: 0;
+  border-radius: 15px;
+  padding: 15px 8px;
+  font: 800 15px 'Nunito',sans-serif;
+  cursor: pointer;
+}
+
+.aurora-cancel {
+  background: #ffffff2b;
+  color: white;
+}
+
+.aurora-create {
+  background: linear-gradient(
+    110deg,#ffc9e9,#bfc5ff
+  );
+  color: #32234f;
+}
+
+.aurora-create:disabled {
+  opacity: .5;
+}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">✦ Аврора</div>
+<div class="avatar" id="avatar">A</div>
+</header>
+<main>
+<section id="home">
+<h1>Моё пространство</h1>
+<p class="sub">Всё важное в одном месте.</p>
+<div class="cards">
+<button class="card" onclick="openPage('gallery')"><span class="aurora-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="14" height="14" rx="3"/><path d="M4 8H3a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1"/><circle cx="12" cy="8" r="1"/><path d="m7 14 4-4 5 5"/></svg></span><strong>Галерея</strong><small>Фото и альбомы</small></button>
+<button class="card" onclick="openPage('notes');auroraNotesRender()"><span class="aurora-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="15" height="18" rx="3"/><path d="M8 8h7M8 12h5M8 16h4"/><path d="m16 17 4-4 2 2-4 4-3 1z"/></svg></span><strong>Заметки</strong><small>Скоро</small></button>
+<button class="card" onclick="soon()"><span class="aurora-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 14h2M14 14h2M8 18h2"/></svg></span><strong>Мои дела</strong><small>Скоро</small></button>
+<button class="card" onclick="soon()"><span class="aurora-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg></span><strong>Напоминания</strong><small>Скоро</small></button>
+</div>
+</section>
+<section id="gallery" class="hidden">
+<button class="back" onclick="openPage('home')">← На главную</button>
+<h1>Галерея</h1>
+<p class="sub">Твои фотографии и личные альбомы</p>
+<button class="action" onclick="createAlbum()">＋ Создать альбом</button>
+<div class="empty">📁<p>Пока нет альбомов</p></div>
+
+<button id="addAlbumPhoto"
+type="button"
+style="display:none;margin:15px 0;padding:14px;border-radius:12px"
+onclick="document.getElementById('photoPicker').click()">
++ Добавить фото
+</button>
+<div id="photoPreview" style="
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px;
+margin-top:20px;
+"></div>
+</section>
+<section id="profile" class="hidden">
+<button class="back" onclick="openPage('home')">← На главную</button>
+<h1>Мой профиль</h1>
+<p class="sub" id="username">Аврора</p>
+</section>
+
+<section id="notes" class="hidden aurora-notes">
+  <button class="back" onclick="openPage('home')">
+    ← На главную
+  </button>
+  <h1>Заметки</h1>
+  <p class="sub">Твои мысли и идеи ✨</p>
+  <input id="auroraNotesSearch" type="search"
+    placeholder="Поиск заметок..."
+    oninput="auroraNotesRender()">
+  <button class="aurora-notes-new"
+    onclick="auroraNoteOpen()">
+    ＋ Новая заметка
+  </button>
+  <div id="auroraNotesList"></div>
+</section>
+</main>
+<nav>
+<button id="nav-home" class="active" onclick="openPage('home')" aria-label="Главная"><span class="aurora-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v11H3z"/><path d="M9 21v-8h6v8"/></svg></span><span class="aurora-nav-text">Главная</span></button>
+<button id="nav-gallery" onclick="openPage('gallery')" aria-label="Галерея"><span class="aurora-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="14" height="14" rx="3"/><path d="M4 8H3a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1"/><circle cx="12" cy="8" r="1"/><path d="m7 14 4-4 5 5"/></svg></span><span class="aurora-nav-text">Галерея</span></button>
+<button id="nav-profile" onclick="openPage('profile')" aria-label="Профиль"><span class="aurora-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg></span><span class="aurora-nav-text">Профиль</span></button>
+</nav>
+<script>
+const tg=window.Telegram?.WebApp;
+if(tg){tg.ready();tg.expand();}
+const user=tg?.initDataUnsafe?.user;
+if(user){
+ document.getElementById('avatar').textContent=(user.first_name||'A')[0];
+ document.getElementById('username').textContent=user.first_name||'Пользователь';
+}
+function openPage(page){
+ for(const id of ['home','gallery','profile','notes']){
+  document.getElementById(id).classList.toggle('hidden',id!==page);
+  document.getElementById('nav-'+id)?.classList.toggle('active',id===page);
+ }
+}
+function soon(){
+ if(tg?.showAlert)tg.showAlert('Эту функцию мы скоро добавим ✨');
+ else alert('Эту функцию мы скоро добавим ✨');
+}
+</script>
+
+<script>
+async function createAlbum() {
+  const name = await askAuroraAlbumName();
+  if (!name || !name.trim()) return;
+
+  const albums = JSON.parse(
+    localStorage.getItem("aurora_demo_albums") || "[]"
+  );
+
+  albums.push(name.trim());
+
+  localStorage.setItem(
+    "aurora_demo_albums",
+    JSON.stringify(albums)
+  );
+
+  showAlbums();
+}
+
+function showAlbums() {
+  const albums = JSON.parse(
+    localStorage.getItem("aurora_demo_albums") || "[]"
+  );
+
+  const empty = document.querySelector("#gallery .empty");
+  if (!empty) return;
+
+  if (!albums.length) {
+      empty.textContent = "Пока нет альбомов";
+      return;
+    }
+
+  empty.replaceChildren();
+
+  albums.forEach(name => {
+    const item = document.createElement("div");
+    item.textContent = "📁 " + name;
+    item.style.cssText =
+      "padding:18px;margin:12px 0;background:#20212d;border-radius:14px;color:white";
+    item.style.cursor = "pointer";
+    
+item.onclick = () => {
+  window.activeAlbum = name;
+
+const addBtn = document.getElementById("addAlbumPhoto");
+if (addBtn) addBtn.style.display = "block";
+
+    auroraRenderAlbum(name);
+};
+
+    const removeAlbum = document.createElement("button");
+    removeAlbum.type = "button";
+    removeAlbum.textContent = "✕";
+    removeAlbum.title = "Удалить альбом";
+    removeAlbum.setAttribute("aria-label", "Удалить альбом");
+
+    item.style.position = "relative";
+    item.style.paddingRight = "48px";
+
+    removeAlbum.style.cssText =
+      "position:absolute;top:5px;right:5px;" +
+      "width:28px;height:28px;border-radius:50%;" +
+      "border:0;background:#3a284acc;color:white;" +
+      "font-size:17px;cursor:pointer;padding:0;" +
+      "display:flex;align-items:center;" +
+      "justify-content:center";
+
+    removeAlbum.onclick = async (event) => {
+      event.stopPropagation();
+      if (!await auroraConfirmDelete("album", name)) return;
+
+      try {
+        await auroraRemoveAlbum(name);
+      } catch (e) {
+        alert("Ошибка удаления: " + e.message);
+      }
+    };
+
+    item.appendChild(removeAlbum);
+    empty.appendChild(item);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", showAlbums);
+</script>
+<input type="file" id="photoPicker"
+ accept="image/*" multiple style="display:none"
+ onchange="previewPhotos(this.files)">
+
+<script>
+// AURORA_SAVE_CONNECTED_V1
+async function previewPhotos(files) {
+  const album = window.activeAlbum || "Мои фото";
+  let container = document.getElementById("photoPreview");
+
+  if (!container) {
+    container = document.createElement("div");
+    container.id = "photoPreview";
+    container.style.cssText =
+      "padding:15px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px";
+    document.querySelector("#gallery").appendChild(container);
+  }
+
+  container.replaceChildren();
+
+  for (const file of files) {
+    await saveAuroraPhoto(album, file);
+  }
+
+  await auroraRenderAlbum(album);
+  return;
+
+  for (const file of files) {
+    const img = document.createElement("img");
+    img.src = URL.createObjectURL(file);
+    img.style.cssText =
+      "width:100%;aspect-ratio:1;object-fit:cover;border-radius:12px";
+    img.onload = () => URL.revokeObjectURL(img.src);
+    container.appendChild(img);
+  }
+
+  alert("Фото выбраны для альбома: " + album);
+}
+</script>
+
+<script>
+// AURORA_PHOTO_STORAGE_V1
+const photoDB = new Promise((resolve, reject) => {
+  const request = indexedDB.open("AuroraPhotos", 1);
+
+  request.onupgradeneeded = () => {
+    const db = request.result;
+    if (!db.objectStoreNames.contains("photos")) {
+      db.createObjectStore("photos", {
+        keyPath: "id",
+        autoIncrement: true
+      });
+    }
+  };
+
+  request.onsuccess = () => resolve(request.result);
+  request.onerror = () => reject(request.error);
+});
+
+async function saveAuroraPhoto(album, file) {
+  const db = await photoDB;
+
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction("photos", "readwrite");
+
+    tx.objectStore("photos").add({
+      album: album,
+      file: file,
+      created: Date.now()
+    });
+
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+async function loadAuroraPhotos(album) {
+  const db = await photoDB;
+
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction("photos", "readonly");
+    const request = tx.objectStore("photos").getAll();
+
+    request.onsuccess = () => {
+      resolve(request.result.filter(p => p.album === album));
+    };
+
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function displayAuroraPhotos(album) {
+  const container = document.getElementById("photoPreview");
+  if (!container) return;
+
+  const photos = await loadAuroraPhotos(album);
+  container.replaceChildren();
+
+  for (const photo of photos) {
+    const img = document.createElement("img");
+    const url = URL.createObjectURL(photo.file);
+
+    img.src = url;
+    img.style.cssText =
+      "width:100%;aspect-ratio:1;object-fit:cover;border-radius:12px";
+
+    img.onload = () => URL.revokeObjectURL(url);
+    container.appendChild(img);
+  }
+}
+</script>
+
+<script>
+// AURORA_DELETE_TOOLS_V1
+
+async function auroraRecords(album) {
+  const db = await photoDB;
+
+  return new Promise((resolve, reject) => {
+    const found = [];
+    const tx = db.transaction("photos", "readonly");
+    const request = tx.objectStore("photos").openCursor();
+
+    request.onsuccess = () => {
+      const cursor = request.result;
+      if (!cursor) return;
+
+      if (cursor.value.album === album) {
+        found.push({
+          key: cursor.primaryKey,
+          file: cursor.value.file
+        });
+      }
+      cursor.continue();
+    };
+
+    tx.oncomplete = () => resolve(found);
+    tx.onerror = () => reject(tx.error);
+    tx.onabort = () => reject(tx.error);
+  });
+}
+
+async function auroraRenderAlbum(album) {
+  const container = document.getElementById("photoPreview");
+  if (!container) return;
+
+  const records = await auroraRecords(album);
+  if (window.activeAlbum !== album) return;
+
+  container.replaceChildren();
+
+  for (const record of records) {
+    const tile = document.createElement("div");
+    tile.style.cssText = "position:relative;min-width:0";
+
+    const img = document.createElement("img");
+    const url = URL.createObjectURL(record.file);
+
+    img.src = url;
+    img.style.cssText =
+      "width:100%;aspect-ratio:1;" +
+      "object-fit:cover;border-radius:12px;display:block";
+
+    img.onload = () => URL.revokeObjectURL(url);
+    img.onerror = () => URL.revokeObjectURL(url);
+
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.textContent = "✕";
+    remove.title = "Удалить фотографию";
+    remove.setAttribute("aria-label", "Удалить фотографию");
+
+    remove.style.cssText =
+      "position:absolute;top:5px;right:5px;" +
+      "width:28px;height:28px;border-radius:50%;" +
+      "border:0;background:#3a284acc;color:white;" +
+      "font-size:17px;cursor:pointer";
+
+    remove.onclick = async (event) => {
+      event.stopPropagation();
+
+      if (!await auroraConfirmDelete("photo")) return;
+
+      try {
+        const db = await photoDB;
+
+        await new Promise((resolve, reject) => {
+          const tx = db.transaction("photos", "readwrite");
+          tx.objectStore("photos").delete(record.key);
+
+          tx.oncomplete = resolve;
+          tx.onerror = () => reject(tx.error);
+          tx.onabort = () => reject(tx.error);
+        });
+
+        await auroraRenderAlbum(album);
+      } catch (e) {
+        alert("Ошибка удаления фото: " + e.message);
+      }
+    };
+
+    tile.append(img, remove);
+    container.appendChild(tile);
+  }
+}
+
+async function auroraRemoveAlbum(album) {
+  const db = await photoDB;
+
+  await new Promise((resolve, reject) => {
+    const tx = db.transaction("photos", "readwrite");
+    const request = tx.objectStore("photos").openCursor();
+
+    request.onsuccess = () => {
+      const cursor = request.result;
+      if (!cursor) return;
+
+      if (cursor.value.album === album) {
+        cursor.delete();
+      }
+      cursor.continue();
+    };
+
+    tx.oncomplete = resolve;
+    tx.onerror = () => reject(tx.error);
+    tx.onabort = () => reject(tx.error);
+  });
+
+  const albums = JSON.parse(
+    localStorage.getItem("aurora_demo_albums") || "[]"
+  );
+
+  localStorage.setItem(
+    "aurora_demo_albums",
+    JSON.stringify(albums.filter(x => x !== album))
+  );
+
+  if (window.activeAlbum === album) {
+    window.activeAlbum = null;
+
+    document.getElementById("photoPreview")
+      ?.replaceChildren();
+
+    const button = document.getElementById("addAlbumPhoto");
+    if (button) button.style.display = "none";
+  }
+
+  showAlbums();
+}
+</script>
+
+<style>
+/* AURORA_ALBUM_CARDS_V1 */
+#gallery .empty {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+#gallery .empty > .aurora-album-tile {
+  display: flex !important;
+  align-items: center !important;
+  gap: 15px !important;
+  position: relative !important;
+  min-height: 94px !important;
+  margin: 12px 0 !important;
+  padding: 17px 50px 17px 15px !important;
+  border-radius: 23px !important;
+  border: 1px solid rgba(255,255,255,.35) !important;
+  background: linear-gradient(
+    115deg, #674a91, #453b79
+  ) !important;
+  box-shadow: 0 12px 25px rgba(50,31,101,.19) !important;
+  color: white !important;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: transform .15s ease;
+  overflow: hidden;
+}
+
+.aurora-album-tile:active {
+  transform: scale(.98);
+}
+
+.aurora-album-symbol {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  border-radius: 17px;
+  background: linear-gradient(135deg,#ebaee1,#9b8aee);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aurora-album-symbol svg {
+  width: 31px;
+  height: 31px;
+  stroke: white;
+}
+
+.aurora-album-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+  flex: 1;
+}
+
+.aurora-album-name {
+  font-family: 'Nunito', 'Avenir Next', sans-serif;
+  font-size: 17px;
+  font-weight: 900;
+  color: white;
+  overflow-wrap: anywhere;
+}
+
+.aurora-album-subtitle {
+  font-size: 12px;
+  color: #e2d7f2;
+  font-weight: 600;
+}
+
+#gallery .aurora-album-trash {
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+  width: 29px !important;
+  height: 29px !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  background: #302344bb !important;
+  color: white !important;
+  padding: 0 !important;
+  font-size: 17px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+</style>
+
+<script>
+(function () {
+  function initAlbumDesign() {
+    const holder = document.querySelector("#gallery .empty");
+    if (!holder) return;
+
+    function decorate() {
+      for (const item of holder.children) {
+        if (item.tagName !== "DIV") continue;
+        if (item.classList.contains("aurora-album-tile")) continue;
+
+        const textNode = [...item.childNodes].find(
+          n => n.nodeType === 3 && n.textContent.trim()
+        );
+        if (!textNode) continue;
+
+        const name = textNode.textContent
+          .replace(/^\s*📁\s*/, "")
+          .trim();
+
+        if (!name) continue;
+
+        textNode.textContent = "";
+        item.classList.add("aurora-album-tile");
+
+        const icon = document.createElement("span");
+        icon.className = "aurora-album-symbol";
+        icon.innerHTML = `
+          <svg viewBox="0 0 24 24" fill="none"
+               stroke-width="1.8"
+               stroke-linecap="round"
+               stroke-linejoin="round">
+            <path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <path d="M12 17s-4-2.3-4-4.5a2.1 2.1 0 0 1 4-1 2.1 2.1 0 0 1 4 1c0 2.2-4 4.5-4 4.5z"/>
+          </svg>`;
+
+        const info = document.createElement("span");
+        info.className = "aurora-album-info";
+
+        const title = document.createElement("span");
+        title.className = "aurora-album-name";
+        title.textContent = name;
+
+        const subtitle = document.createElement("span");
+        subtitle.className = "aurora-album-subtitle";
+        subtitle.textContent = "Личный альбом";
+
+        info.append(title, subtitle);
+        item.prepend(icon, info);
+
+        const trash = item.querySelector("button");
+        if (trash) trash.classList.add("aurora-album-trash");
+      }
+    }
+
+    new MutationObserver(decorate).observe(holder, {
+      childList: true
+    });
+
+    decorate();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initAlbumDesign);
+  } else {
+    initAlbumDesign();
+  }
+})();
+</script>
+
+
+<script>
+function askAuroraAlbumName() {
+  return new Promise(resolve => {
+    const overlay = document.createElement("div");
+    overlay.className = "aurora-modal-shade";
+
+    overlay.innerHTML = `
+      <section class="aurora-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="aurora-modal-title">
+
+        <div class="aurora-modal-icon">
+          <svg width="32" height="32"
+            viewBox="0 0 24 24"
+            fill="none" stroke="white"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <path d="M12 11v6M9 14h6"/>
+          </svg>
+        </div>
+
+        <h2 id="aurora-modal-title">Новый альбом</h2>
+        <p>Придумай название для своей коллекции фотографий ✨</p>
+
+        <form id="aurora-album-form">
+          <label for="aurora-album-input">
+            Название альбома
+          </label>
+          <input id="aurora-album-input"
+            maxlength="60"
+            autocomplete="off"
+            placeholder="Наши воспоминания">
+
+          <div class="aurora-modal-buttons">
+            <button type="button"
+              class="aurora-cancel">Отмена</button>
+            <button type="submit"
+              class="aurora-create"
+              disabled>Создать</button>
+          </div>
+        </form>
+      </section>
+    `;
+
+    document.body.appendChild(overlay);
+
+    const input = overlay.querySelector("input");
+    const form = overlay.querySelector("form");
+    const create = overlay.querySelector(".aurora-create");
+
+    function finish(value) {
+      document.removeEventListener("keydown", onKey);
+      overlay.remove();
+      resolve(value);
+    }
+
+    function onKey(e) {
+      if (e.key === "Escape") finish(null);
+    }
+
+    document.addEventListener("keydown", onKey);
+
+    overlay.addEventListener("click", e => {
+      if (e.target === overlay) finish(null);
+    });
+
+    overlay.querySelector(".aurora-cancel")
+      .onclick = () => finish(null);
+
+    input.addEventListener("input", () => {
+      create.disabled = !input.value.trim();
+    });
+
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      const name = input.value.trim();
+      if (name) finish(name);
+    });
+
+    input.focus();
+  });
+}
+</script>
+
+<style>
+/* AURORA_TG_AVATAR_V1 */
+#avatar {
+  overflow: hidden;
+  border-radius: 50% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow:
+    0 0 0 3px rgba(255,255,255,.28),
+    0 6px 18px rgba(66,37,120,.2);
+}
+
+#avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+</style>
+
+<script>
+(function () {
+  function loadTelegramAvatar() {
+    const avatar = document.getElementById("avatar");
+    if (!avatar) return;
+
+    const tg = window.Telegram?.WebApp;
+    const user = tg?.initDataUnsafe?.user;
+
+    if (!user) return;
+
+    const initial = (
+      user.first_name ||
+      user.username ||
+      "A"
+    ).charAt(0).toUpperCase();
+
+    avatar.textContent = initial;
+
+    if (!user.photo_url) return;
+
+    const photo = document.createElement("img");
+    photo.alt = "Фото профиля Telegram";
+
+    photo.onload = () => {
+      avatar.replaceChildren(photo);
+    };
+
+    photo.onerror = () => {
+      avatar.textContent = initial;
+    };
+
+    photo.src = user.photo_url;
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      loadTelegramAvatar
+    );
+  } else {
+    loadTelegramAvatar();
+  }
+})();
+</script>
+
+<style>
+/* AURORA_DELETE_MODAL_V1 */
+.aurora-del-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  background: rgba(17,12,35,.66);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.aurora-del-box {
+  width: 100%;
+  max-width: 370px;
+  padding: 28px 22px;
+  border-radius: 28px;
+  border: 1px solid rgba(255,255,255,.3);
+  box-sizing: border-box;
+  background: linear-gradient(
+    145deg,#68518f,#39315f
+  );
+  box-shadow: 0 24px 70px rgba(24,15,53,.5);
+  color: white;
+  text-align: center;
+  font-family: 'Nunito', sans-serif;
+}
+
+.aurora-del-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 18px;
+  border-radius: 20px;
+  display: grid;
+  place-items: center;
+  background: rgba(222,112,159,.24);
+  color: #ffb4d2;
+}
+
+.aurora-del-box h2 {
+  color: white;
+  font-size: 23px;
+  font-weight: 900;
+  margin: 0 0 12px;
+}
+
+.aurora-del-description {
+  color: #e9def4;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 25px;
+  overflow-wrap: anywhere;
+}
+
+.aurora-del-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.aurora-del-actions button {
+  min-height: 49px;
+  padding: 12px 8px;
+  border: none;
+  border-radius: 15px;
+  font-family: 'Nunito',sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.aurora-del-cancel {
+  background: rgba(255,255,255,.15) !important;
+  color: white !important;
+}
+
+.aurora-del-confirm {
+  background: linear-gradient(
+    110deg,#ff91bc,#f56a9f
+  ) !important;
+  color: #421c3d !important;
+}
+</style>
+
+<script>
+function auroraConfirmDelete(type, name = "") {
+  return new Promise(resolve => {
+    const overlay = document.createElement("div");
+    overlay.className = "aurora-del-overlay";
+
+    const box = document.createElement("div");
+    box.className = "aurora-del-box";
+    box.setAttribute("role", "alertdialog");
+    box.setAttribute("aria-modal", "true");
+
+    const icon = document.createElement("div");
+    icon.className = "aurora-del-icon";
+    icon.innerHTML = `
+      <svg width="31" height="31"
+        viewBox="0 0 24 24"
+        fill="none" stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round">
+        <path d="M3 6h18M8 6V4h8v2"/>
+        <path d="M5 6l1 15h12l1-15"/>
+        <path d="M10 10v7M14 10v7"/>
+      </svg>`;
+
+    const title = document.createElement("h2");
+    title.textContent = type === "album"
+      ? "Удалить альбом?"
+      : "Удалить фотографию?";
+
+    const desc = document.createElement("p");
+    desc.className = "aurora-del-description";
+
+    desc.textContent = type === "album"
+      ? "Альбом «" + name +
+        "» и все фотографии внутри него будут удалены. Это действие нельзя отменить."
+      : "Выбранная фотография будет удалена из альбома. Это действие нельзя отменить.";
+
+    const actions = document.createElement("div");
+    actions.className = "aurora-del-actions";
+
+    const cancel = document.createElement("button");
+    cancel.type = "button";
+    cancel.className = "aurora-del-cancel";
+    cancel.textContent = "Отмена";
+
+    const confirmButton = document.createElement("button");
+    confirmButton.type = "button";
+    confirmButton.className = "aurora-del-confirm";
+    confirmButton.textContent = "Удалить";
+
+    actions.append(cancel, confirmButton);
+    box.append(icon, title, desc, actions);
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+
+    function finish(answer) {
+      document.removeEventListener("keydown", onKey);
+      overlay.remove();
+      resolve(answer);
+    }
+
+    function onKey(e) {
+      if (e.key === "Escape") finish(false);
+    }
+
+    document.addEventListener("keydown", onKey);
+
+    cancel.onclick = () => finish(false);
+    confirmButton.onclick = () => finish(true);
+
+    overlay.onclick = e => {
+      if (e.target === overlay) finish(false);
+    };
+
+    cancel.focus();
+  });
+}
+</script>
+
+<!-- AURORA_NOTES_V1 -->
+<style>
+.aurora-notes { padding-bottom: 35px; }
+
+#auroraNotesSearch {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16px;
+  border: 1px solid #ffffff66;
+  border-radius: 17px;
+  background: #ffffffed;
+  color: #35254d;
+  font: 600 16px 'Nunito',sans-serif;
+  margin: 20px 0 12px;
+}
+
+.aurora-notes-new {
+  width: 100%;
+  padding: 16px;
+  margin-bottom: 20px;
+  border: 0;
+  border-radius: 17px;
+  background: linear-gradient(110deg,#ffd0e8,#b7c1fc);
+  color: #35254d;
+  font: 800 16px 'Nunito',sans-serif;
+}
+
+.aurora-note-card {
+  position: relative;
+  padding: 20px 48px 20px 18px;
+  margin: 12px 0;
+  border-radius: 21px;
+  border: 1px solid #ffffff55;
+  background: #47376fcc;
+  color: white;
+  box-shadow: 0 10px 24px #38246133;
+}
+
+.aurora-note-card strong {
+  display: block;
+  font-size: 17px;
+  font-weight: 900;
+  margin-bottom: 8px;
+  overflow-wrap: anywhere;
+}
+
+.aurora-note-card p {
+  margin: 0 0 10px;
+  color: #e9dff4;
+  font-size: 14px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.aurora-note-card small {
+  color: #cfc0e1;
+}
+
+.aurora-note-trash {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  border: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #302344bb;
+  color: white;
+  font-size: 17px;
+}
+
+.aurora-note-shade {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: #17112bc4;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow-y: auto;
+  box-sizing: border-box;
+  backdrop-filter: blur(12px);
+}
+
+.aurora-note-shade.open { display: flex; }
+
+.aurora-note-dialog {
+  width: 100%;
+  max-width: 390px;
+  box-sizing: border-box;
+  padding: 24px;
+  border: 1px solid #ffffff55;
+  border-radius: 26px;
+  background: linear-gradient(140deg,#805aab,#495e9f);
+  color: white;
+  box-shadow: 0 20px 65px #20144588;
+}
+
+.aurora-note-dialog h2 {
+  font-size: 23px;
+  margin: 0 0 18px;
+  color: white;
+}
+
+.aurora-note-dialog input,
+.aurora-note-dialog textarea {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 14px;
+  border: 0;
+  border-radius: 14px;
+  background: white;
+  color: #35254d;
+  font: 600 16px 'Nunito',sans-serif;
+}
+
+.aurora-note-dialog textarea {
+  min-height: 155px;
+  resize: vertical;
+}
+
+.aurora-note-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.aurora-note-actions button {
+  flex: 1;
+  border: 0;
+  border-radius: 14px;
+  padding: 14px 8px;
+  font: 800 15px 'Nunito',sans-serif;
+}
+
+.aurora-note-cancel {
+  background: #ffffff33;
+  color: white;
+}
+
+.aurora-note-save {
+  background: linear-gradient(110deg,#ffd0e8,#b7c1fc);
+  color: #35254d;
+}
+</style>
+
+<div id="auroraNoteEditor" class="aurora-note-shade">
+  <div class="aurora-note-dialog"
+    role="dialog" aria-modal="true"
+    aria-label="Редактор заметки">
+    <h2 id="auroraNoteHeading">Новая заметка</h2>
+    <form id="auroraNoteForm">
+      <input id="auroraNoteTitle"
+        maxlength="100"
+        placeholder="Название заметки">
+      <textarea id="auroraNoteText"
+        placeholder="Напиши что-нибудь..."></textarea>
+      <div class="aurora-note-actions">
+        <button type="button" class="aurora-note-cancel"
+          onclick="auroraNoteClose()">Отмена</button>
+        <button type="submit" class="aurora-note-save">
+          Сохранить
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+const AURORA_NOTES_KEY = "aurora_notes_v1";
+let auroraEditingNote = null;
+
+function auroraNotesGet() {
+  try {
+    const data = JSON.parse(
+      localStorage.getItem(AURORA_NOTES_KEY) || "[]"
+    );
+    return Array.isArray(data) ? data : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function auroraNotesRender() {
+  const list = document.getElementById("auroraNotesList");
+  if (!list) return;
+
+  const query = document.getElementById("auroraNotesSearch")
+    ?.value.toLowerCase().trim() || "";
+
+  const notes = auroraNotesGet()
+    .filter(n => (
+      (n.title || "") + " " + (n.text || "")
+    ).toLowerCase().includes(query))
+    .sort((a,b) => b.updated - a.updated);
+
+  list.replaceChildren();
+
+  if (!notes.length) {
+    const empty = document.createElement("p");
+    empty.className = "sub";
+    empty.textContent = query
+      ? "Ничего не найдено"
+      : "Пока нет заметок. Создай первую ✨";
+    list.appendChild(empty);
+    return;
+  }
+
+  notes.forEach(note => {
+    const card = document.createElement("div");
+    card.className = "aurora-note-card";
+
+    const title = document.createElement("strong");
+    title.textContent = note.title || "Без названия";
+
+    const preview = document.createElement("p");
+    preview.textContent = (note.text || "").slice(0,120);
+
+    const date = document.createElement("small");
+    date.textContent = new Date(note.updated)
+      .toLocaleDateString("ru-RU");
+
+    const trash = document.createElement("button");
+    trash.className = "aurora-note-trash";
+    trash.textContent = "×";
+    trash.setAttribute("aria-label", "Удалить заметку");
+
+    trash.onclick = async e => {
+      e.stopPropagation();
+
+      if (!await auroraConfirmNoteDelete()) return;
+
+      const remaining = auroraNotesGet()
+        .filter(n => n.id !== note.id);
+
+      localStorage.setItem(
+        AURORA_NOTES_KEY, JSON.stringify(remaining)
+      );
+      auroraNotesRender();
+    };
+
+    card.onclick = () => auroraNoteOpen(note.id);
+    card.append(title, preview, date, trash);
+    list.appendChild(card);
+  });
+}
+
+function auroraNoteOpen(id = null) {
+  const note = auroraNotesGet().find(n => n.id === id);
+  auroraEditingNote = note ? note.id : null;
+
+  document.getElementById("auroraNoteHeading")
+    .textContent = note ? "Редактировать" : "Новая заметка";
+
+  document.getElementById("auroraNoteTitle")
+    .value = note?.title || "";
+
+  document.getElementById("auroraNoteText")
+    .value = note?.text || "";
+
+  document.getElementById("auroraNoteEditor")
+    .classList.add("open");
+}
+
+function auroraNoteClose() {
+  document.getElementById("auroraNoteEditor")
+    .classList.remove("open");
+}
+
+document.getElementById("auroraNoteForm")
+  .addEventListener("submit", e => {
+    e.preventDefault();
+
+    const title = document.getElementById("auroraNoteTitle")
+      .value.trim();
+    const text = document.getElementById("auroraNoteText")
+      .value.trim();
+
+    if (!title && !text) {
+      alert("Напиши название или текст заметки.");
+      return;
+    }
+
+    const notes = auroraNotesGet();
+    const previous = notes.find(
+      n => n.id === auroraEditingNote
+    );
+
+    const updated = {
+      id: previous?.id ||
+        String(Date.now()) + Math.random(),
+      title, text,
+      updated: Date.now()
+    };
+
+    const result = previous
+      ? notes.map(n => n.id === previous.id ? updated : n)
+      : [...notes, updated];
+
+    try {
+      localStorage.setItem(
+        AURORA_NOTES_KEY, JSON.stringify(result)
+      );
+      auroraNoteClose();
+      auroraNotesRender();
+    } catch (err) {
+      alert("Не удалось сохранить заметку.");
+    }
+  });
+</script>
+
+<!-- AURORA_NOTES_DELETE_MODAL_V1 -->
+<style>
+.aurora-note-del-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000002;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  background: rgba(19,12,39,.7);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.aurora-note-del-panel {
+  width: 100%;
+  max-width: 370px;
+  padding: 28px 22px;
+  box-sizing: border-box;
+  text-align: center;
+  color: white;
+  border-radius: 28px;
+  border: 1px solid #ffffff55;
+  background: linear-gradient(
+    145deg,#67508d,#39305f
+  );
+  box-shadow: 0 25px 70px #170e3999;
+  font-family: 'Nunito', sans-serif;
+}
+
+.aurora-note-del-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 18px;
+  border-radius: 20px;
+  background: #df81b033;
+  display: grid;
+  place-items: center;
+  color: #ffb7d9;
+}
+
+.aurora-note-del-panel h2 {
+  margin: 0 0 12px;
+  font-size: 24px;
+  font-weight: 900;
+  color: white;
+}
+
+.aurora-note-del-panel p {
+  margin: 0 0 26px;
+  color: #eadff5;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.aurora-note-del-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.aurora-note-del-buttons button {
+  border: 0;
+  border-radius: 15px;
+  padding: 15px 8px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.aurora-note-del-cancel {
+  background: #ffffff25 !important;
+  color: white !important;
+}
+
+.aurora-note-del-confirm {
+  background: linear-gradient(
+    110deg,#ffb2d5,#f27eae
+  ) !important;
+  color: #41263f !important;
+}
+</style>
+
+<script>
+function auroraConfirmNoteDelete() {
+  return new Promise(resolve => {
+    const overlay = document.createElement("div");
+    overlay.className = "aurora-note-del-overlay";
+
+    overlay.innerHTML = `
+      <div class="aurora-note-del-panel"
+        role="alertdialog" aria-modal="true"
+        aria-labelledby="noteDelTitle">
+        <div class="aurora-note-del-icon">
+          <svg width="32" height="32"
+            viewBox="0 0 24 24"
+            fill="none" stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M3 6h18"/>
+            <path d="M8 6V4h8v2"/>
+            <path d="M5 6l1 15h12l1-15"/>
+            <path d="M10 10v7M14 10v7"/>
+          </svg>
+        </div>
+
+        <h2 id="noteDelTitle">Удалить заметку?</h2>
+        <p>Заметка будет удалена без
+        возможности восстановления.</p>
+
+        <div class="aurora-note-del-buttons">
+          <button type="button"
+            class="aurora-note-del-cancel">
+            Отмена
+          </button>
+          <button type="button"
+            class="aurora-note-del-confirm">
+            Удалить
+          </button>
+        </div>
+      </div>`;
+
+    document.body.appendChild(overlay);
+
+    function onKey(e) {
+      if (e.key === "Escape") finish(false);
+    }
+
+    function finish(value) {
+      document.removeEventListener("keydown", onKey);
+      overlay.remove();
+      resolve(value);
+    }
+
+    overlay.querySelector(".aurora-note-del-cancel")
+      .onclick = () => finish(false);
+
+    overlay.querySelector(".aurora-note-del-confirm")
+      .onclick = () => finish(true);
+
+    overlay.onclick = e => {
+      if (e.target === overlay) finish(false);
+    };
+
+    document.addEventListener("keydown", onKey);
+
+    overlay.querySelector(".aurora-note-del-cancel")
+      .focus();
+  });
+}
+</script>
+</body>
+</html>
+  
