@@ -3135,232 +3135,372 @@ function auroraConfirmNoteDelete() {
 }
 </style>
 
-<script>
+<!-- AURORA 6 CHAT ENGINE -->
+<script id="aurora-chat-v6">
+/* AURORA 6 — upgraded chat; original tools remain untouched. */
 (() => {
   if (document.getElementById('auroraAi')) return;
-
-  const cards = document.querySelector('#home .cards');
+  const homeCards = document.querySelector('#home .cards');
   const main = document.querySelector('main');
-  if (!cards || !main) return;
+  if (!homeCards || !main) return;
 
-  const API_URL =
-    'https://aurora-ai.artykartunov.workers.dev/chat';
+  const API_URL = 'https://aurora-ai.artykartunov.workers.dev';
+  const tgApp = window.Telegram?.WebApp;
+  const localId = String(tgApp?.initDataUnsafe?.user?.id || 'browser');
+  const oldHistoryKey = 'aurora_ai_history_' + localId;
+  const activeKey = 'aurora_v6_active_' + localId;
+  const dbName = 'aurora_v6_threads_' + localId;
 
   const tile = document.createElement('button');
-  tile.type = 'button';
-  tile.className = 'card';
-  tile.innerHTML = `
-    <span class="aurora-icon"
-      aria-hidden="true">✦</span>
-    <strong>GPT-чат</strong>
-    <small>Твой AI-помощник</small>
-  `;
-  cards.appendChild(tile);
+  tile.type = 'button'; tile.className = 'card';
+  tile.innerHTML = '<span class="aurora-icon" aria-hidden="true">✦</span><strong>Аврора AI</strong><small>Личный помощник</small>';
+  homeCards.appendChild(tile);
 
   const page = document.createElement('section');
-  page.id = 'auroraAi';
-  page.className = 'hidden';
-
+  page.id = 'auroraAi'; page.className = 'hidden';
   page.innerHTML = `
-    <button class="back" id="aiBack"
-      type="button">← На главную</button>
-    <h1>AI-помощник ✦</h1>
-    <p class="sub">
-      Задавай вопросы, придумывай идеи и учись
-    </p>
-
-    <div class="ai-panel">
-      <div class="ai-top">
-        <strong>Диалог</strong>
-        <button type="button" class="ai-clear"
-          id="aiClear">Очистить</button>
-      </div>
-
-      <div class="ai-messages"
-        id="aiMessages" aria-live="polite"></div>
-
-      <form class="ai-compose" id="aiForm">
-        <textarea id="aiInput" rows="2"
-          maxlength="1500"
-          placeholder="Напиши сообщение..."
-          required></textarea>
-
-        <button type="submit" class="ai-send"
-          id="aiSend"
-          aria-label="Отправить">➤</button>
-      </form>
-
-      <p class="ai-status" id="aiStatus">
-        Готов к общению
-      </p>
+    <div class="a6-head">
+      <button type="button" id="aiThreadsButton" class="a6-head-action" aria-label="История диалогов">☰</button>
+      <div class="a6-identity"><img src="./aurora-mascot.webp" alt=""><span><strong>Аврора</strong><small>ИИ-собеседница</small></span></div>
+      <button type="button" id="aiNewThread" class="a6-head-action" aria-label="Новый чат">＋</button>
     </div>
+    <div class="ai-panel">
+      <div class="ai-top"><strong id="aiThreadTitle">Новый диалог</strong><button type="button" class="ai-clear" id="aiClear">Новый чат</button></div>
+      <div class="ai-messages" id="aiMessages" role="log" aria-live="polite" aria-relevant="additions"></div>
+      <div class="a6-selected" id="aiSelected" hidden></div>
+      <form class="ai-compose" id="aiForm">
+        <button type="button" id="aiAttachImage" class="a6-attach" aria-label="Прикрепить фото">＋</button>
+        <textarea id="aiInput" rows="1" maxlength="1500" placeholder="Напиши Авроре..." aria-label="Твоё сообщение"></textarea>
+        <button type="button" id="aiRecordVoice" class="a6-attach" aria-label="Голосовое сообщение">🎙</button>
+        <button type="submit" class="ai-send" id="aiSend" aria-label="Отправить">➤</button>
+      </form>
+      <p class="ai-status" id="aiStatus" role="status">Аврора рядом 💜</p>
+    </div>
+    <input type="file" id="aiImagePicker" hidden accept="image/png,image/jpeg,image/webp,image/heic,image/heif">
   `;
-
   main.appendChild(page);
 
-  const oldOpenPage = window.openPage;
+  const drawer = document.createElement('div');
+  drawer.id = 'auroraThreadsDrawer'; drawer.className = 'a6-drawer'; drawer.hidden = true;
+  drawer.innerHTML = `
+    <div class="a6-backdrop" data-close="1"></div>
+    <aside class="a6-drawer-content" role="dialog" aria-modal="true" aria-label="История диалогов">
+      <div class="a6-drawer-title"><strong>Мои диалоги</strong><button id="a6CloseDrawer" aria-label="Закрыть">✕</button></div>
+      <button class="a6-create" id="a6NewInDrawer">＋ Новый чат</button>
+      <input id="a6ThreadSearch" type="search" placeholder="Найти диалог..." aria-label="Поиск диалога">
+      <div id="a6ThreadList" class="a6-thread-list"></div>
+      <p class="a6-drawer-foot">Диалоги хранятся на этом устройстве.</p>
+    </aside>
+  `;
+  document.body.appendChild(drawer);
+  const $ = id => document.getElementById(id);
+  const chat = $('aiMessages'), input = $('aiInput'), send = $('aiSend');
+  const status = $('aiStatus'), imagePicker = $('aiImagePicker');
+  const selected = $('aiSelected'), voiceButton = $('aiRecordVoice');
+  let threads = [], activeId = '', pendingImage = null, busy = false;
+  let recording = null, db = null, fallback = false;
+  let writing = Promise.resolve();
+  const uuid = () => crypto.randomUUID ? crypto.randomUUID() : (Date.now() + '-' + Math.random().toString(36).slice(2));
+  const escapeText = t => String(t || '');
+  const current = () => threads.find(t => t.id === activeId);
+  const setStatus = s => { status.textContent = s; };
+  const scrollBottom = () => { requestAnimationFrame(() => { chat.scrollTop = chat.scrollHeight; }); };
+  const safeParse = (s, def) => { try { return JSON.parse(s) ?? def; } catch { return def; } };
+  const makeThread = () => ({id:uuid(), title:'Новый чат', created:Date.now(), updated:Date.now(), messages:[]});
+  const clean = msg => ({role:msg.role, content:escapeText(msg.content).slice(0,1500), ...(msg.image ? {image:msg.image} : {})});
 
-  window.openPage = function(id) {
-    if (typeof oldOpenPage === 'function') {
-      oldOpenPage(id);
-    }
-
-    page.classList.toggle(
-      'hidden', id !== 'auroraAi'
-    );
-  };
-
-  tile.onclick = () => window.openPage('auroraAi');
-
-  page.querySelector('#aiBack').onclick =
-    () => window.openPage('home');
-
-  const tg = window.Telegram?.WebApp;
-  const localId =
-    tg?.initDataUnsafe?.user?.id || 'browser';
-
-  const storageKey =
-    'aurora_ai_history_' + localId;
-
-  const chat = page.querySelector('#aiMessages');
-  const input = page.querySelector('#aiInput');
-  const send = page.querySelector('#aiSend');
-  const status = page.querySelector('#aiStatus');
-
-  let history = [];
-
-  try {
-    const saved = JSON.parse(
-      localStorage.getItem(storageKey) || '[]'
-    );
-
-    if (Array.isArray(saved)) {
-      history = saved.slice(-30);
-    }
-  } catch (_) {}
-
-  function persist() {
+  async function initStorage() {
     try {
-      localStorage.setItem(
-        storageKey,
-        JSON.stringify(history.slice(-30))
-      );
-    } catch (_) {
-      status.textContent =
-        'История не сохранилась на устройстве';
+      db = await new Promise((resolve, reject) => {
+        const req = indexedDB.open(dbName, 1);
+        req.onupgradeneeded = () => req.result.createObjectStore('threads', {keyPath:'id'});
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+      });
+      threads = await new Promise((resolve, reject) => {
+        const txn = db.transaction('threads', 'readonly');
+        const req = txn.objectStore('threads').getAll();
+        req.onsuccess = () => resolve(req.result || []);
+        req.onerror = () => reject(req.error);
+      });
+    } catch(e) {
+      fallback = true;
+      threads = safeParse(localStorage.getItem(dbName), []);
+      if (!Array.isArray(threads)) threads = [];
+      setStatus('Хранилище ограничено: используется память браузера');
     }
+    // Import the previous single chat without deleting the old copy.
+    if (!threads.length) {
+      const older = safeParse(localStorage.getItem(oldHistoryKey), []);
+      if (Array.isArray(older) && older.length) {
+        const t = makeThread(); t.title = 'Прежний диалог';
+        t.messages = older.filter(m => ['user','assistant'].includes(m?.role) && typeof m.content === 'string').slice(-50).map(clean);
+        threads.push(t); await saveThread(t);
+      }
+    }
+    if (!threads.length) { const t=makeThread(); threads.push(t); await saveThread(t); }
+    activeId = localStorage.getItem(activeKey) || threads[0].id;
+    if (!current()) activeId = threads[0].id;
+    render();
   }
-
-  function draw() {
+  function saveThread(t) {
+    t.updated = Date.now();
+    if (t.messages.length > 60) t.messages = t.messages.slice(-60);
+    if (fallback) {
+      try { localStorage.setItem(dbName,JSON.stringify(threads.slice(-35))); }
+      catch { setStatus('Недостаточно места для сохранения'); }
+      return Promise.resolve();
+    }
+    writing = writing.catch(()=>{}).then(() => new Promise((resolve,reject) => {
+      const tx=db.transaction('threads','readwrite');
+      tx.objectStore('threads').put(t);
+      tx.oncomplete=resolve;
+      tx.onerror=()=>reject(tx.error);
+    })).catch(()=>setStatus('Не удалось сохранить беседу на устройстве'));
+    return writing;
+  }
+  function deleteThread(id) {
+    threads = threads.filter(t=>t.id!==id);
+    if (fallback) { try { localStorage.setItem(dbName,JSON.stringify(threads)); } catch{} return Promise.resolve(); }
+    writing = writing.catch(()=>{}).then(()=>new Promise((resolve,reject)=>{
+      const tx = db.transaction('threads','readwrite');
+      tx.objectStore('threads').delete(id);
+      tx.oncomplete=resolve; tx.onerror=()=>reject(tx.error);
+    }));
+    return writing;
+  }
+  function selectThread(id) {
+    activeId=id; localStorage.setItem(activeKey, id);
+    pendingImage = null; render(); closeDrawer();
+  }
+  async function newThread() {
+    const t=makeThread(); threads.unshift(t); await saveThread(t); selectThread(t.id);
+  }
+  function textBubble(m) {
+    const row = document.createElement('div'); row.className='a6-msg-row '+(m.role==='user'?'mine':'theirs');
+    if (m.role === 'assistant') { const avatar=document.createElement('img'); avatar.src='./aurora-mascot.webp'; avatar.alt=''; avatar.className='a6-msg-avatar'; row.appendChild(avatar); }
+    const bubble=document.createElement('div'); bubble.className='ai-msg '+(m.role==='user'?'user':'bot');
+    if (m.image && /^data:image\/(jpeg|png|webp);base64,/.test(m.image)) {
+      const img=document.createElement('img'); img.src=m.image; img.alt='Отправленная фотография'; img.className='a6-sent-photo'; bubble.appendChild(img);
+    }
+    if (m.content) { const text=document.createElement('div'); text.textContent=m.content; bubble.appendChild(text); }
+    row.appendChild(bubble); return row;
+  }
+  function render() {
+    const t = current(); if (!t) return;
+    $('aiThreadTitle').textContent = t.title;
     chat.replaceChildren();
-
-    if (!history.length) {
-      const intro = document.createElement('div');
-      intro.className = 'ai-msg bot';
-      intro.textContent =
-        'Привет! Я помощник Авроры. ' +
-        'Чем могу помочь? ✨';
-      chat.appendChild(intro);
+    if (!t.messages.length) {
+      const intro=document.createElement('div'); intro.className='a6-welcome';
+      const avatar=document.createElement('img'); avatar.src='./aurora-mascot.webp'; avatar.alt='';
+      const title=document.createElement('strong'); title.textContent='Привет, я Аврора! 💜';
+      const subtitle=document.createElement('p'); subtitle.textContent='Можем поговорить, создать заметку, разобрать фото или отправить голосовое.';
+      intro.append(avatar,title,subtitle);chat.appendChild(intro);
     }
-
-    for (const message of history) {
-      if (
-        !['user','assistant'].includes(message.role) ||
-        typeof message.content !== 'string'
-      ) continue;
-
-      const bubble = document.createElement('div');
-
-      bubble.className =
-        'ai-msg ' +
-        (message.role === 'user' ? 'user' : 'bot');
-
-      bubble.textContent = message.content;
-      chat.appendChild(bubble);
+    t.messages.forEach(m=>{ if(['user','assistant'].includes(m.role)) chat.appendChild(textBubble(m)); });
+    showSelected(); scrollBottom();
+  }
+  function showSelected() {
+    selected.replaceChildren(); selected.hidden = !pendingImage;
+    if (!pendingImage) return;
+    const img = document.createElement('img'); img.src=pendingImage; img.alt='Выбранное фото';
+    const label=document.createElement('span'); label.textContent='Фото готово к отправке';
+    const remove=document.createElement('button');remove.type='button';remove.textContent='✕';remove.setAttribute('aria-label','Убрать фото');
+    remove.onclick=()=>{pendingImage=null;showSelected();}; selected.append(img,label,remove);
+  }
+  function openDrawer() { $('a6ThreadSearch').value=''; drawer.hidden=false; drawThreadList(); }
+  function closeDrawer() { drawer.hidden=true; }
+  function drawThreadList() {
+    const q=$('a6ThreadSearch').value.trim().toLowerCase();
+    const list=$('a6ThreadList');list.replaceChildren();
+    const visible=[...threads].sort((a,b)=>b.updated-a.updated).filter(t=>t.title.toLowerCase().includes(q)||t.messages.some(m=>(m.content||'').toLowerCase().includes(q)));
+    if(!visible.length){const p=document.createElement('p');p.textContent='Ничего не найдено';list.append(p);return;}
+    for (const t of visible) {
+      const row=document.createElement('div');row.className='a6-thread-row'+(t.id===activeId?' selected':'');
+      const enter=document.createElement('button');enter.className='a6-thread-open';enter.type='button';
+      const name=document.createElement('strong');name.textContent=t.title;
+      const date=document.createElement('small');date.textContent=new Date(t.updated).toLocaleDateString('ru-RU');
+      enter.append(name,date);enter.onclick=()=>selectThread(t.id);
+      const remove=document.createElement('button');remove.type='button';remove.className='a6-thread-delete';remove.textContent='✕';remove.setAttribute('aria-label','Удалить диалог');
+      remove.onclick=async()=>{
+        if (!confirm('Удалить этот диалог?'))return;
+        await deleteThread(t.id);
+        if(!threads.length){const replacement=makeThread();threads.push(replacement);await saveThread(replacement);}
+        if (activeId===t.id) selectThread(threads[0].id); else drawThreadList();
+      };
+      row.append(enter,remove);list.append(row);
     }
-
-    chat.scrollTop = chat.scrollHeight;
   }
 
-  page.querySelector('#aiClear').onclick = () => {
-    if (!confirm('Удалить историю GPT-чата?')) {
-      return;
+  // Note commands operate on the same existing localStorage key and renderer as Aurora Notes.
+  function noteCommand(text) {
+    const cmd=text.match(/^(?:аврора[,! ]*)?(?:создай|добавь|запиши|сохрани|сделай)\s+(?:мне\s+)?заметк[уы](?:\s*[:—–-]\s*|\s+о\s+|\s+что\s+|\s+)([\s\S]*)$/i);
+    if(cmd) {
+      const content=(cmd[1]||'').trim();
+      if(!content) return 'Что записать в заметку? Напиши: «Создай заметку: купить продукты». ';
+      const notes = typeof auroraNotesGet === 'function' ? auroraNotesGet() : [];
+      const title=content.slice(0,70);
+      notes.push({id:uuid(),title,text:content,updated:Date.now()});
+      try {
+        localStorage.setItem('aurora_notes_v1', JSON.stringify(notes));
+        if(typeof auroraNotesRender==='function')auroraNotesRender();
+        return `Я сохранила заметку «${title}» в разделе «Заметки» 💜`;
+      } catch { return 'Не получилось сохранить заметку: закончилось место в памяти устройства.'; }
     }
+    if (/^(?:аврора[,! ]*)?(?:покажи|открой|перечисли)\s+(?:мои\s+)?заметки\s*$/i.test(text)) {
+      const n=typeof auroraNotesGet==='function'?auroraNotesGet():[];
+      return n.length ? 'Твои последние заметки:\n'+n.slice(-8).reverse().map(x=>'• '+(x.title||x.text||'Без названия')).join('\n') : 'Пока нет заметок. Можем создать первую!';
+    }
+    const search=text.match(/^(?:аврора[,! ]*)?(?:найди|поищи)\s+заметк[уы]\s+(?:про|о|с\s+текстом)?\s*(.+)$/i);
+    if(search){const query=search[1].toLowerCase().trim(); const found=(typeof auroraNotesGet==='function'?auroraNotesGet():[]).filter(n=>((n.title||'')+' '+(n.text||'')).toLowerCase().includes(query)).slice(-5);return found.length?'Нашла заметки:\n'+found.map(n=>'• '+(n.title||'Без названия')+': '+(n.text||'').slice(0,160)).join('\n'):'Не нашла заметок по запросу «'+query+'».';}
+    return null;
+  }
 
-    history = [];
-    persist();
-    draw();
+  function imageToDataURL(file) {
+    return new Promise((resolve,reject)=>{
+      if (!file || file.size > 8 * 1024 * 1024) return reject(new Error('Фото должно быть меньше 8 МБ'));
+      const src=URL.createObjectURL(file); const img=new Image();
+      img.onload=()=>{
+        const scale=Math.min(1,1024/Math.max(img.width,img.height));
+        const c=document.createElement('canvas');c.width=Math.max(1,Math.round(img.width*scale));c.height=Math.max(1,Math.round(img.height*scale));
+        c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+        URL.revokeObjectURL(src);
+        try {const data=c.toDataURL('image/jpeg',0.76);if(data.length>1150000)reject(new Error('Слишком большое фото'));else resolve(data);}catch(e){reject(e);}
+      };
+      img.onerror=()=>{URL.revokeObjectURL(src);reject(new Error('Этот формат фото не поддерживается'));};img.src=src;
+    });
+  }
+  imagePicker.onchange=async()=>{
+    const file=imagePicker.files?.[0];imagePicker.value='';if(!file)return;
+    try{pendingImage=await imageToDataURL(file);showSelected();setStatus('Фото прикреплено — отправь вопрос');}
+    catch(e){setStatus(e.message);}
   };
 
-  page.querySelector('#aiForm').onsubmit =
-    async (event) => {
-      event.preventDefault();
-
-      const text = input.value.trim();
-      if (!text || send.disabled) return;
-
-      if (!tg?.initData) {
-        status.textContent =
-          'Открой Аврору внутри Telegram.';
-        return;
-      }
-
-      if (API_URL.includes('YOUR-WORKER')) {
-        status.textContent =
-          'Нужно подключить сервер AI.';
-        return;
-      }
-
-      history.push({
-        role:'user',
-        content:text
-      });
-
-      persist();
-      draw();
-      input.value = '';
-      send.disabled = true;
-      status.textContent = 'ИИ печатает…';
-
-      try {
-        const response = await fetch(API_URL, {
-          method:'POST',
-          headers:{
-            'Content-Type':'application/json'
-          },
-          body:JSON.stringify({
-            initData:tg.initData,
-            messages:history.slice(-10)
-          })
+  async function submitMessage(event) {
+    event.preventDefault();if(busy) return;
+    const text=input.value.trim();const image=pendingImage;
+    if(!text && !image) return;
+    if(!tgApp?.initData){setStatus('Для ИИ открой Аврору через Telegram');return;}
+    const t=current();if(!t)return;
+    const msg={role:'user',content:text||(image?'Что изображено на этой фотографии?':''),...(image?{image}:{})};
+    t.messages.push(msg);
+    if(t.title==='Новый чат')t.title=(text || 'Фотография').slice(0,39);
+    input.value='';pendingImage=null;showSelected();render();await saveThread(t);
+    busy=true;send.disabled=true;voiceButton.disabled=true;setStatus('Аврора думает…');
+    try {
+      // Do not pretend a language-model response executed any local operation.
+      const localAction = !image ? noteCommand(text) : null;
+      let reply;
+      if(localAction!==null){reply=localAction;}
+      else{
+        const history=t.messages.slice(-10).map((m,i,a)=>({role:m.role,content:m.content,...(i===a.length-1 && m.image?{image:m.image}:{})}));
+        const response=await fetch(API_URL+'/chat',{
+          method:'POST',headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({initData:tgApp.initData,messages:history})
         });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(
-            data.error || 'Ошибка сервера'
-          );
-        }
-
-        history.push({
-          role:'assistant',
-          content:data.answer
-        });
-
-        persist();
-        draw();
-
-        status.textContent = 'Готов к общению';
-
-      } catch (error) {
-        status.textContent =
-          'Ошибка: ' + error.message;
-      } finally {
-        send.disabled = false;
+        const data=await response.json().catch(()=>({}));
+        if(!response.ok)throw new Error(data.error||'Не удалось получить ответ');
+        reply=String(data.answer || '').trim();
+        if(!reply)throw new Error('Яндекс не вернул ответ');
       }
-    };
+      t.messages.push({role:'assistant',content:reply}); await saveThread(t);
+      if(current()?.id===t.id)render();setStatus('Я рядом 💜');
+    }catch(e){setStatus('Ошибка: '+e.message);}
+    finally{busy=false;send.disabled=false;voiceButton.disabled=false;}
+  }
 
-  draw();
+  // Browser audio is captured as mono PCM16 at 16 kHz for SpeechKit v1.
+  function pcm16(samples,sampleRate){
+    const factor=sampleRate/16000;const count=Math.floor(samples.length/factor);
+    const output=new Uint8Array(count*2);const view=new DataView(output.buffer);
+    for(let i=0;i<count;i++){
+      const at=i*factor;const j=Math.floor(at);const frac=at-j;
+      const v=(samples[j]||0)*(1-frac)+(samples[j+1]||0)*frac;
+      const a=Math.max(-1,Math.min(1,v));view.setInt16(i*2,a<0?a*0x8000:a*0x7fff,true);
+    }
+    return output;
+  }
+  function base64FromBytes(bytes){
+    let str='';const chunk=8192;
+    for(let i=0;i<bytes.length;i+=chunk)str+=String.fromCharCode(...bytes.subarray(i,i+chunk));
+    return btoa(str);
+  }
+  async function startVoice(){
+    if(!navigator.mediaDevices?.getUserMedia || !(window.AudioContext||window.webkitAudioContext))throw new Error('Микрофон недоступен в этом браузере');
+    const stream=await navigator.mediaDevices.getUserMedia({audio:{channelCount:1,echoCancellation:true},video:false});
+    let ctx,node,source,gain;
+    try{
+      const AC=window.AudioContext||window.webkitAudioContext;
+      ctx=new AC();await ctx.resume();source=ctx.createMediaStreamSource(stream);
+      node=ctx.createScriptProcessor(4096,1,1);gain=ctx.createGain();gain.gain.value=0;
+      const chunks=[];let samplesCount=0;const maxSamples=Math.floor(ctx.sampleRate*20);
+      node.onaudioprocess=e=>{
+        const data=e.inputBuffer.getChannelData(0);
+        if(samplesCount>=maxSamples)return;
+        const copy=data.slice(0,Math.min(data.length,maxSamples-samplesCount));chunks.push(copy);samplesCount+=copy.length;
+        if(samplesCount>=maxSamples)stopVoice();
+      };
+      source.connect(node);node.connect(gain);gain.connect(ctx.destination);
+      recording={stream,ctx,node,source,gain,chunks,get count(){return samplesCount;},rate:ctx.sampleRate,started:Date.now()};
+      voiceButton.classList.add('recording');voiceButton.textContent='■';setStatus('Запись голоса… нажми ещё раз для отправки (до 20 сек)');
+    }catch(e){stream.getTracks().forEach(t=>t.stop());if(ctx)await ctx.close();throw e;}
+  }
+  async function stopVoice(){
+    const rec=recording;if(!rec)return;
+    recording=null;voiceButton.classList.remove('recording');voiceButton.textContent='🎙';
+    rec.node.onaudioprocess=null;rec.node.disconnect();rec.source.disconnect();rec.gain.disconnect();rec.stream.getTracks().forEach(t=>t.stop());await rec.ctx.close();
+    if(rec.count<rec.rate*0.35){setStatus('Слишком короткое голосовое');return;}
+    const floats=new Float32Array(rec.count);let at=0;rec.chunks.forEach(a=>{floats.set(a,at);at+=a.length;});
+    const bytes=pcm16(floats,rec.rate);
+    if(bytes.length>720000){setStatus('Слишком длинное голосовое');return;}
+    voiceButton.disabled=true;setStatus('Распознаю голос…');
+    try{
+      if(!tgApp?.initData)throw new Error('Открой Аврору через Telegram');
+      const response=await fetch(API_URL+'/transcribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({initData:tgApp.initData,audio:base64FromBytes(bytes)})});
+      const data=await response.json().catch(()=>({}));if(!response.ok)throw new Error(data.error||'Не удалось распознать голос');
+      const speech=String(data.text||'').trim();if(!speech)throw new Error('Речь не распознана');
+      input.value=[input.value.trim(),speech].filter(Boolean).join(' ');input.focus();setStatus('Голос преобразован в текст — нажми отправить');
+    }catch(e){setStatus('Ошибка голоса: '+e.message);}finally{voiceButton.disabled=false;}
+  }
+  voiceButton.onclick=async()=>{
+    if(busy)return;
+    if(recording){await stopVoice();return;}
+    try{await startVoice();}catch(e){setStatus('Не удалось включить микрофон: '+e.message);}
+  };
+
+  function updateViewport(){
+    const vp=window.visualViewport;
+    document.documentElement.style.setProperty('--a6-height',Math.round(vp?.height||innerHeight)+'px');
+    document.documentElement.style.setProperty('--a6-top',Math.round(vp?.offsetTop||0)+'px');
+  }
+  input.addEventListener('focus',()=>{document.body.classList.add('aurora-typing');updateViewport();scrollBottom();setTimeout(()=>{updateViewport();scrollBottom();},240);});
+  input.addEventListener('blur',()=>setTimeout(()=>{if(document.activeElement!==input)document.body.classList.remove('aurora-typing');},120));
+  window.visualViewport?.addEventListener('resize',()=>{updateViewport();scrollBottom();});
+  window.visualViewport?.addEventListener('scroll',updateViewport);
+  window.addEventListener('resize',updateViewport);
+  updateViewport();
+
+  // Hook navigation while leaving all original gallery/notes/finance pages intact.
+  const previousOpenPage=window.openPage;
+  window.openPage=function(pageName,...args){
+    previousOpenPage?.call(this,pageName,...args);
+    page.classList.toggle('hidden',pageName!=='auroraAi');
+    document.body.classList.toggle('aurora-chat-page',pageName==='auroraAi');
+    if(pageName!=='auroraAi'){input.blur();document.body.classList.remove('aurora-typing');}
+    if(pageName==='auroraAi')scrollBottom();
+  };
+  tile.onclick=()=>window.openPage('auroraAi');
+  $('aiThreadsButton').onclick=openDrawer;
+  $('aiNewThread').onclick=newThread;
+  $('aiClear').onclick=newThread;
+  $('a6NewInDrawer').onclick=async()=>{await newThread();closeDrawer();};
+  $('a6CloseDrawer').onclick=closeDrawer;
+  drawer.querySelector('.a6-backdrop').onclick=closeDrawer;
+  $('a6ThreadSearch').oninput=drawThreadList;
+  $('aiAttachImage').onclick=()=>imagePicker.click();
+  $('aiForm').onsubmit=submitMessage;
+  window.openPage('auroraAi');
+  initStorage();
 })();
 </script>
   
@@ -5513,279 +5653,110 @@ body>nav button.active .aurora-nav-icon{
 }
 </style>
   
-<!-- AURORA 5.0 — MOBILE CHAT -->
-<style id="aurora-chat-v5">
 
-#auroraAi .ai-messages{
-  flex:1 1 auto!important;
-  min-height:0!important;
-  overflow-y:auto!important;
-  overflow-x:hidden!important;
-  -webkit-overflow-scrolling:touch;
-  overscroll-behavior:contain;
-  padding-bottom:20px!important;
+
+<!-- AURORA 6 FINAL CHAT STYLES -->
+<style id="aurora-v6-styles">
+/* AURORA 6 — conversational full screen, same pink/lilac/blue palette */
+:root { --a6-violet:#342650; --a6-cream:#fff9ff; --a6-gradient:linear-gradient(130deg,#ffdbed,#ddccff 52%,#b6dfff); }
+body.aurora-chat-page { overflow:hidden!important; }
+body.aurora-chat-page > header { display:none!important; }
+body.aurora-chat-page > main { padding:0!important; max-width:none!important; margin:0!important; }
+body.aurora-chat-page #auroraAi {
+  position:fixed!important; top:var(--a6-top,0px)!important; left:0!important; right:0!important;
+  width:100%!important; max-width:none!important;
+  height:calc(var(--a6-height,100dvh) - 76px)!important; max-height:none!important; min-height:0!important;
+  display:flex!important; flex-direction:column!important;
+  gap:0!important; padding:0!important; margin:0!important;
+  background:linear-gradient(156deg,#c48fdb 0%,#9b8be2 55%,#8fbef4 100%)!important;
+  z-index:60!important; overflow:hidden!important;
 }
-
-#auroraAi .ai-compose{
-  flex-shrink:0!important;
-  display:flex!important;
-  align-items:flex-end!important;
-  gap:9px!important;
+body.aurora-chat-page #auroraAi.hidden { display:none!important; }
+body.aurora-chat-page #auroraAi .a2-toolbar,
+body.aurora-chat-page #auroraAi > h1,
+body.aurora-chat-page #auroraAi > .sub,
+body.aurora-chat-page #auroraAi #aiBack { display:none!important; }
+body.aurora-chat-page #auroraAi .a6-head {
+  flex:0 0 auto!important; min-height:62px; padding:10px 15px 9px;
+  display:flex; justify-content:space-between; align-items:center; gap:10px;
+  border-bottom:1px solid #ffffff5a; background:#ffffff20; backdrop-filter:blur(13px);
 }
-
-#auroraAi #aiInput{
-  min-width:0!important;
-  flex:1 1 auto!important;
-  font-size:16px!important;
-  height:50px!important;
-  min-height:50px!important;
-  max-height:90px!important;
-  padding:12px 15px!important;
-  border-radius:16px!important;
-  box-sizing:border-box!important;
-  resize:none!important;
+#auroraAi .a6-identity { display:flex;gap:10px;align-items:center;min-width:0;color:white; }
+#auroraAi .a6-identity img { width:39px;height:39px;border-radius:13px;border:1px solid #ffffff99;object-fit:cover; }
+#auroraAi .a6-identity span { display:flex;flex-direction:column;gap:2px; }
+#auroraAi .a6-identity strong { font-size:17px;font-weight:900; }
+#auroraAi .a6-identity small { font-size:11px;color:#f9e8ff; }
+#auroraAi button.a6-head-action { width:40px;height:40px;display:grid;place-items:center;border-radius:14px;border:1px solid #ffffff6e;background:#ffffff24;color:white;font-size:24px;flex-shrink:0;padding:0; }
+body.aurora-chat-page #auroraAi .ai-panel {
+  flex:1 1 auto!important;display:flex!important;flex-direction:column!important;min-height:0!important;
+  height:auto!important;max-height:none!important;max-width:none!important;
+  margin:0!important;padding:10px 11px 10px!important;
+  overflow:hidden!important;background:transparent!important;box-shadow:none!important;
+  border:0!important;border-radius:0!important;backdrop-filter:none!important;
 }
-
-#auroraAi #aiSend{
-  width:50px!important;
-  min-width:50px!important;
-  height:50px!important;
-  flex:0 0 50px!important;
-  border-radius:16px!important;
+body.aurora-chat-page #auroraAi .ai-top { min-height:30px!important; margin:0 0 2px!important; padding:0 3px; flex:0 0 auto; }
+body.aurora-chat-page #auroraAi .ai-top strong { font-size:12px!important; font-weight:800; color:#fff!important;opacity:.9; }
+body.aurora-chat-page #auroraAi .ai-top strong::before { display:none!important; }
+body.aurora-chat-page #auroraAi #aiClear { padding:7px 10px!important;border-radius:12px!important;font-size:11px!important;min-height:29px; }
+body.aurora-chat-page #auroraAi .ai-messages {
+  flex:1 1 auto!important;display:flex;flex-direction:column;min-height:0!important;
+  max-height:none!important;height:auto!important; overflow:auto!important;overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch; padding:12px 1px 17px!important; gap:12px!important;
 }
+#auroraAi .a6-msg-row { width:100%; display:flex; align-items:flex-end; gap:8px; flex-shrink:0; }
+#auroraAi .a6-msg-row.mine {justify-content:flex-end;}
+#auroraAi .a6-msg-row.theirs {justify-content:flex-start;}
+#auroraAi .a6-msg-avatar {width:29px;height:29px;border-radius:11px;border:1px solid #ffffff8c;flex:0 0 29px;object-fit:cover;}
+#auroraAi .a6-msg-row .ai-msg {width:fit-content!important;max-width:min(85%,650px)!important;margin:0!important;padding:12px 15px!important;border-radius:20px!important;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.45!important;font-size:14px!important;}
+#auroraAi .a6-msg-row .ai-msg.bot {background:#443468eb!important;border:1px solid #ffffff4c!important;color:white!important;border-bottom-left-radius:5px!important;}
+#auroraAi .a6-msg-row .ai-msg.user {background:var(--a6-gradient)!important;color:var(--a6-violet)!important;border:0!important;border-bottom-right-radius:5px!important;}
+#auroraAi .a6-msg-row .ai-msg::before {display:none!important;}
+#auroraAi .a6-sent-photo { display:block;width:100%;max-width:240px;border-radius:13px;margin-bottom:8px;object-fit:cover; }
+#auroraAi .a6-welcome {margin:auto auto 28px;text-align:center;display:flex;flex-direction:column;gap:10px;align-items:center;padding:22px;color:white;max-width:340px;}
+#auroraAi .a6-welcome img {width:90px;height:90px;border-radius:27px;border:2px solid #ffffff94;box-shadow:0 14px 40px #4b246e50;}
+#auroraAi .a6-welcome strong {font-size:23px;}
+#auroraAi .a6-welcome p {font-size:14px;line-height:1.5;margin:0;color:#fff3fc;}
+#auroraAi .a6-selected[hidden] {display:none!important;}
+#auroraAi .a6-selected {display:flex;flex:0 0 auto;align-items:center;gap:9px;padding:8px;margin:0 2px 8px;background:#45336cad;border:1px solid #ffffff66;color:white;border-radius:16px;font-size:12px;}
+#auroraAi .a6-selected img {width:47px;height:47px;object-fit:cover;border-radius:9px;}
+#auroraAi .a6-selected span {flex:1;}
+#auroraAi .a6-selected button {border:none;background:none;color:white;font-size:20px;}
+body.aurora-chat-page #auroraAi .ai-compose {display:flex!important;align-items:flex-end!important;gap:7px!important;min-height:48px;margin:0!important;flex:0 0 auto!important;}
+body.aurora-chat-page #auroraAi #aiInput { height:48px!important;min-height:48px!important;max-height:90px!important;flex:1 1 auto!important;width:100%!important;min-width:0!important;padding:12px 12px!important;font-size:16px!important;line-height:24px!important;border-radius:16px!important;background:var(--a6-cream)!important;resize:none!important; }
+body.aurora-chat-page #auroraAi #aiSend {flex:0 0 46px!important;width:46px!important;min-width:46px!important;height:46px!important;padding:0!important;border-radius:16px!important;background:var(--a6-gradient)!important;color:#392954!important;font-size:22px;}
+#auroraAi .a6-attach {border:1px solid #ffffff70!important;border-radius:15px!important;background:#ffffff35!important;color:white!important;padding:0!important;width:40px!important;min-width:40px!important;height:46px!important;flex:0 0 40px;display:grid;place-items:center;font-size:22px;}
+#auroraAi .a6-attach.recording {background:#fb6489!important;animation:a6-pulse 1.2s infinite;}
+#auroraAi .a6-attach:disabled {opacity:.4;}
+@keyframes a6-pulse{50%{box-shadow:0 0 0 7px #fff3}}
+body.aurora-chat-page #auroraAi .ai-status {font-size:11px!important;line-height:1.3;margin:7px 4px 0!important;color:#ffffffeb!important;min-height:14px;flex:0 0 auto;}
+body.aurora-chat-page>nav {z-index:110!important;}
+body.aurora-chat-page.aurora-typing>nav {display:none!important;}
+body.aurora-chat-page.aurora-typing #auroraAi {height:var(--a6-height,100dvh)!important;}
+body.aurora-chat-page.aurora-typing #auroraAi .a6-head {min-height:48px;padding:4px 12px;}
+body.aurora-chat-page.aurora-typing #auroraAi .ai-top {display:none!important;}
+body.aurora-chat-page.aurora-typing #auroraAi .ai-panel {padding:5px 8px 7px!important;}
+@media(max-width:370px){body.aurora-chat-page #auroraAi .ai-compose{gap:5px!important;}#auroraAi .a6-attach{width:34px!important;min-width:34px!important;flex-basis:34px;font-size:19px;}body.aurora-chat-page #auroraAi #aiSend{width:40px!important;min-width:40px!important;flex-basis:40px!important;}}
 
-#auroraAi #aiInput:focus{
-  outline:none!important;
-  box-shadow:0 0 0 2px
-    rgba(255,216,244,.5)!important;
-}
-
-/* Компактный чат при открытой клавиатуре */
-
-@media(max-width:700px){
-
-  body.aurora-typing{
-    overscroll-behavior:none!important;
-  }
-
-  body.aurora-typing>header,
-  body.aurora-typing>nav{
-    display:none!important;
-  }
-
-  body.aurora-typing #auroraAi{
-    position:fixed!important;
-    top:var(
-      --aurora-visible-top,0px
-    )!important;
-    left:0!important;
-    right:0!important;
-    bottom:auto!important;
-    width:100%!important;
-    max-width:none!important;
-    height:var(
-      --aurora-visible-height,100dvh
-    )!important;
-    max-height:none!important;
-    min-height:0!important;
-    display:flex!important;
-    flex-direction:column!important;
-    z-index:9999!important;
-    margin:0!important;
-    padding:8px 11px 10px!important;
-    box-sizing:border-box!important;
-    background:linear-gradient(
-      150deg,
-      #cf96d9,
-      #a38cdd 60%,
-      #90bdf5
-    )!important;
-  }
-
-  body.aurora-typing
-  #auroraAi .a2-toolbar,
-
-  body.aurora-typing
-  #auroraAi>h1,
-
-  body.aurora-typing
-  #auroraAi>.sub{
-    display:none!important;
-  }
-
-  body.aurora-typing
-  #auroraAi .ai-panel{
-    flex:1 1 auto!important;
-    display:flex!important;
-    flex-direction:column!important;
-    height:100%!important;
-    max-height:none!important;
-    min-height:0!important;
-    padding:12px!important;
-    overflow:hidden!important;
-    border-radius:21px!important;
-  }
-
-  body.aurora-typing
-  #auroraAi .ai-top{
-    flex-shrink:0!important;
-    margin-bottom:4px!important;
-  }
-
-  body.aurora-typing
-  #auroraAi .ai-messages{
-    flex:1 1 auto!important;
-    min-height:0!important;
-    max-height:none!important;
-    overflow-y:auto!important;
-  }
-
-  body.aurora-typing
-  #auroraAi .ai-status,
-
-  body.aurora-typing
-  #auroraAi #aiClear{
-    display:none!important;
-  }
-
-  body.aurora-typing
-  #auroraAi .ai-compose{
-    flex-shrink:0!important;
-    margin-top:7px!important;
-  }
-}
-
+/* Chat history drawer, with accessible search and deletion. */
+#auroraThreadsDrawer {display:block;}
+#auroraThreadsDrawer[hidden] {display:none!important;}
+#auroraThreadsDrawer {position:fixed;inset:0;z-index:100001;}
+#auroraThreadsDrawer .a6-backdrop {position:absolute;inset:0;background:#211534aa;backdrop-filter:blur(7px);}
+#auroraThreadsDrawer .a6-drawer-content {position:absolute;top:0;bottom:0;left:0;width:min(340px,88vw);display:flex;flex-direction:column;gap:13px;padding:22px 15px calc(15px + env(safe-area-inset-bottom));background:linear-gradient(160deg,#4c356e,#302352 80%);box-shadow:12px 0 40px #210f3880;color:white;overflow:hidden;}
+#auroraThreadsDrawer button {font:inherit;}
+#auroraThreadsDrawer .a6-drawer-title {display:flex;align-items:center;justify-content:space-between;gap:9px;font-size:21px;}
+#auroraThreadsDrawer .a6-drawer-title button {background:#ffffff23;color:white;border:0;border-radius:12px;width:35px;height:35px;font-size:17px;}
+#auroraThreadsDrawer .a6-create {padding:13px;border:0;border-radius:15px;background:var(--a6-gradient);color:#33214f;font-weight:900;}
+#auroraThreadsDrawer #a6ThreadSearch {background:#fff9ff!important;color:#33214f!important;border:0!important;padding:13px;border-radius:15px!important;width:100%!important;min-height:44px;font-size:16px;}
+#auroraThreadsDrawer .a6-thread-list {flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:8px;min-height:0;}
+#auroraThreadsDrawer .a6-thread-row {display:flex;gap:3px;align-items:center;border:1px solid #ffffff24;border-radius:14px;background:#ffffff0e;}
+#auroraThreadsDrawer .a6-thread-row.selected {background:#ffffff28;border-color:#ffddf1a0;}
+#auroraThreadsDrawer .a6-thread-open {border:0;background:transparent;color:white;padding:12px;text-align:left;min-width:0;flex:1;display:flex;flex-direction:column;gap:6px;}
+#auroraThreadsDrawer .a6-thread-open strong {font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%;}
+#auroraThreadsDrawer .a6-thread-open small {font-size:10px;color:#ddd3ed;}
+#auroraThreadsDrawer .a6-thread-delete {background:none;border:0;color:#f2d6f3;font-size:19px;padding:12px;}
+#auroraThreadsDrawer .a6-drawer-foot {font-size:11px;color:#d5c8e4;margin:0;}
 </style>
-
-<script id="aurora-chat-v5-logic">
-(() => {
-
-  if(window.__auroraChatV5) return;
-
-  const input =
-    document.getElementById('aiInput');
-
-  const messages =
-    document.querySelector(
-      '#auroraAi .ai-messages'
-    );
-
-  if(!input || !messages) return;
-
-  window.__auroraChatV5 = true;
-
-  // Аврора вместо стороннего AI-помощника
-
-  const title =
-    document.querySelector(
-      '#auroraAi .ai-top strong'
-    );
-
-  if(title){
-    title.textContent='Аврора';
-  }
-
-  const subtitle =
-    document.querySelector(
-      '#auroraAi > .sub'
-    );
-
-  if(subtitle){
-    subtitle.textContent =
-      'Я рядом. Расскажи, что у тебя на уме ✨';
-  }
-
-  input.placeholder='Напиши Авроре...';
-
-  // Высота видимой части экрана iPhone
-
-  const viewport=window.visualViewport;
-  const root=document.documentElement;
-
-  const updateViewport=()=>{
-
-    const h=viewport
-      ? viewport.height
-      : window.innerHeight;
-
-    const top=viewport
-      ? viewport.offsetTop
-      : 0;
-
-    root.style.setProperty(
-      '--aurora-visible-height',
-      `${Math.max(160,h)}px`
-    );
-
-    root.style.setProperty(
-      '--aurora-visible-top',
-      `${Math.max(0,top)}px`
-    );
-  };
-
-  const toBottom=()=>{
-    messages.scrollTop=messages.scrollHeight;
-  };
-
-  const onFocus=()=>{
-
-    document.body.classList.add(
-      'aurora-typing'
-    );
-
-    updateViewport();
-
-    requestAnimationFrame(toBottom);
-
-    setTimeout(()=>{
-      updateViewport();
-      toBottom();
-    },250);
-  };
-
-  input.addEventListener('focus',onFocus);
-
-  input.addEventListener('blur',()=>{
-
-    setTimeout(()=>{
-
-      if(document.activeElement!==input){
-        document.body.classList.remove(
-          'aurora-typing'
-        );
-      }
-
-    },100);
-
-  });
-
-  if(viewport){
-
-    viewport.addEventListener('resize',()=>{
-
-      updateViewport();
-
-      if(document.activeElement===input){
-        requestAnimationFrame(toBottom);
-      }
-
-    });
-
-    viewport.addEventListener(
-      'scroll',
-      updateViewport
-    );
-  }
-
-  window.addEventListener(
-    'resize',
-    updateViewport
-  );
-
-  updateViewport();
-
-})();
-</script>
 </body>
 </html>
   
