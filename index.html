@@ -3029,6 +3029,340 @@ function auroraConfirmNoteDelete() {
   padding-bottom: 110px;
 }
 </style>
+  
+<!-- AURORA_AI_CHAT_V1 -->
+<style>
+#auroraAi.hidden{display:none!important}
+#auroraAi{
+  max-width:640px;
+  margin:0 auto;
+  padding-bottom:110px
+}
+#auroraAi *{box-sizing:border-box}
+#auroraAi .ai-panel{
+  background:rgba(39,29,77,.76);
+  border:1px solid #ffffff44;
+  border-radius:24px;
+  padding:16px;
+  box-shadow:0 14px 28px #2b205033
+}
+#auroraAi .ai-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:14px
+}
+#auroraAi .ai-top strong{font-size:18px}
+#auroraAi .ai-clear{
+  border:1px solid #ffffff55;
+  border-radius:12px;
+  background:#ffffff25;
+  color:white;
+  padding:9px 11px;
+  font-size:13px
+}
+#auroraAi .ai-messages{
+  height:min(47vh,440px);
+  min-height:230px;
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  padding:8px 1px 16px
+}
+#auroraAi .ai-msg{
+  max-width:90%;
+  padding:12px 15px;
+  border-radius:18px;
+  line-height:1.48;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  font-size:15px
+}
+#auroraAi .ai-msg.bot{
+  align-self:flex-start;
+  background:#ffffff26;
+  color:#fff;
+  border-bottom-left-radius:5px
+}
+#auroraAi .ai-msg.user{
+  align-self:flex-end;
+  background:linear-gradient(
+    110deg,#ffd4eb,#c1d4ff
+  );
+  color:#332750;
+  border-bottom-right-radius:5px
+}
+#auroraAi .ai-compose{
+  display:flex;
+  gap:9px;
+  margin-top:14px;
+  align-items:flex-end
+}
+#auroraAi textarea{
+  width:100%;
+  min-width:0;
+  resize:none;
+  max-height:100px;
+  min-height:49px;
+  padding:12px;
+  border-radius:15px;
+  border:0;
+  background:#fff;
+  color:#34254e;
+  font-size:16px;
+  font-family:inherit
+}
+#auroraAi .ai-send{
+  flex-shrink:0;
+  min-width:51px;
+  height:49px;
+  border:0;
+  border-radius:15px;
+  background:linear-gradient(
+    110deg,#ffd4eb,#a8d7ff
+  );
+  color:#392a59;
+  font-size:23px;
+  font-weight:900
+}
+#auroraAi .ai-send:disabled{opacity:.55}
+#auroraAi .ai-status{
+  font-size:12px;
+  color:#f2ddfa;
+  margin:10px 0 0
+}
+</style>
+
+<script>
+(() => {
+  if (document.getElementById('auroraAi')) return;
+
+  const cards = document.querySelector('#home .cards');
+  const main = document.querySelector('main');
+  if (!cards || !main) return;
+
+  const API_URL =
+    'https://YOUR-WORKER.workers.dev/chat';
+
+  const tile = document.createElement('button');
+  tile.type = 'button';
+  tile.className = 'card';
+  tile.innerHTML = `
+    <span class="aurora-icon"
+      aria-hidden="true">✦</span>
+    <strong>GPT-чат</strong>
+    <small>Твой AI-помощник</small>
+  `;
+  cards.appendChild(tile);
+
+  const page = document.createElement('section');
+  page.id = 'auroraAi';
+  page.className = 'hidden';
+
+  page.innerHTML = `
+    <button class="back" id="aiBack"
+      type="button">← На главную</button>
+    <h1>AI-помощник ✦</h1>
+    <p class="sub">
+      Задавай вопросы, придумывай идеи и учись
+    </p>
+
+    <div class="ai-panel">
+      <div class="ai-top">
+        <strong>Диалог</strong>
+        <button type="button" class="ai-clear"
+          id="aiClear">Очистить</button>
+      </div>
+
+      <div class="ai-messages"
+        id="aiMessages" aria-live="polite"></div>
+
+      <form class="ai-compose" id="aiForm">
+        <textarea id="aiInput" rows="2"
+          maxlength="1500"
+          placeholder="Напиши сообщение..."
+          required></textarea>
+
+        <button type="submit" class="ai-send"
+          id="aiSend"
+          aria-label="Отправить">➤</button>
+      </form>
+
+      <p class="ai-status" id="aiStatus">
+        Готов к общению
+      </p>
+    </div>
+  `;
+
+  main.appendChild(page);
+
+  const oldOpenPage = window.openPage;
+
+  window.openPage = function(id) {
+    if (typeof oldOpenPage === 'function') {
+      oldOpenPage(id);
+    }
+
+    page.classList.toggle(
+      'hidden', id !== 'auroraAi'
+    );
+  };
+
+  tile.onclick = () => window.openPage('auroraAi');
+
+  page.querySelector('#aiBack').onclick =
+    () => window.openPage('home');
+
+  const tg = window.Telegram?.WebApp;
+  const localId =
+    tg?.initDataUnsafe?.user?.id || 'browser';
+
+  const storageKey =
+    'aurora_ai_history_' + localId;
+
+  const chat = page.querySelector('#aiMessages');
+  const input = page.querySelector('#aiInput');
+  const send = page.querySelector('#aiSend');
+  const status = page.querySelector('#aiStatus');
+
+  let history = [];
+
+  try {
+    const saved = JSON.parse(
+      localStorage.getItem(storageKey) || '[]'
+    );
+
+    if (Array.isArray(saved)) {
+      history = saved.slice(-30);
+    }
+  } catch (_) {}
+
+  function persist() {
+    try {
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify(history.slice(-30))
+      );
+    } catch (_) {
+      status.textContent =
+        'История не сохранилась на устройстве';
+    }
+  }
+
+  function draw() {
+    chat.replaceChildren();
+
+    if (!history.length) {
+      const intro = document.createElement('div');
+      intro.className = 'ai-msg bot';
+      intro.textContent =
+        'Привет! Я помощник Авроры. ' +
+        'Чем могу помочь? ✨';
+      chat.appendChild(intro);
+    }
+
+    for (const message of history) {
+      if (
+        !['user','assistant'].includes(message.role) ||
+        typeof message.content !== 'string'
+      ) continue;
+
+      const bubble = document.createElement('div');
+
+      bubble.className =
+        'ai-msg ' +
+        (message.role === 'user' ? 'user' : 'bot');
+
+      bubble.textContent = message.content;
+      chat.appendChild(bubble);
+    }
+
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  page.querySelector('#aiClear').onclick = () => {
+    if (!confirm('Удалить историю GPT-чата?')) {
+      return;
+    }
+
+    history = [];
+    persist();
+    draw();
+  };
+
+  page.querySelector('#aiForm').onsubmit =
+    async (event) => {
+      event.preventDefault();
+
+      const text = input.value.trim();
+      if (!text || send.disabled) return;
+
+      if (!tg?.initData) {
+        status.textContent =
+          'Открой Аврору внутри Telegram.';
+        return;
+      }
+
+      if (API_URL.includes('YOUR-WORKER')) {
+        status.textContent =
+          'Нужно подключить сервер AI.';
+        return;
+      }
+
+      history.push({
+        role:'user',
+        content:text
+      });
+
+      persist();
+      draw();
+      input.value = '';
+      send.disabled = true;
+      status.textContent = 'ИИ печатает…';
+
+      try {
+        const response = await fetch(API_URL, {
+          method:'POST',
+          headers:{
+            'Content-Type':'application/json'
+          },
+          body:JSON.stringify({
+            initData:tg.initData,
+            messages:history.slice(-10)
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(
+            data.error || 'Ошибка сервера'
+          );
+        }
+
+        history.push({
+          role:'assistant',
+          content:data.answer
+        });
+
+        persist();
+        draw();
+
+        status.textContent = 'Готов к общению';
+
+      } catch (error) {
+        status.textContent =
+          'Ошибка: ' + error.message;
+      } finally {
+        send.disabled = false;
+      }
+    };
+
+  draw();
+})();
+</script>
 </body>
 </html>
   
