@@ -1723,6 +1723,401 @@ function auroraConfirmNoteDelete() {
   });
 }
 </script>
+  <style>
+
+#auroraCalculator.hidden {
+
+  display: none !important;
+
+}
+
+#auroraCalculator .calc-box {
+
+  margin-top: 22px;
+
+  padding: 18px;
+
+  border-radius: 26px;
+
+  background: rgba(37,28,73,.68);
+
+  border: 1px solid rgba(255,255,255,.28);
+
+  box-shadow: 0 14px 32px rgba(44,25,90,.2);
+
+}
+
+#auroraCalculator .calc-history {
+
+  height: 28px;
+
+  text-align: right;
+
+  color: #f6d6ff;
+
+  font-size: 16px;
+
+  overflow: hidden;
+
+}
+
+#auroraCalculator .calc-screen {
+
+  display: block;
+
+  width: 100%;
+
+  min-height: 78px;
+
+  padding: 9px 0 20px;
+
+  font-size: 42px;
+
+  font-weight: 900;
+
+  text-align: right;
+
+  color: white;
+
+  overflow-x: auto;
+
+  white-space: nowrap;
+
+}
+
+#auroraCalculator .calc-pad {
+
+  display: grid;
+
+  grid-template-columns: repeat(4,minmax(0,1fr));
+
+  gap: 10px;
+
+}
+
+#auroraCalculator .calc-pad button {
+
+  height: 64px;
+
+  padding: 0;
+
+  border-radius: 18px;
+
+  border: 1px solid rgba(255,255,255,.16);
+
+  background: rgba(255,255,255,.16);
+
+  color: white;
+
+  font-size: 23px;
+
+  font-weight: 800;
+
+}
+
+#auroraCalculator .calc-pad .tool {
+
+  background: rgba(255,255,255,.29);
+
+}
+
+#auroraCalculator .calc-pad .op {
+
+  background: #7961ba;
+
+}
+
+#auroraCalculator .calc-pad .equal {
+
+  background: linear-gradient(110deg,#ffd1e8,#b2d8ff);
+
+  color: #382b61;
+
+}
+
+#auroraCalculator .calc-pad button:active {
+
+  transform: scale(.94);
+
+}
+
+</style>
+
+<script>
+
+(() => {
+
+  const card = [...document.querySelectorAll('#home .card')]
+
+    .find(el =>
+
+      el.querySelector('strong')?.textContent.trim() === 'Мои дела'
+
+    );
+
+  if (!card || document.getElementById('auroraCalculator')) return;
+
+  card.querySelector('strong').textContent = 'Калькулятор';
+
+  card.querySelector('small').textContent = 'Быстрые вычисления';
+
+  card.querySelector('.aurora-icon').innerHTML =
+
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2M8 19h2M14 19h2"/></svg>';
+
+  const page = document.createElement('section');
+
+  page.id = 'auroraCalculator';
+
+  page.className = 'hidden';
+
+  page.innerHTML = `
+
+    <button type="button" class="back" id="calcBack">
+
+      ← На главную
+
+    </button>
+
+    <h1>Калькулятор</h1>
+
+    <p class="sub">Считай легко ✨</p>
+
+    <div class="calc-box">
+
+      <div class="calc-history" id="calcHistory"></div>
+
+      <output class="calc-screen" id="calcScreen">0</output>
+
+      <div class="calc-pad" id="calcPad"></div>
+
+    </div>`;
+
+  document.querySelector('main').appendChild(page);
+
+  const keys = [
+
+    'AC','±','%','÷',
+
+    '7','8','9','×',
+
+    '4','5','6','−',
+
+    '1','2','3','+',
+
+    '⌫','0','.','='
+
+  ];
+
+  const pad = page.querySelector('#calcPad');
+
+  keys.forEach(key => {
+
+    const button = document.createElement('button');
+
+    button.type = 'button';
+
+    button.textContent = key;
+
+    button.dataset.key = key;
+
+    button.className =
+
+      ['+','−','×','÷'].includes(key) ? 'op'
+
+      : key === '=' ? 'equal'
+
+      : ['AC','±','%','⌫'].includes(key) ? 'tool' : '';
+
+    pad.appendChild(button);
+
+  });
+
+  const previousOpenPage = window.openPage;
+
+  window.openPage = function(id) {
+
+    previousOpenPage(id);
+
+    page.classList.toggle('hidden', id !== 'auroraCalculator');
+
+  };
+
+  card.onclick = () => openPage('auroraCalculator');
+
+  page.querySelector('#calcBack').onclick =
+
+    () => openPage('home');
+
+  let value = '0';
+
+  let saved = null;
+
+  let operator = null;
+
+  let startNew = false;
+
+  const screen = page.querySelector('#calcScreen');
+
+  const history = page.querySelector('#calcHistory');
+
+  const isOperator = key =>
+
+    ['+','−','×','÷'].includes(key);
+
+  function compute(a, b, op) {
+
+    let result =
+
+      op === '+' ? a+b :
+
+      op === '−' ? a-b :
+
+      op === '×' ? a*b :
+
+      b === 0 ? NaN : a/b;
+
+    return Number.isFinite(result)
+
+      ? Number(result.toPrecision(12))
+
+      : null;
+
+  }
+
+  function render() {
+
+    screen.textContent = value;
+
+    history.textContent =
+
+      operator !== null ? saved+' '+operator : '';
+
+  }
+
+  pad.onclick = event => {
+
+    const button = event.target.closest('button');
+
+    if (!button) return;
+
+    const key = button.dataset.key;
+
+    if (key === 'AC') {
+
+      value='0';
+
+      saved=null;
+
+      operator=null;
+
+      startNew=false;
+
+    } else if (key === '⌫') {
+
+      value = startNew || value === 'Ошибка'
+
+        ? '0' : value.slice(0,-1) || '0';
+
+      if (value === '-') value='0';
+
+      startNew=false;
+
+    } else if (key === '±') {
+
+      if (value !== '0' && value !== 'Ошибка')
+
+        value = value.startsWith('-')
+
+          ? value.slice(1) : '-'+value;
+
+    } else if (key === '%') {
+
+      if (value !== 'Ошибка')
+
+        value = String(Number(value)/100);
+
+    } else if (key === '.') {
+
+      if (startNew || value === 'Ошибка') {
+
+        value='0.';
+
+        startNew=false;
+
+      } else if (!value.includes('.')) value+='.'
+
+    } else if (/^[0-9]$/.test(key)) {
+
+      if (startNew || value === 'Ошибка') {
+
+        value=key;
+
+        startNew=false;
+
+      } else if (value.replace(/[^0-9]/g,'').length < 13) {
+
+        value = value === '0' ? key : value+key;
+
+      }
+
+    } else if (isOperator(key)) {
+
+      if (value === 'Ошибка') return;
+
+      if (operator !== null && saved !== null && !startNew) {
+
+        const result=compute(saved,Number(value),operator);
+
+        if (result === null) {
+
+          value='Ошибка';
+
+          saved=null;
+
+          operator=null;
+
+          startNew=true;
+
+          render();
+
+          return;
+
+        }
+
+        value=String(result);
+
+      }
+
+      saved=Number(value);
+
+      operator=key;
+
+      startNew=true;
+
+    } else if (key === '=' && operator !== null && saved !== null) {
+
+      const result=compute(saved,Number(value),operator);
+
+      value=result === null ? 'Ошибка' : String(result);
+
+      saved=null;
+
+      operator=null;
+
+      startNew=true;
+
+    }
+
+    render();
+
+  };
+
+  render();
+
+})();
+
+</script>
 </body>
 </html>
   
