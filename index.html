@@ -5512,6 +5512,280 @@ body>nav button.active .aurora-nav-icon{
   }
 }
 </style>
+  
+<!-- AURORA 5.0 — MOBILE CHAT -->
+<style id="aurora-chat-v5">
+
+#auroraAi .ai-messages{
+  flex:1 1 auto!important;
+  min-height:0!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+  padding-bottom:20px!important;
+}
+
+#auroraAi .ai-compose{
+  flex-shrink:0!important;
+  display:flex!important;
+  align-items:flex-end!important;
+  gap:9px!important;
+}
+
+#auroraAi #aiInput{
+  min-width:0!important;
+  flex:1 1 auto!important;
+  font-size:16px!important;
+  height:50px!important;
+  min-height:50px!important;
+  max-height:90px!important;
+  padding:12px 15px!important;
+  border-radius:16px!important;
+  box-sizing:border-box!important;
+  resize:none!important;
+}
+
+#auroraAi #aiSend{
+  width:50px!important;
+  min-width:50px!important;
+  height:50px!important;
+  flex:0 0 50px!important;
+  border-radius:16px!important;
+}
+
+#auroraAi #aiInput:focus{
+  outline:none!important;
+  box-shadow:0 0 0 2px
+    rgba(255,216,244,.5)!important;
+}
+
+/* Компактный чат при открытой клавиатуре */
+
+@media(max-width:700px){
+
+  body.aurora-typing{
+    overscroll-behavior:none!important;
+  }
+
+  body.aurora-typing>header,
+  body.aurora-typing>nav{
+    display:none!important;
+  }
+
+  body.aurora-typing #auroraAi{
+    position:fixed!important;
+    top:var(
+      --aurora-visible-top,0px
+    )!important;
+    left:0!important;
+    right:0!important;
+    bottom:auto!important;
+    width:100%!important;
+    max-width:none!important;
+    height:var(
+      --aurora-visible-height,100dvh
+    )!important;
+    max-height:none!important;
+    min-height:0!important;
+    display:flex!important;
+    flex-direction:column!important;
+    z-index:9999!important;
+    margin:0!important;
+    padding:8px 11px 10px!important;
+    box-sizing:border-box!important;
+    background:linear-gradient(
+      150deg,
+      #cf96d9,
+      #a38cdd 60%,
+      #90bdf5
+    )!important;
+  }
+
+  body.aurora-typing
+  #auroraAi .a2-toolbar,
+
+  body.aurora-typing
+  #auroraAi>h1,
+
+  body.aurora-typing
+  #auroraAi>.sub{
+    display:none!important;
+  }
+
+  body.aurora-typing
+  #auroraAi .ai-panel{
+    flex:1 1 auto!important;
+    display:flex!important;
+    flex-direction:column!important;
+    height:100%!important;
+    max-height:none!important;
+    min-height:0!important;
+    padding:12px!important;
+    overflow:hidden!important;
+    border-radius:21px!important;
+  }
+
+  body.aurora-typing
+  #auroraAi .ai-top{
+    flex-shrink:0!important;
+    margin-bottom:4px!important;
+  }
+
+  body.aurora-typing
+  #auroraAi .ai-messages{
+    flex:1 1 auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow-y:auto!important;
+  }
+
+  body.aurora-typing
+  #auroraAi .ai-status,
+
+  body.aurora-typing
+  #auroraAi #aiClear{
+    display:none!important;
+  }
+
+  body.aurora-typing
+  #auroraAi .ai-compose{
+    flex-shrink:0!important;
+    margin-top:7px!important;
+  }
+}
+
+</style>
+
+<script id="aurora-chat-v5-logic">
+(() => {
+
+  if(window.__auroraChatV5) return;
+
+  const input =
+    document.getElementById('aiInput');
+
+  const messages =
+    document.querySelector(
+      '#auroraAi .ai-messages'
+    );
+
+  if(!input || !messages) return;
+
+  window.__auroraChatV5 = true;
+
+  // Аврора вместо стороннего AI-помощника
+
+  const title =
+    document.querySelector(
+      '#auroraAi .ai-top strong'
+    );
+
+  if(title){
+    title.textContent='Аврора';
+  }
+
+  const subtitle =
+    document.querySelector(
+      '#auroraAi > .sub'
+    );
+
+  if(subtitle){
+    subtitle.textContent =
+      'Я рядом. Расскажи, что у тебя на уме ✨';
+  }
+
+  input.placeholder='Напиши Авроре...';
+
+  // Высота видимой части экрана iPhone
+
+  const viewport=window.visualViewport;
+  const root=document.documentElement;
+
+  const updateViewport=()=>{
+
+    const h=viewport
+      ? viewport.height
+      : window.innerHeight;
+
+    const top=viewport
+      ? viewport.offsetTop
+      : 0;
+
+    root.style.setProperty(
+      '--aurora-visible-height',
+      `${Math.max(160,h)}px`
+    );
+
+    root.style.setProperty(
+      '--aurora-visible-top',
+      `${Math.max(0,top)}px`
+    );
+  };
+
+  const toBottom=()=>{
+    messages.scrollTop=messages.scrollHeight;
+  };
+
+  const onFocus=()=>{
+
+    document.body.classList.add(
+      'aurora-typing'
+    );
+
+    updateViewport();
+
+    requestAnimationFrame(toBottom);
+
+    setTimeout(()=>{
+      updateViewport();
+      toBottom();
+    },250);
+  };
+
+  input.addEventListener('focus',onFocus);
+
+  input.addEventListener('blur',()=>{
+
+    setTimeout(()=>{
+
+      if(document.activeElement!==input){
+        document.body.classList.remove(
+          'aurora-typing'
+        );
+      }
+
+    },100);
+
+  });
+
+  if(viewport){
+
+    viewport.addEventListener('resize',()=>{
+
+      updateViewport();
+
+      if(document.activeElement===input){
+        requestAnimationFrame(toBottom);
+      }
+
+    });
+
+    viewport.addEventListener(
+      'scroll',
+      updateViewport
+    );
+  }
+
+  window.addEventListener(
+    'resize',
+    updateViewport
+  );
+
+  updateViewport();
+
+})();
+</script>
 </body>
 </html>
   
