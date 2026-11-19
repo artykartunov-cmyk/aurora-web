@@ -2118,6 +2118,867 @@ function auroraConfirmNoteDelete() {
 })();
 
 </script>
+  <!-- AURORA_FINANCE_V1 -->
+
+<style>
+
+#auroraFinance.hidden {display:none!important}
+
+#auroraFinance {max-width:620px;margin:0 auto;color:#fff}
+
+#auroraFinance .fin-panel {
+
+  background:rgba(37,28,73,.72);
+
+  border:1px solid rgba(255,255,255,.25);
+
+  border-radius:23px;
+
+  padding:19px;
+
+  margin:15px 0;
+
+  box-shadow:0 10px 28px rgba(53,32,100,.14)
+
+}
+
+#auroraFinance .fin-label {
+
+  font-size:13px;
+
+  color:#f6d5ff;
+
+  font-weight:700
+
+}
+
+#auroraFinance .fin-balance {
+
+  font-size:33px;
+
+  font-weight:900;
+
+  margin:8px 0 2px;
+
+  overflow-wrap:anywhere
+
+}
+
+#auroraFinance .fin-cols {
+
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  gap:11px;
+
+  margin-top:15px
+
+}
+
+#auroraFinance .fin-stat {
+
+  background:rgba(255,255,255,.13);
+
+  border-radius:16px;
+
+  padding:12px;
+
+  min-width:0
+
+}
+
+#auroraFinance .fin-stat b {
+
+  display:block;
+
+  margin-top:7px;
+
+  overflow-wrap:anywhere
+
+}
+
+#auroraFinance .fin-field {
+
+  display:grid;
+
+  gap:6px;
+
+  margin:12px 0;
+
+  font-size:13px;
+
+  font-weight:800;
+
+  color:#fff
+
+}
+
+#auroraFinance input,
+
+#auroraFinance select {
+
+  width:100%;
+
+  min-width:0;
+
+  box-sizing:border-box;
+
+  padding:13px;
+
+  border:1px solid rgba(255,255,255,.28);
+
+  border-radius:13px;
+
+  background:#fff;
+
+  color:#30234f;
+
+  font:700 16px Nunito,sans-serif
+
+}
+
+#auroraFinance .fin-save {
+
+  width:100%;
+
+  border:0;
+
+  border-radius:15px;
+
+  padding:15px;
+
+  background:linear-gradient(
+
+    110deg,#ffd3e9,#d4bdff,#a3d9ff
+
+  );
+
+  color:#30234f;
+
+  font-weight:900;
+
+  font-size:16px
+
+}
+
+#auroraFinance .fin-head {
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:12px
+
+}
+
+#auroraFinance .fin-head h2 {
+
+  font-size:19px;
+
+  margin:0
+
+}
+
+#auroraFinance .fin-head select {
+
+  width:auto;
+
+  max-width:50%;
+
+  font-size:13px;
+
+  padding:9px
+
+}
+
+#auroraFinance .fin-entry {
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+  padding:13px 0;
+
+  border-bottom:1px solid rgba(255,255,255,.15)
+
+}
+
+#auroraFinance .fin-entry:last-child {
+
+  border-bottom:0
+
+}
+
+#auroraFinance .fin-entry-info {
+
+  flex:1;
+
+  min-width:0
+
+}
+
+#auroraFinance .fin-entry-info strong {
+
+  display:block;
+
+  font-size:14px;
+
+  overflow-wrap:anywhere
+
+}
+
+#auroraFinance .fin-entry-info small {
+
+  display:block;
+
+  font-size:12px;
+
+  color:#e9d9fa;
+
+  margin-top:4px;
+
+  overflow-wrap:anywhere
+
+}
+
+#auroraFinance .fin-amount {
+
+  text-align:right;
+
+  font-weight:900;
+
+  font-size:14px;
+
+  white-space:nowrap
+
+}
+
+#auroraFinance .fin-income {color:#bdf7d7}
+
+#auroraFinance .fin-expense {color:#ffcee1}
+
+#auroraFinance .fin-delete {
+
+  border:0;
+
+  background:rgba(255,255,255,.12);
+
+  border-radius:10px;
+
+  color:#fff;
+
+  font-size:17px;
+
+  width:30px;
+
+  height:32px
+
+}
+
+#auroraFinance .fin-empty {
+
+  color:#f1e7fa;
+
+  font-size:14px;
+
+  text-align:center;
+
+  padding:20px 0
+
+}
+
+</style>
+
+<script>
+
+(() => {
+
+  if (document.getElementById('auroraFinance')) return;
+
+  const cards = document.querySelector('#home .cards');
+
+  const main = document.querySelector('main');
+
+  if (!cards || !main) return;
+
+  const tile = document.createElement('button');
+
+  tile.type = 'button';
+
+  tile.className = 'card';
+
+  tile.innerHTML = `
+
+    <span class="aurora-icon" aria-hidden="true">
+
+      <svg viewBox="0 0 24 24" fill="none"
+
+        stroke="currentColor" stroke-width="1.8"
+
+        stroke-linecap="round" stroke-linejoin="round">
+
+        <rect x="3" y="5" width="18" height="15" rx="3"/>
+
+        <path d="M16 11h5M7 9h5"/>
+
+        <circle cx="16" cy="13" r="1"/>
+
+      </svg>
+
+    </span>
+
+    <strong>Личные финансы</strong>
+
+    <small>Доходы и расходы</small>
+
+  `;
+
+  cards.appendChild(tile);
+
+  const page = document.createElement('section');
+
+  page.id = 'auroraFinance';
+
+  page.className = 'hidden';
+
+  page.innerHTML = `
+
+    <button type="button" class="back" id="finBack">
+
+      ← На главную
+
+    </button>
+
+    <h1>Личные финансы</h1>
+
+    <p class="sub">Управляй своим бюджетом ✨</p>
+
+    <div class="fin-panel">
+
+      <div class="fin-label">Общий баланс</div>
+
+      <div class="fin-balance" id="finBalance">0 ₽</div>
+
+      <div class="fin-label">
+
+        Доходы и расходы за выбранный период
+
+      </div>
+
+      <div class="fin-cols">
+
+        <div class="fin-stat">
+
+          <span class="fin-label">↑ Доходы</span>
+
+          <b class="fin-income" id="finIncome">0 ₽</b>
+
+        </div>
+
+        <div class="fin-stat">
+
+          <span class="fin-label">↓ Расходы</span>
+
+          <b class="fin-expense" id="finExpense">0 ₽</b>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <form class="fin-panel" id="finForm">
+
+      <h2 style="font-size:19px;margin:0 0 10px">
+
+        ＋ Новая операция
+
+      </h2>
+
+      <label class="fin-field">
+
+        Тип
+
+        <select id="finType">
+
+          <option value="expense">Расход</option>
+
+          <option value="income">Доход</option>
+
+        </select>
+
+      </label>
+
+      <label class="fin-field">
+
+        Сумма (₽)
+
+        <input id="finValue" type="text"
+
+          inputmode="decimal"
+
+          placeholder="Например, 1250,50"
+
+          required maxlength="14">
+
+      </label>
+
+      <label class="fin-field">
+
+        Категория
+
+        <select id="finCategory"></select>
+
+      </label>
+
+      <label class="fin-field">
+
+        Дата
+
+        <input id="finDate" type="date" required>
+
+      </label>
+
+      <label class="fin-field">
+
+        Комментарий (необязательно)
+
+        <input id="finNote" type="text"
+
+          maxlength="70"
+
+          placeholder="Например, продукты">
+
+      </label>
+
+      <button class="fin-save" type="submit">
+
+        Сохранить операцию
+
+      </button>
+
+    </form>
+
+    <div class="fin-panel">
+
+      <div class="fin-head">
+
+        <h2>История</h2>
+
+        <select id="finPeriod" aria-label="Период">
+
+          <option value="month">Этот месяц</option>
+
+          <option value="all">Всё время</option>
+
+        </select>
+
+      </div>
+
+      <div id="finHistory"></div>
+
+    </div>
+
+  `;
+
+  main.appendChild(page);
+
+  const oldOpenPage = window.openPage;
+
+  window.openPage = function(name) {
+
+    if (typeof oldOpenPage === 'function') {
+
+      oldOpenPage(name);
+
+    }
+
+    page.classList.toggle(
+
+      'hidden', name !== 'auroraFinance'
+
+    );
+
+  };
+
+  tile.addEventListener('click', () => {
+
+    window.openPage('auroraFinance');
+
+    render();
+
+  });
+
+  page.querySelector('#finBack')
+
+    .addEventListener('click', () => {
+
+      window.openPage('home');
+
+    });
+
+  const get = id => page.querySelector('#' + id);
+
+  const categories = {
+
+    expense: [
+
+      'Продукты','Кафе','Транспорт',
+
+      'Жильё','Покупки','Здоровье',
+
+      'Развлечения','Другое'
+
+    ],
+
+    income: [
+
+      'Зарплата','Подработка',
+
+      'Подарки','Возврат','Другое'
+
+    ]
+
+  };
+
+  const now = new Date();
+
+  const today = [
+
+    now.getFullYear(),
+
+    String(now.getMonth()+1).padStart(2,'0'),
+
+    String(now.getDate()).padStart(2,'0')
+
+  ].join('-');
+
+  get('finDate').value = today;
+
+  const telegramId =
+
+    window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
+
+  const storageKey =
+
+    'aurora_finance_v1_' + (telegramId || 'browser');
+
+  let entries = [];
+
+  try {
+
+    const loaded = JSON.parse(
+
+      localStorage.getItem(storageKey) || '[]'
+
+    );
+
+    if (Array.isArray(loaded)) {
+
+      entries = loaded.filter(e =>
+
+        e &&
+
+        (e.type === 'income' || e.type === 'expense') &&
+
+        Number.isSafeInteger(e.cents) &&
+
+        e.cents > 0 &&
+
+        typeof e.date === 'string'
+
+      );
+
+    }
+
+  } catch (error) {
+
+    console.warn('Finance storage unavailable', error);
+
+  }
+
+  function save(next) {
+
+    try {
+
+      localStorage.setItem(
+
+        storageKey, JSON.stringify(next)
+
+      );
+
+      entries = next;
+
+      return true;
+
+    } catch(error) {
+
+      alert('Не удалось сохранить данные на устройстве');
+
+      return false;
+
+    }
+
+  }
+
+  function money(cents) {
+
+    return (cents/100).toLocaleString('ru-RU', {
+
+      minimumFractionDigits:0,
+
+      maximumFractionDigits:2
+
+    }) + ' ₽';
+
+  }
+
+  function updateCategories() {
+
+    const box = get('finCategory');
+
+    box.replaceChildren();
+
+    categories[get('finType').value].forEach(category => {
+
+      const option = document.createElement('option');
+
+      option.value = category;
+
+      option.textContent = category;
+
+      box.appendChild(option);
+
+    });
+
+  }
+
+  get('finType').addEventListener(
+
+    'change',updateCategories
+
+  );
+
+  updateCategories();
+
+  get('finPeriod').addEventListener('change',render);
+
+  function render() {
+
+    const balance = entries.reduce((sum,e) =>
+
+      sum + (e.type === 'income' ? e.cents : -e.cents),
+
+      0
+
+    );
+
+    get('finBalance').textContent = money(balance);
+
+    const month = today.slice(0,7);
+
+    const selected = entries.filter(e =>
+
+      get('finPeriod').value === 'all' ||
+
+      e.date.startsWith(month)
+
+    );
+
+    const income = selected
+
+      .filter(e => e.type === 'income')
+
+      .reduce((sum,e) => sum+e.cents,0);
+
+    const expense = selected
+
+      .filter(e => e.type === 'expense')
+
+      .reduce((sum,e) => sum+e.cents,0);
+
+    get('finIncome').textContent = money(income);
+
+    get('finExpense').textContent = money(expense);
+
+    const list = get('finHistory');
+
+    list.replaceChildren();
+
+    if (!selected.length) {
+
+      const empty = document.createElement('div');
+
+      empty.className = 'fin-empty';
+
+      empty.textContent =
+
+        'Пока нет операций за этот период';
+
+      list.appendChild(empty);
+
+      return;
+
+    }
+
+    [...selected]
+
+      .sort((a,b) => b.date.localeCompare(a.date))
+
+      .forEach(e => {
+
+        const row = document.createElement('div');
+
+        row.className = 'fin-entry';
+
+        const info = document.createElement('div');
+
+        info.className = 'fin-entry-info';
+
+        const title = document.createElement('strong');
+
+        title.textContent = e.category;
+
+        const extra = document.createElement('small');
+
+        extra.textContent =
+
+          e.date.split('-').reverse().join('.') +
+
+          (e.note ? ' · ' + e.note : '');
+
+        info.append(title,extra);
+
+        const amount = document.createElement('div');
+
+        amount.className =
+
+          'fin-amount ' +
+
+          (e.type === 'income'
+
+            ? 'fin-income'
+
+            : 'fin-expense');
+
+        amount.textContent =
+
+          (e.type === 'income' ? '+' : '−') +
+
+          money(e.cents);
+
+        const del = document.createElement('button');
+
+        del.type = 'button';
+
+        del.className = 'fin-delete';
+
+        del.textContent = '×';
+
+        del.setAttribute(
+
+          'aria-label','Удалить операцию'
+
+        );
+
+        del.addEventListener('click', () => {
+
+          if (
+
+            confirm('Удалить эту операцию?') &&
+
+            save(entries.filter(item => item.id !== e.id))
+
+          ) {
+
+            render();
+
+          }
+
+        });
+
+        row.append(info,amount,del);
+
+        list.appendChild(row);
+
+      });
+
+  }
+
+  get('finForm').addEventListener('submit', event => {
+
+    event.preventDefault();
+
+    const raw = get('finValue').value
+
+      .trim()
+
+      .replace(',','.');
+
+    if (!/^\d{1,10}(\.\d{1,2})?$/.test(raw)) {
+
+      alert('Введите сумму с точностью до копеек');
+
+      return;
+
+    }
+
+    const cents = Math.round(Number(raw)*100);
+
+    if (!Number.isSafeInteger(cents) || cents <= 0) {
+
+      alert('Укажите сумму больше нуля');
+
+      return;
+
+    }
+
+    const entry = {
+
+      id: Date.now()+'-'+Math.random().toString(36).slice(2),
+
+      type: get('finType').value,
+
+      cents,
+
+      category: get('finCategory').value,
+
+      date: get('finDate').value,
+
+      note: get('finNote').value.trim()
+
+    };
+
+    if (!entry.date) {
+
+      alert('Выберите дату');
+
+      return;
+
+    }
+
+    if (save([entry,...entries])) {
+
+      get('finValue').value = '';
+
+      get('finNote').value = '';
+
+      render();
+
+    }
+
+  });
+
+  render();
+
+})();
+
+</script>
 </body>
 </html>
   
