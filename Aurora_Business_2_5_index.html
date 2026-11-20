@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#faf1ff">
+<title>Аврора Бизнес 2.5 · Soft Prestige</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+:root{color-scheme:light;--ink:#30273d;--muted:#93849e;--line:#e9e1ee;--paper:#fff;--wash:#f8f6fa;--lav:#a26dd9;--pink:#ed92c6;--violet:#855bc5;--shadow:0 10px 32px rgba(75,44,100,.055);--gradient:linear-gradient(112deg,#e98dca,#a977dd 70%,#9363d9)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;min-height:100%}body{font:14px/1.5 Manrope,-apple-system,BlinkMacSystemFont,Arial,sans-serif;color:var(--ink);background:radial-gradient(ellipse 85% 35% at 95% 0%,#f3dff6 0%,transparent 75%),radial-gradient(ellipse 80% 35% at -30% 40%,#fae8f4 0%,transparent 75%),var(--wash);background-attachment:fixed}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{cursor:default;opacity:.52}button,input,textarea,select{outline:none}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid #ad83df;outline-offset:2px}h1,h2,h3,p{margin:0}h1{font-weight:800;letter-spacing:-1.1px;font-size:27px;line-height:1.25}h2{font-size:18px;font-weight:800;letter-spacing:-.5px}h3{font-size:15px;letter-spacing:-.2px}.small{font-size:12px;line-height:1.65}.muted{color:var(--muted)}.eyebrow{font-size:10px;font-weight:800;letter-spacing:1.3px;color:#a177bd;text-transform:uppercase;margin-bottom:7px}.shell{max-width:560px;padding:18px 17px calc(111px + env(safe-area-inset-bottom,0px));margin:auto}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:27px}.logo{display:flex;align-items:center;gap:10px}.logo-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:15px;background:var(--gradient);color:white;font-size:23px;font-weight:800;font-style:italic;box-shadow:0 6px 16px #d6b0e340}.logo strong{font-weight:800;font-size:16px;letter-spacing:-.55px;display:block;line-height:1.25}.logo small{display:block;color:var(--muted);font-size:10px;margin-top:2px}.avatar,.profile-picture{width:43px;height:43px;object-fit:cover;border-radius:50%;border:2px solid white;background:#f3e7f9}.avatar-fallback{display:grid;place-items:center;color:white;font-size:18px;font-weight:800;background:var(--gradient)}.header-button{height:42px;min-width:42px;border:1px solid var(--line);border-radius:14px;background:#fff;color:var(--ink);display:grid;place-items:center;box-shadow:var(--shadow);padding:0;overflow:hidden}.header-button img{width:100%;height:100%;object-fit:cover}.ui-icon{width:20px;height:20px;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round;fill:none;flex:0 0 auto}.ui-icon.small-icon{width:17px;height:17px}.ui-icon.large-icon{width:24px;height:24px}.page-title{margin:3px 0 24px}.page-title .small{max-width:430px;margin-top:7px}.glass,.panel{background:rgba(255,255,255,.91);border:1px solid rgba(226,215,232,.92);border-radius:22px;padding:19px;margin-bottom:13px;box-shadow:var(--shadow)}.hero{border-radius:26px;padding:26px 22px;background:linear-gradient(128deg,#fbe5f2,#eee3f9 68%,#e7daf9);border:1px solid #f1dced;box-shadow:var(--shadow);margin-bottom:22px;position:relative;overflow:hidden}.hero::after{content:'';position:absolute;right:-34px;top:-45px;width:160px;height:160px;border-radius:50%;border:34px solid #ffffff61;pointer-events:none}.hero h1{position:relative;z-index:1;max-width:86%;margin:10px 0 10px;font-size:26px}.hero p{font-size:12px;color:#77647e;max-width:75%;margin:0 0 20px;position:relative;z-index:1}.btn{min-height:46px;display:inline-flex;align-items:center;justify-content:center;gap:9px;border:1px solid transparent;border-radius:14px;padding:12px 16px;background:#fff;font-size:12px;font-weight:800;color:var(--violet);transition:transform .15s,background .15s;text-align:center}.btn:active,.tile:active,.nav-tab:active,.setting-link:active{transform:scale(.98)}.btn.primary{background:var(--gradient);color:white;box-shadow:0 8px 19px #c190d842}.btn.outline{border-color:var(--line);background:white;color:var(--ink)}.btn.soft{background:#f4eef9;color:#7b54b7}.btn.danger{background:#fff1f4;color:#b94f7a}.btn.block{width:100%}.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.btn-row>.btn{flex:1;min-width:95px}.icon-btn{display:grid;place-items:center;border:1px solid var(--line);background:#fff;color:var(--violet);height:38px;width:38px;border-radius:12px;padding:0;font-size:18px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.tile{text-align:left;min-height:140px;padding:17px;background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);color:var(--ink);display:flex;flex-direction:column;align-items:flex-start;gap:6px}.tile span,.tile .tool-icon,.icon-disc{display:grid;place-items:center;background:#f5edf9;color:#9f66cd;border-radius:13px;width:43px;height:43px;margin:0 0 7px;font-size:23px}.tile strong{font-size:13px;font-weight:800}.tile small{font-size:10px;line-height:1.5;color:var(--muted)}.tile .ui-icon{width:22px;height:22px}.section{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:23px 0 13px}.section h2{margin:0}.tag,.badge-pro{display:inline-flex;align-items:center;border:1px solid #ead9f1;background:#f7eef9;color:#8b61b4;font-size:10px;padding:6px 10px;border-radius:100px;font-weight:800;white-space:nowrap}.badge-pro{background:#f2e3ff}.field{display:block;margin:16px 0 0}.field>span{display:block;color:#65566d;font-size:12px;font-weight:800;margin-bottom:8px}.input{display:block;width:100%;background:#faf8fc;border:1px solid #e6ddeb;border-radius:14px;min-height:49px;padding:13px 14px;font-size:14px;color:var(--ink);transition:box-shadow .2s,border-color .2s}.input::placeholder{color:#afa2bb}.input:focus{background:#fff;border-color:#b88cdd;box-shadow:0 0 0 3px #e8d7f550}textarea.input{min-height:115px;resize:vertical;line-height:1.6}select.input{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%238a6a9d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-position:right 13px center;background-repeat:no-repeat;padding-right:39px}.glass>.btn.block{margin-top:18px}.notice{background:#f5effa;border:1px solid #ecdef3;border-radius:15px;padding:13px 15px;font-size:11px;line-height:1.6;color:#795c91;margin:0 0 14px}.pillrow{display:flex;gap:7px;overflow:auto;margin:13px 0;padding-bottom:2px;scrollbar-width:none}.pillrow::-webkit-scrollbar{display:none}.pill{border:1px solid #eadfee;background:#fff;padding:9px 14px;font-size:11px;font-weight:800;border-radius:100px;color:#816e8d;white-space:nowrap}.pill.active{background:var(--gradient);border-color:transparent;color:white}.empty{text-align:center;padding:34px 18px}.empty .symbol{font-size:37px;color:#a980c9;margin-bottom:12px}.item{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid #f0e9f2}.item:last-child{border-bottom:none}.thumb{height:55px;width:55px;border-radius:15px;background:#f4eafb;display:grid;place-items:center;color:#a272ce;flex:0 0 auto;font-size:22px;object-fit:cover}.item-info{flex:1;min-width:0}.item-info strong{font-size:12px;font-weight:800;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.item-info small{font-size:10px;color:var(--muted);display:block;margin-top:3px}.item-actions{display:flex;gap:6px}.photo-preview{display:block;width:100%;max-height:440px;object-fit:contain;background:#f8f2fb;border-radius:18px;margin:14px 0}.upload{min-height:110px;background:#fbf8fd;border:1.5px dashed #d4bae6;border-radius:16px;padding:18px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:7px;text-align:center;color:#8a64b5;font-size:12px;font-weight:800}.upload small{color:var(--muted);font-size:10px}.preview-card{border:1px solid #e8d9f1;border-radius:22px;padding:17px;min-height:330px;margin-bottom:13px;box-shadow:var(--shadow);background:linear-gradient(145deg,#eee4fb,#e1d3f4);overflow:hidden}.preview-card .product-image{width:100%;height:230px;object-fit:contain;border-radius:14px;background:#fffc}.preview-card h2{margin:10px 0 5px}.preview-card .price{font-size:20px;font-weight:800;color:#7956ac}.preview-card .features{white-space:pre-line;font-size:12px}.preview-card .stamp{font-size:10px;letter-spacing:1.3px;font-weight:800;color:#806298}.preview-card.pink{background:linear-gradient(140deg,#ffe7f3,#f8cce7)}.preview-card.pearl{background:linear-gradient(140deg,#fff,#eae4f7)}.preview-card .fake-product{display:grid;place-items:center;height:230px;border-radius:14px;background:#fff8;color:#9b79c9;font-size:52px}.setting-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid #f0eaf3}.setting-row:last-child{border-bottom:0}.setting-row strong{font-size:12px;font-weight:800}.setting-row small{display:block;font-size:10px;color:var(--muted);margin-top:4px}.setting-link{display:flex;align-items:center;text-align:left;width:100%;background:transparent;border:0;border-bottom:1px solid #f0eaf3;padding:14px 1px;gap:12px;color:var(--ink)}.setting-link:last-child{border-bottom:0}.setting-link .icon-disc{height:37px;width:37px;border-radius:12px;margin:0}.setting-link .meta{flex:1;min-width:0}.setting-link strong{font-size:12px}.setting-link small{font-size:10px;display:block;margin-top:2px;color:var(--muted)}.bottom{position:fixed;z-index:30;left:0;right:0;bottom:0;padding:9px 13px calc(9px + env(safe-area-inset-bottom,0px));background:linear-gradient(0deg,#f8f6fa 45%,#f8f6fac9 90%);pointer-events:none}.bottom-inner{pointer-events:auto;max-width:535px;margin:auto;display:flex;padding:7px;background:#fffc;border:1px solid #e5dcea;border-radius:24px;box-shadow:0 12px 42px #4c2e6721;backdrop-filter:blur(16px)}.nav-tab{display:flex;flex:1;min-width:0;align-items:center;justify-content:center;flex-direction:column;gap:2px;padding:9px 2px;background:transparent;border:0;border-radius:17px;color:#9e8fac;font-size:10px;font-weight:800}.nav-tab .ui-icon{width:21px;height:21px}.nav-tab.active{color:#8e5bc5;background:#f5edfa}.nav-tab.active .ui-icon{stroke-width:2.2}.hide{display:none!important}.hidden-input{position:absolute;height:1px;width:1px;opacity:0;overflow:hidden}.textresult{white-space:pre-wrap;line-height:1.8;overflow-wrap:anywhere;font-size:13px;color:#493d51}.line{height:1px;background:#eee5f0;margin:16px 0}.sticky-title{margin-bottom:19px}.status{font-size:11px;color:#7c5a94}.back{background:transparent;border:0;color:#8f61bb;font-weight:800;padding:4px}.project-list .glass{margin-bottom:9px}.inline-filter{display:flex;align-items:center;gap:7px}.inline-filter>.input{flex:1;min-width:0}.loading{animation:loading 1.2s infinite alternate}@keyframes loading{to{opacity:.45}}#toast{position:fixed;z-index:110;bottom:calc(100px + env(safe-area-inset-bottom,0px));left:50%;width:max-content;max-width:calc(100vw - 32px);transform:translateX(-50%);background:#31283c;color:#fff;border-radius:14px;padding:12px 17px;box-shadow:0 12px 28px #3f24544a;font-size:12px}#toast[hidden]{display:none}.dash-kpi{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;min-width:0}.dash-kpi strong{display:block;font-size:22px;letter-spacing:-.7px}.dash-kpi small{color:var(--muted);font-size:10px}.simple-stat{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line)}.quick-ticket{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;margin-bottom:10px}.quick-ticket .ticket-top{display:flex;align-items:center;justify-content:space-between;gap:8px}.ticket-status{font-size:10px;font-weight:800;border-radius:100px;background:#f7effc;color:#8f5bc3;padding:5px 9px}.ticket-status.closed{color:#8e8796;background:#f2f0f3}.quick-ticket h3{margin:9px 0 6px}.quick-ticket p{font-size:12px;color:#75687d;line-height:1.6}.modal-back{position:fixed;z-index:90;inset:0;background:#25202c72;display:flex;align-items:flex-end;justify-content:center;padding:14px 10px 0;backdrop-filter:blur(6px)}.modal-back[hidden]{display:none}.modal-sheet{background:#fff;width:min(100%,530px);border-radius:28px 28px 0 0;padding:22px 21px calc(25px + env(safe-area-inset-bottom,0px));box-shadow:0 -14px 35px #1e103c2b;max-height:90vh;overflow:auto}.modal-head{display:flex;justify-content:space-between;align-items:center;gap:8px}.modal-head h2{font-size:19px}.modal-copy{font-size:12px;color:var(--muted);line-height:1.7;margin-top:9px}.modal-actions{display:flex;gap:8px;margin-top:18px}.modal-actions>.btn{flex:1}.reply-templates{display:flex;overflow:auto;gap:7px;margin:14px 0}.reply-templates button{white-space:nowrap}.empty-helper{font-size:11px;color:var(--muted)}.step-row{display:flex;gap:13px;align-items:center;padding:13px 0}.step-num{width:30px;height:30px;border-radius:50%;background:#f5eafb;display:grid;place-items:center;color:#9b6ac4;font-weight:800;font-size:12px}.section-pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}.minimal-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:800;color:#ae8abf;margin-bottom:6px}.user-strip{display:flex;align-items:center;gap:12px;padding:5px 0}.user-strip .meta{flex:1}.user-strip strong{display:block;font-size:15px}.user-strip small{color:var(--muted);font-size:11px}.owner-link{color:#855ab9}.safe-box{display:flex;gap:9px;align-items:flex-start;background:#f9f4fc;border-radius:15px;border:1px solid #efe1f5;padding:13px;font-size:11px;color:#806893}.safe-box .ui-icon{width:18px;height:18px}.tool-banner{padding:20px;border:1px solid #eadfed;border-radius:20px;background:linear-gradient(112deg,#fff,#f6effa);margin-bottom:19px}.tool-banner p{margin-top:5px;color:var(--muted);font-size:12px}.tool-compact{display:flex;align-items:center;gap:11px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:13px;margin-bottom:9px;box-shadow:var(--shadow);width:100%;text-align:left;color:var(--ink)}.tool-compact .icon-disc{margin:0}.tool-compact .meta{flex:1}.tool-compact strong{display:block;font-size:12px}.tool-compact small{display:block;font-size:10px;color:var(--muted);margin-top:4px}@media(min-width:650px){.shell{padding-top:28px}}@media(max-width:350px){.shell{padding:14px 11px 112px}.glass{padding:15px}.tile{padding:13px}.hero h1{font-size:24px}.nav-tab{font-size:9px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+/* Aurora 2.1 Glow — new visual language, existing backend unchanged */
+:root{--ink:#302044;--muted:#8a759d;--line:#eadbf5;--paper:#fff;--wash:#fbf3ff;--lav:#a650e3;--pink:#f07ad0;--violet:#873ae0;--gradient:linear-gradient(108deg,#ee86ce 0%,#c368e4 49%,#863de0 100%);--shadow:0 13px 30px rgba(138,73,187,.08)}
+body{background:radial-gradient(ellipse 100% 40% at 95% -5%,#ead3ff 0%,transparent 85%),radial-gradient(ellipse 70% 32% at -30% 50%,#f8dafa 0%,transparent 95%),#fbf2ff;color:var(--ink)}
+.shell{padding:22px 16px calc(124px + env(safe-area-inset-bottom,0px))}.top{margin-bottom:25px}.logo-icon{height:47px;width:47px;border-radius:16px;box-shadow:0 9px 19px #ae6bcf43;font-size:27px}.logo strong{font-size:17px}.logo small{font-size:11px;letter-spacing:-.1px}.aur-brand-accent{color:#a954db}.aur-brand-version{font-size:9px;color:#a55acf;vertical-align:super;margin-left:3px}.header-button{border-radius:17px;height:46px;min-width:46px;background:#fff8;box-shadow:0 7px 17px #ba89db24;color:#a458d7}
+.glass,.panel{border:1px solid #fff;background:rgba(255,255,255,.77);border-radius:24px;box-shadow:0 14px 34px #976db018;backdrop-filter:blur(12px)}.page-title h1{font-size:26px}.page-title p{font-size:12px}.btn{font-size:13px;border-radius:16px;min-height:49px}.btn.primary{box-shadow:0 9px 20px #c46ad747}.btn.soft{background:#f6e9fe;color:#914cc8}.btn.outline{border:1px solid #e2ccef;color:#8d52bd}.input{background:#fff9ff;border:1px solid #e7d6f3;border-radius:16px}.input:focus{border-color:#b775df;background:white;box-shadow:0 0 0 3px #efdcfa78}.field>span{font-size:12px}.pill.active{background:var(--gradient)}.pill{border-color:#e9daf5;color:#865ca1}
+.bottom{padding:0 7px calc(6px + env(safe-area-inset-bottom,0px))}.bottom-inner{max-width:570px;border-radius:28px;padding:9px 5px;background:rgba(255,250,255,.95);box-shadow:0 -8px 34px #b382ce26;border:1px solid #fff;backdrop-filter:blur(24px)}.nav-tab{padding:9px 2px 7px;border-radius:20px;gap:6px;font-size:10px;background:transparent!important;color:#9d85b2}.nav-tab .nav-icon{width:33px;height:33px;display:grid;place-items:center;border-radius:14px;transition:.18s}.nav-tab .ui-icon{width:21px;height:21px}.nav-tab.active{color:#9344d0}.nav-tab.active .nav-icon{background:#f6e9fe}.nav-tab.nav-create .nav-icon{width:47px;height:47px;border-radius:16px;background:var(--gradient);box-shadow:0 9px 20px #bc6bda52;color:white;margin-top:-20px}.nav-tab.nav-create .nav-icon .ui-icon{width:27px;height:27px;stroke-width:2}.nav-tab.nav-create.active .nav-icon{background:var(--gradient)}
+.aur-home-heading{margin-bottom:18px}.aur-home-heading h1{font-size:25px;font-weight:800}.aur-home-heading p{margin-top:5px}.aur-wave{color:#ce82ef}.aur-hero{min-height:242px;border:1px solid #fff9;border-radius:27px;position:relative;overflow:hidden;background:linear-gradient(115deg,#fbdcf5 0%,#f2d9fa 35%,#d2b0ff 75%,#ba86ef 100%);box-shadow:0 15px 30px #b37ddd2e}.aur-hero:after{content:"";position:absolute;inset:auto -35px -115px auto;width:260px;height:290px;border:1px solid #fff9;border-radius:50%;transform:rotate(35deg);pointer-events:none}.aur-hero-copy{position:relative;z-index:2;padding:22px 18px;width:67%}.aur-hero-kicker{font-size:9px;color:#a564c4;font-weight:800;letter-spacing:1.1px}.aur-hero h2{font-weight:800;line-height:1.14;letter-spacing:-.7px;font-size:25px;margin:12px 0 9px}.aur-hero p{max-width:190px;font-size:11px;line-height:1.55;color:#755882}.aur-hero-action{margin-top:16px;background:linear-gradient(110deg,#f18dcb,#9146df);box-shadow:0 9px 18px #b76cd040;color:#fff;border-radius:100px;min-height:42px;font-size:11px;padding:10px 14px}.aur-product-art{pointer-events:none;position:absolute;right:-6px;bottom:0;width:54%;height:100%}.aur-halo{position:absolute;width:210px;height:210px;border:1px solid #fff9;border-radius:50%;right:-25px;top:5px;box-shadow:0 0 30px #fff8}.aur-pedestal{position:absolute;bottom:-16px;right:-15px;width:220px;height:73px;background:linear-gradient(160deg,#fff8,#d5aef1 50%,#945ecf);border:1px solid #fff9;border-radius:50% 50% 18% 18%;transform:rotate(-11deg);box-shadow:0 13px 24px #7744bd4d}.aur-bottle{position:absolute;width:93px;height:146px;right:42px;bottom:36px;filter:drop-shadow(10px 15px 13px #7b42aa44);transform:rotate(4deg)}.aur-bottle-body{position:absolute;inset:35px 0 0;border-radius:17px 18px 15px 15px;border:3px solid #fff9;background:linear-gradient(92deg,#ffffff91,#d7a0ee9e 35%,#edc4fd8f 60%,#8f52c8a8);box-shadow:inset 8px 0 12px #fff8,inset -8px 0 11px #8f4ec257}.aur-bottle-cap{position:absolute;z-index:3;left:31px;top:0;width:34px;height:25px;background:linear-gradient(95deg,#b585a8,#ffedfc,#a16ca1);border-radius:5px 5px 3px 3px;border:1px solid #fff9;box-shadow:0 4px 9px #834db352}.aur-bottle-neck{position:absolute;top:22px;left:38px;width:20px;height:23px;border:2px solid #ffefff;background:linear-gradient(95deg,#aa6bba,#e4c7f8,#b277ba)}.aur-bottle-reflection{position:absolute;z-index:4;left:13px;top:46px;width:17px;height:85px;border-radius:40%;background:linear-gradient(90deg,#ffffffb9,transparent)}.aur-bottle-label{position:absolute;z-index:5;left:19px;right:16px;top:94px;text-align:center;font-size:8px;font-weight:800;letter-spacing:1.1px;font-style:normal;color:#ffffffdc;border-top:1px solid #fff8;padding-top:6px}.aur-art-spark{position:absolute;top:30px;left:14px;font-size:36px;color:#fffd}.aur-carousel-dots{display:flex;justify-content:center;align-items:center;gap:5px;margin:9px 0 22px}.aur-carousel-dots b,.aur-carousel-dots i{height:5px;width:5px;background:#dbc2e7;border-radius:100px}.aur-carousel-dots b{width:18px;background:#bc62e0}
+.aur-shortcuts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.aur-shortcuts button{border:1px solid #fff;background:#ffffffa8;border-radius:20px;box-shadow:0 9px 23px #a975c31b;min-height:96px;padding:11px 5px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;font-weight:800;color:#453552;font-size:10px;line-height:1.4;text-align:center}.aur-shortcuts span{color:#a748d8}.aur-shortcuts .ui-icon{height:23px;width:23px}.aur-section{margin:23px 0 12px}.aur-plain-link{background:none;border:0;color:#9a5eca;display:inline-flex;gap:4px;align-items:center;font-size:11px;font-weight:800}.aur-recent{margin-bottom:10px;padding:8px 17px}.aur-empty-recent{display:flex;align-items:center;gap:10px;min-height:76px}.aur-empty-recent>span{color:#a764d0}.aur-empty-recent>div{flex:1}.aur-empty-recent strong{display:block;font-size:12px}.aur-empty-recent small{display:block;font-size:10px;color:var(--muted)}.aur-full-link{width:100%;display:flex;gap:9px;align-items:center;justify-content:center;border:1px solid #e5cff2;color:#9151bc;background:#fff8;border-radius:16px;padding:13px;font-weight:800;font-size:12px}.aur-full-link .ui-icon:last-child{margin-left:auto}
+.aur-subhead{display:flex;align-items:center;gap:14px;margin-bottom:18px}.aur-subhead>div{flex:1;min-width:0;text-align:center}.aur-subhead h1{font-size:20px;letter-spacing:-.5px}.aur-subhead .small{font-size:10px}.aur-back,.aur-mini-history{border:1px solid #fff;height:41px;min-width:41px;border-radius:50%;background:#fff9;display:grid;place-items:center;color:#784a9f;box-shadow:0 5px 12px #ad77c01e}.aur-photo-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:0 0 16px}.aur-photo-tabs button{border:1px solid #f4e7fd;background:#fff9;border-radius:100px;padding:11px 5px;font-weight:800;color:#806091;font-size:10px;white-space:nowrap}.aur-photo-tabs button.selected{background:var(--gradient);color:white;border-color:transparent;box-shadow:0 5px 13px #ba6ad42e}.aur-upload-zone{width:100%;min-height:214px;background:#fff9;border:1px solid #fff;border-radius:24px;padding:14px;display:flex;align-items:center;justify-content:center;flex-direction:column;position:relative;gap:8px;box-shadow:0 12px 23px #b68ed225;color:var(--ink)}.aur-upload-zone:after{content:"";position:absolute;inset:11px;border:1.5px dashed #d6b7ef;border-radius:18px;pointer-events:none}.aur-upload-icon{width:64px;height:60px;border-radius:18px;background:linear-gradient(120deg,#f6e2fe,#ede3fd);display:grid;place-items:center;color:#b35be0;margin-bottom:5px}.aur-upload-icon .ui-icon{width:32px;height:32px}.aur-upload-heading{font-weight:800;font-size:16px}.aur-upload-zone small{color:var(--muted);font-size:11px}.aur-upload-tags{border-radius:100px;background:#f3e8fa;color:#9574ae;font-size:10px;padding:5px 12px;margin-top:6px}.aur-example-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:0 0 16px}.aur-example{border:1px solid #f5e7fb;background:#fff9;border-radius:16px;padding:6px 4px;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0;color:#846e93}.aur-example.chosen{border-color:#c47fe7;box-shadow:0 0 0 2px #dab0ef5c}.aur-example-emoji{height:69px;width:100%;border-radius:13px;background:linear-gradient(125deg,#ffe5f7,#e8d8fc);display:grid;place-items:center;font-size:37px;filter:saturate(.74)}.aur-example-emoji.headphones{background:linear-gradient(125deg,#eee0fc,#cebaf8)}.aur-example-emoji.bag{background:linear-gradient(125deg,#f7e2ef,#dfbaf2)}.aur-example-emoji.shoe{background:linear-gradient(125deg,#e5dafa,#c7b4f9)}.aur-example small{font-size:9px;font-weight:800}.aur-photo-settings{padding:17px}.aur-photo-settings textarea.input{min-height:86px}.aur-settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.aur-settings-grid .field{margin-top:10px}.aur-generate{font-size:14px;min-height:54px;border-radius:17px;margin-top:16px}.aur-limit-note{text-align:center;font-size:10px;color:#9c83ac;margin-top:10px}.aur-result h2{font-size:17px}
+.aur-pro-header{position:relative;display:flex;align-items:center;min-height:136px;overflow:hidden;padding:16px;border-radius:24px;background:linear-gradient(120deg,#fae4fb,#efdcfc 60%,#d7baf5);border:1px solid #fff9;margin:16px 0}.aur-pro-header>div:first-child{max-width:70%;z-index:1}.aur-pro-symbol{font-size:27px;color:#ba61e5}.aur-pro-header h2{font-size:21px;line-height:1.22;margin:3px 0}.aur-pro-header em{font-style:normal;color:#ac4ee1}.aur-pro-header p{font-size:11px;color:#8b729d}.aur-pro-crown{position:absolute;right:18px;top:-36px;font-size:150px;line-height:1;color:#aa5ee6;transform:rotate(-10deg);text-shadow:0 0 4px white,10px 12px 22px #aa61d77a;opacity:.62}.aur-plan-tabs{display:flex;background:#ffffffb0;border-radius:100px;border:1px solid #fff;padding:5px;margin:12px 0 15px;gap:5px}.aur-plan-tabs>span{width:50%;text-align:center;padding:10px 5px;border-radius:100px;color:#967ba7;font-size:12px;font-weight:800}.aur-plan-tabs>.selected{background:var(--gradient);color:white}.aur-plan-tabs>.unavailable{opacity:.65}.aur-pricing{padding:22px;margin-top:0}.aur-price-label{color:#9a6dbc;font-size:10px;font-weight:800;letter-spacing:1px}.aur-price{font-size:28px;font-weight:800;margin:11px 0 17px;letter-spacing:-.6px}.aur-price small{font-size:12px;letter-spacing:0;font-weight:700;color:#806b91}.aur-benefits{border-top:1px solid #eee0f5;padding-top:15px;display:grid;gap:14px}.aur-benefits>div{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:650}.aur-check{display:grid;place-items:center;width:24px;height:24px;background:#f1dcfd;color:#a450da;border-radius:100px}.aur-check .ui-icon{height:16px;width:16px}.aur-pro-disclaimer{text-align:center;color:#9985a8;font-size:10px;margin:11px 0 16px}
+.aur-support-banner{display:flex;align-items:center;gap:14px;background:linear-gradient(120deg,#f3d9f9,#e5ceff);border-radius:23px;border:1px solid #fff;padding:18px;margin-bottom:16px}.aur-support-illustration{height:52px;width:52px;display:grid;place-items:center;border-radius:18px;background:#fff9;color:#a75adb;flex:none}.aur-support-illustration .ui-icon{height:28px;width:28px}.aur-support-banner h2{font-size:17px}.aur-support-banner p{font-size:11px;color:#826b94;margin-top:3px}.aur-support-form{padding:19px}.aur-support-form textarea.input{min-height:130px}
+.modal-back{z-index:120;align-items:flex-end;padding:0 0 env(safe-area-inset-bottom,0px)}.modal-sheet.aur-reply-sheet{width:100%;max-width:550px;border:1px solid #fff9;border-bottom:0;border-radius:30px 30px 0 0;background:linear-gradient(160deg,#fffaff,#f2e2fd);max-height:94dvh;overflow-y:auto;padding:10px 20px 23px;box-shadow:0 -18px 62px #5c28725e}.aur-sheet-grip{width:37px;height:4px;background:#c3aad3;border-radius:99px;margin:0 auto 18px}.aur-reply-sheet .modal-head{margin-bottom:11px}.aur-reply-sheet .modal-head h2{font-size:20px;display:inline-block}.aur-reply-sheet .modal-head p{margin-top:4px}.aur-reply-spark{display:inline-block;margin-right:9px;color:#ba57dc;font-size:19px}.aur-ticket-question{border-radius:16px;background:#ffffff9c;border:1px solid #f2defb;padding:11px 13px;margin-bottom:15px}.aur-ticket-question strong{font-size:12px}.aur-ticket-question p{font-size:11px;color:#877194;margin-top:5px}.aur-reply-list{display:grid;gap:7px}.aur-reply-choice{width:100%;background:#ffffffc7;border:1px solid #e6d4f6;border-radius:15px;display:flex;gap:9px;align-items:center;padding:12px;text-align:left;font-size:12px;font-weight:750;color:#604372}.aur-reply-choice span{color:#a950d6}.aur-reply-choice>.ui-icon:last-child{margin-left:auto;width:16px}.aur-reply-choice.chosen{border-color:#b365e1;background:#f9ecff}.aur-reply-sheet textarea.input{min-height:90px}
+@media(max-width:380px){.aur-hero h2{font-size:22px}.aur-hero-copy{width:68%;padding:19px 13px}.aur-bottle{right:20px}.aur-shortcuts{gap:5px}.aur-shortcuts button{font-size:9px}.aur-subhead h1{font-size:17px}.aur-price{font-size:25px}.nav-tab{font-size:9px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+/* Aurora 2.2 Compact Glass — iPhone-friendly refinements */
+html{font-size:14px;-webkit-text-size-adjust:100%;text-size-adjust:100%;overflow-x:hidden}
+body{overflow-x:hidden;overscroll-behavior-x:none;background:linear-gradient(155deg,#faf4ff 0%,#f9f0fb 54%,#f6effb 100%);background-attachment:fixed}
+.shell{max-width:500px;padding:12px 15px calc(96px + env(safe-area-inset-bottom,0px))}
+.top{margin-bottom:16px;gap:10px;min-width:0}
+.logo{min-width:0;gap:9px}.logo>div{min-width:0}
+.logo-icon{height:38px;width:38px;flex:0 0 38px;border-radius:13px;font-size:22px}
+.logo strong{font-size:15px;line-height:1.25;letter-spacing:-.4px;white-space:nowrap}
+.logo small{font-size:10px;line-height:1.4;margin-top:2px}
+.header-chip{flex:0 0 auto;white-space:nowrap;font-size:9px;letter-spacing:.8px;font-weight:800;color:#995cc3;padding:8px 10px;border-radius:100px;background:#ffffff80;border:1px solid #ffffffd9;backdrop-filter:blur(15px)}
+.aur-home-heading{margin-bottom:13px}.aur-home-heading .eyebrow{font-size:9px;margin-bottom:5px;letter-spacing:1px}
+.aur-home-heading h1{font-size:22px;line-height:1.22;letter-spacing:-.7px}
+.aur-home-heading p{font-size:11px;line-height:1.45;margin-top:4px}
+.aur-hero{min-height:192px;border-radius:22px;box-shadow:0 12px 27px #b37ddd24}
+.aur-hero-copy{padding:17px 15px;width:69%}.aur-hero h2{font-size:21px;line-height:1.12;margin:8px 0}
+.aur-hero p{font-size:10px;max-width:190px;line-height:1.5}
+.aur-hero-kicker{font-size:8px}.aur-hero-action{min-height:37px;padding:8px 12px;margin-top:12px;font-size:10px}
+.aur-product-art{width:50%}.aur-bottle{transform:rotate(4deg) scale(.76);transform-origin:bottom right;right:18px;bottom:22px}.aur-halo{width:160px;height:160px;right:-20px}.aur-pedestal{transform:rotate(-11deg) scale(.8);transform-origin:bottom right}
+.aur-shortcuts{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:13px}
+.aur-shortcuts button{min-height:68px;flex-direction:row;justify-content:flex-start;gap:10px;text-align:left;padding:12px 13px;font-size:11px;border-radius:17px;background:rgba(255,255,255,.57);border:1px solid rgba(255,255,255,.88);box-shadow:0 8px 20px #a975c31a;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.aur-shortcuts span{display:grid;place-items:center;flex:0 0 34px;width:34px;height:34px;border-radius:11px;background:#f2e3fb9c}
+.aur-shortcuts .ui-icon{width:20px;height:20px}
+.aur-section{margin:17px 0 10px}
+.glass,.panel,.aur-recent{background:rgba(255,255,255,.67);border:1px solid rgba(255,255,255,.88);box-shadow:0 8px 24px #976db016;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-radius:19px;padding:15px}
+.page-title{margin:0 0 15px}.page-title h1{font-size:22px}
+.section{margin:17px 0 10px}.section h2{font-size:16px}
+.btn{min-height:42px;padding:10px 13px;font-size:12px;border-radius:13px}
+.tile{min-height:112px;padding:13px;border-radius:17px}
+.field{margin-top:12px}.field>span{margin-bottom:6px}
+.input, input,textarea,select{font-size:16px!important} /* prevents iOS focus auto-zoom */
+.input{min-height:44px;padding:10px 12px;border-radius:12px}
+textarea.input{min-height:94px}
+.bottom{padding:0 10px calc(5px + env(safe-area-inset-bottom,0px))}
+.bottom-inner{max-width:500px;padding:5px;border-radius:22px;background:rgba(255,250,255,.79);border:1px solid #fff;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 -5px 25px #9e78b425}
+.nav-tab{padding:7px 2px 6px;gap:3px;font-size:10px;border-radius:16px}
+.nav-tab .nav-icon,.nav-tab.nav-create .nav-icon{width:32px;height:32px;margin:0;border-radius:12px;box-shadow:none;background:transparent;color:inherit}
+.nav-tab.nav-create.active .nav-icon,.nav-tab.active .nav-icon{background:#f0e1fb;color:#9148ce}
+.nav-tab .ui-icon,.nav-tab.nav-create .nav-icon .ui-icon{width:20px;height:20px;stroke-width:1.8}
+.modal-back{padding:12px}.modal,.dialog{max-width:460px}
+button{touch-action:manipulation}
+@media(max-width:360px){.shell{padding-left:11px;padding-right:11px}.header-chip{font-size:8px;padding:7px}.aur-hero h2{font-size:19px}.aur-hero-copy{width:72%}.aur-shortcuts button{padding:10px;font-size:10px}}
+@media(prefers-reduced-transparency:reduce){.glass,.panel,.aur-recent,.aur-shortcuts button,.bottom-inner{backdrop-filter:none;-webkit-backdrop-filter:none;background:#fff}}
+
+/* Aurora no-zoom: stable text scale, preserve normal scrolling. */
+html,body { -webkit-text-size-adjust:100%; text-size-adjust:100%; touch-action:pan-x pan-y; }
+/* Aurora 2.3 Glass Fix: compact layout, no page zoom */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  touch-action: pan-x pan-y;
+  overscroll-behavior-x: none;
+}
+body {
+  touch-action: pan-x pan-y;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(229,199,255,.53),transparent 38%),
+    radial-gradient(circle at 0% 70%,rgba(252,218,240,.48),transparent 42%),
+    #fbf7fe;
+}
+input, textarea, select, [contenteditable], .textresult, .selectable, pre, code {
+  -webkit-user-select: text;
+  user-select: text;
+  -webkit-touch-callout: default;
+}
+input,textarea,select {
+  font-size:16px !important;
+  touch-action: manipulation;
+}
+button, a, label, .nav-tab {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+* { min-width: 0; }
+.shell {
+  max-width:480px;
+  padding:11px 14px calc(86px + env(safe-area-inset-bottom,0px));
+}
+.top {margin-bottom:15px}
+.logo {gap:9px}
+.logo-icon {
+  width:36px;height:36px;flex:0 0 36px;
+  border-radius:12px;font-size:20px;
+  box-shadow:0 5px 15px #b882d24a;
+}
+.logo strong {font-size:14px;letter-spacing:-.3px;white-space:normal}
+.logo small {font-size:10px}
+.aur-home-heading {margin:0 0 13px}
+.aur-home-heading h1 {font-size:21px;line-height:1.2;letter-spacing:-.6px}
+.aur-home-heading p {font-size:11px;margin-top:4px;line-height:1.45}
+.aur-hero {
+  min-height:165px;
+  border-radius:20px;
+  background:linear-gradient(120deg,#fbe1f5 0%,#edcffb 43%,#c79cf3 100%);
+  box-shadow:0 10px 24px #b78dd323;
+}
+.aur-hero-copy {width:69%;padding:16px 15px 15px}
+.aur-hero-kicker {font-size:8px;letter-spacing:.8px}
+.aur-hero h2 {font-size:21px;line-height:1.12;margin:7px 0}
+.aur-hero p {font-size:10px;line-height:1.45;max-width:190px}
+.aur-hero-action {
+  margin-top:10px;min-height:34px;padding:7px 13px;
+  font-size:11px;border-radius:12px;
+}
+.aur-product-art {width:46%;right:0}
+.aur-bottle {
+  transform:rotate(4deg) scale(.68);
+  transform-origin:bottom right;
+  right:15px;bottom:15px;
+}
+.aur-halo {width:155px;height:155px;right:-25px;top:4px}
+.aur-pedestal {
+  transform:rotate(-11deg) scale(.68);
+  transform-origin:bottom right;
+  right:-24px;bottom:-19px;
+}
+.aur-art-spark {font-size:24px}
+.aur-shortcuts {gap:9px;margin-top:12px}
+.aur-shortcuts button {
+  min-height:57px;padding:9px 12px;gap:9px;
+  border-radius:16px;font-size:11px;
+  color:#473052;
+  background:rgba(255,255,255,.62);
+  border:1px solid rgba(255,255,255,.92);
+  box-shadow:0 5px 17px #ae7cc51b;
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+}
+.aur-shortcuts span {width:32px;height:32px;flex:0 0 32px;border-radius:10px}
+.aur-shortcuts .ui-icon {width:18px;height:18px}
+.aur-shortcuts b {font-size:11px;font-weight:800;line-height:1.25}
+.aur-empty-inline {
+  display:flex;align-items:center;gap:10px;
+  margin-top:15px;padding:13px 14px;
+  border-radius:15px;
+  color:#8b759a;font-size:11px;line-height:1.45;
+  background:rgba(255,255,255,.49);
+  border:1px solid rgba(255,255,255,.85);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+}
+.aur-empty-inline .ui-icon {width:19px;height:19px;flex:0 0 19px;color:#a365cf}
+.aur-section {margin:15px 0 8px}
+.aur-section h2 {font-size:15px}
+.glass,.panel,.aur-recent {
+  background:rgba(255,255,255,.67);
+  border:1px solid rgba(255,255,255,.93);
+  border-radius:18px;padding:14px;
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  box-shadow:0 6px 22px #9974b317;
+}
+.page-title {margin-bottom:12px}
+.page-title h1 {font-size:21px}
+.page-title p {font-size:11px}
+.section {margin:16px 0 9px}
+.section h2 {font-size:15px}
+.btn {min-height:41px;font-size:12px;border-radius:13px}
+.tool-compact,.setting-link {border-radius:16px;min-height:64px}
+.field {margin-top:12px}
+.field>span {margin-bottom:5px}
+.input {min-height:44px;border-radius:12px;padding:10px 12px}
+textarea.input {min-height:94px}
+.bottom {
+  background:linear-gradient(to top,rgba(250,244,254,.82),rgba(250,244,254,0));
+  padding:0 10px calc(7px + env(safe-area-inset-bottom,0px));
+}
+.bottom-inner {
+  max-width:480px;
+  padding:5px 4px;
+  border-radius:20px;
+  background:rgba(255,255,255,.70);
+  border:1px solid rgba(255,255,255,.95);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  box-shadow:0 4px 23px #9e78b423;
+}
+.nav-tab {gap:2px;padding:5px 2px 4px;font-size:10px;border-radius:14px}
+.nav-tab .nav-icon,.nav-tab.nav-create .nav-icon {
+  width:30px;height:30px;border-radius:11px;
+  background:transparent;box-shadow:none;margin:0;
+}
+.nav-tab .ui-icon {width:19px;height:19px}
+.nav-tab.active .nav-icon,.nav-tab.nav-create.active .nav-icon {background:#f0e0f8;color:#9650cc}
+.modal-back {
+  padding:0 0 env(safe-area-inset-bottom,0px);
+  align-items:flex-end;
+  overscroll-behavior:contain;
+}
+.modal-sheet {
+  max-height:min(88dvh,760px);
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  border-radius:23px 23px 0 0;
+  background:rgba(255,251,255,.97);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+}
+.modal-sheet.aur-reply-sheet {max-height:88dvh;border-radius:23px 23px 0 0}
+#toast {max-width:calc(100vw - 26px)}
+@media(max-width:360px) {
+  .shell {padding-left:11px;padding-right:11px}
+  .aur-hero-copy {width:72%;padding:14px 11px}
+  .aur-hero h2 {font-size:19px}
+  .aur-hero p {font-size:9px}
+  .aur-bottle {right:5px;transform:rotate(4deg) scale(.62)}
+  .aur-shortcuts button {padding:9px;font-size:10px}
+}
+@media(prefers-reduced-transparency:reduce) {
+  .glass,.panel,.aur-recent,.aur-shortcuts button,.aur-empty-inline,.bottom-inner {
+    backdrop-filter:none;-webkit-backdrop-filter:none;background:#fff;
+  }
+}
+
+
+/* Aurora 2.4 adaptive Telegram safe area and keyboard */
+.shell{padding-top:calc(11px + var(--aur-tg-top, 0px))}
+/* The bottom bar must disappear whenever an editable field is focused. */
+.input:focus-visible{outline:none!important} /* keep a single soft focus ring */
+html.aur-keyboard-open .bottom{display:none!important;visibility:hidden!important;pointer-events:none!important}
+html.aur-keyboard-open .shell{padding-bottom:calc(18px + env(safe-area-inset-bottom,0px))}
+html.aur-keyboard-open #toast{bottom:14px!important}
+html.aur-keyboard-open .modal-sheet{max-height:calc(100dvh - 14px)}
+/* Smaller projects header and clearer folder form */
+.aur-owner-gift{background:rgba(255,255,255,.64);border:1px solid rgba(255,255,255,.95);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.aur-gift-heading{display:flex;gap:11px;align-items:center;margin-bottom:8px}
+.aur-gift-heading .icon-disc{margin:0;flex:0 0 39px;width:39px;height:39px;background:#f1e3fb;color:#9a54c9}
+.aur-gift-heading h3{font-size:14px}
+.aur-gift-heading p{font-size:11px;color:var(--muted);margin-top:3px}
+.aur-gift-search{display:flex;align-items:center;gap:8px;margin:13px 0 7px}
+.aur-gift-search .input{flex:1;min-width:0;margin:0}
+.aur-gift-search .btn{flex:0 0 auto;min-height:44px}
+.aur-gift-result{margin-top:12px;padding:12px;border:1px solid #e8d7f2;background:rgba(248,240,253,.83);border-radius:15px}
+.aur-gift-result strong{display:block;font-size:13px;overflow-wrap:anywhere}
+.aur-gift-result small{display:block;color:var(--muted);font-size:11px;margin-top:4px;overflow-wrap:anywhere}
+.aur-gift-options{display:flex;align-items:center;gap:9px;margin-top:12px}
+.aur-gift-options select{flex:1;min-width:0}
+.aur-gift-options button{flex:1;min-width:0}
+.aur-gift-note{font-size:10px;line-height:1.55;color:#927ba1;margin-top:11px}
+@media(max-width:355px){.aur-gift-search{flex-wrap:wrap}.aur-gift-search .btn{width:100%}.aur-gift-options{flex-wrap:wrap}.aur-gift-options select,.aur-gift-options button{flex:1 1 100%}}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   AURORA BUSINESS 2.5 — SOFT PRESTIGE UI
+   Existing screens, Telegram safe area and iPhone no-zoom retained.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+:root{
+ --ink:#30263a;--muted:#887c91;--line:#eee7f1;--paper:#fff;
+ --wash:#faf8fb;--lav:#9274c8;--pink:#d9a7cb;--violet:#8265b6;
+ --gradient:linear-gradient(122deg,#ba9bdd 4%,#cda9d9 56%,#e2bdd2 100%);
+ --shadow:0 9px 30px rgba(75,49,96,.043)
+}
+body{background:radial-gradient(ellipse 85% 28% at 95% -6%,#f4e8f7 0%,transparent 76%),#faf8fb!important;color:var(--ink);font-weight:500;letter-spacing:-.12px}
+.shell{max-width:540px;padding:15px 17px calc(112px + env(safe-area-inset-bottom,0px))}
+.top{margin:0 0 23px;align-items:center}
+.logo-icon{background:#eee4f6!important;color:#815fae!important;box-shadow:none!important;border:1px solid #ead9f4;border-radius:13px;width:40px;height:40px;flex:0 0 40px;font-style:normal;font-family:Georgia,serif;font-weight:500}
+.logo strong{font-size:15px;font-weight:800;letter-spacing:-.5px}
+.logo small{color:#a299ac;font-size:10px;letter-spacing:.1px}
+.aur-brand-accent{color:#966eb7}
+.aur-brand-version{font-size:9px;vertical-align:super;margin-left:2px;color:#baabc1}
+.aur-top-right{display:flex;gap:9px;align-items:center}
+.aur-top-label{font-size:10px;letter-spacing:.9px;color:#a290b0;font-weight:800;background:#f1eaf6;border:1px solid #eae1ee;border-radius:50px;padding:7px 10px}
+.aur-header-avatar{border:1px solid #eae2ec;padding:0;border-radius:50%;height:40px;width:40px;display:grid;place-items:center;background:#eadff3;color:#8c6ba5;font-weight:800;overflow:hidden}
+.aur-header-avatar img{width:100%;height:100%;object-fit:cover}
+.aur-greeting{font-size:28px;line-height:1.13;font-weight:800;letter-spacing:-1.1px;margin:0 0 8px}
+.aur-greeting em{font-style:normal;color:#a481bb}
+.aur-subtitle{font-size:12px;line-height:1.7;color:#8b8290;max-width:340px;margin:0}
+.aur-new-hero{position:relative;overflow:hidden;margin:24px 0 20px;padding:24px 22px 20px;background:linear-gradient(133deg,#f1e8f7,#eee5f5 62%,#faeaf3);border:1px solid #e8daee;border-radius:27px;min-height:197px}
+.aur-new-hero:after{content:'✦';position:absolute;right:15px;top:-17px;font-family:Georgia,serif;font-size:164px;line-height:1;color:#fff9;pointer-events:none;transform:rotate(15deg)}
+.aur-new-hero>*{position:relative;z-index:1}
+.aur-new-hero .eyebrow{color:#9e80b7}
+.aur-new-hero h2{font-size:24px;font-weight:800;letter-spacing:-1px;line-height:1.14;max-width:260px;margin:9px 0 10px}
+.aur-new-hero p{font-size:11px;color:#84728d;max-width:228px;line-height:1.7}
+.aur-new-hero .btn{margin-top:17px;background:#fff;color:#795e9c;box-shadow:0 6px 20px #b29bb31f;border-radius:13px}
+.aur-stats{display:flex;gap:10px;margin:18px 0}
+.aur-stat{flex:1;min-width:0;padding:13px 14px;border:1px solid #eee6f0;border-radius:17px;background:#fff}
+.aur-stat strong{font-size:20px;display:block;letter-spacing:-.5px;line-height:1.25}
+.aur-stat small{font-size:10px;color:#9b90a4}
+.aur-kicker{font-size:10px;color:#9f85b2;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:6px}
+.aur-section-title{font-size:16px;font-weight:800;letter-spacing:-.6px;margin:23px 0 12px}
+.aur-feature-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.aur-feature{background:#fff;border:1px solid #eee7f1;border-radius:19px;text-align:left;padding:15px;min-height:113px;color:#48394d;display:flex;flex-direction:column;align-items:flex-start;gap:9px;box-shadow:var(--shadow)}
+.aur-feature .symbol{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:#f5eff9;color:#a17fb7}
+.aur-feature .symbol .ui-icon{width:19px;height:19px}
+.aur-feature strong{font-size:12px;font-weight:800}
+.aur-feature small{font-size:10px;line-height:1.5;color:#978b9e}
+.page-title{margin:0 0 17px}.page-title h1{font-size:25px;letter-spacing:-.8px}.page-title p{font-size:11px;line-height:1.65;margin-top:5px}
+.glass,.panel,.aur-recent{background:#fff;border:1px solid #eee6f0;border-radius:21px;padding:17px;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:var(--shadow)}
+.tool-compact{background:white!important;border:1px solid #eee7f0!important;border-radius:18px!important;box-shadow:var(--shadow)!important;margin-bottom:9px!important}
+.tool-banner{background:#f2ebf6!important;border:1px solid #e8dfee!important;color:#594967!important;border-radius:20px}
+.btn{font-weight:800;font-size:12px;border-radius:13px}.btn.primary{background:#9d7cc5!important;color:white!important;box-shadow:0 8px 20px #9c81c43b!important}
+.btn.soft{background:#f4eef8;color:#886bb0}
+.input{background:#faf9fb;border:1px solid #e8e1e9;border-radius:13px;color:#44374d}
+.input:focus{border-color:#b99bce;box-shadow:0 0 0 3px #e9dcf050}
+.bottom{padding:0 12px calc(7px + env(safe-area-inset-bottom,0px));background:linear-gradient(to top,#faf8fb 40%,transparent)!important}
+.bottom-inner{max-width:520px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;background:#ffffffed!important;border:1px solid #eee6ef!important;border-radius:22px;padding:7px 5px;box-shadow:0 10px 40px #594c701e!important;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
+.nav-tab{min-height:53px;padding:7px 1px 5px!important;font-weight:800!important;font-size:9px!important;color:#9c8ea5;border-radius:16px}
+.nav-tab .nav-icon{margin:0 auto 2px;width:28px;height:28px}
+.nav-tab.active{color:#8d69ad!important;background:#f6f0fa!important}.nav-tab.active .nav-icon{background:transparent!important;color:#8d69ad!important}
+.nav-tab .ui-icon{width:19px;height:19px}
+.aur-ai-intro{text-align:center;padding:28px 17px 20px}
+.aur-ai-mark{width:58px;height:58px;border-radius:20px;display:grid;place-items:center;margin:0 auto 15px;background:linear-gradient(135deg,#e9d9f3,#f7e7f0);color:#986fb6;font-size:31px;font-family:Georgia,serif}
+.aur-ai-intro h2{font-size:23px;letter-spacing:-.7px}
+.aur-ai-intro p{margin:8px auto 0;max-width:255px;color:#9a8ca1;font-size:11px;line-height:1.8}
+.aur-ai-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:1px 0 13px}
+.aur-ai-head h1{font-size:23px;letter-spacing:-.8px}
+.aur-ai-head small{font-size:10px;color:#9b8ca3}
+.aur-ai-buttons{display:flex;gap:7px}
+.aur-ai-buttons .icon-btn{height:37px;width:37px}
+.aur-ai-presets{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:18px 0 20px}
+.aur-ai-presets button{min-height:65px;background:#fff;border:1px solid #ebe3ee;color:#665573;font-size:11px;font-weight:800;text-align:left;padding:13px;border-radius:15px;display:flex;align-items:center;gap:8px}
+.aur-ai-presets .ui-icon{width:17px;height:17px;color:#ab8abe}
+.aur-chat-messages{display:flex;flex-direction:column;gap:14px;margin:18px 0 22px;min-height:180px}
+.aur-bubble{max-width:90%;padding:13px 15px;border-radius:18px;font-size:12px;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere;user-select:text;-webkit-user-select:text}
+.aur-bubble.user{align-self:flex-end;background:#ece3f5;color:#4b375a;border-bottom-right-radius:6px}
+.aur-bubble.assistant{align-self:flex-start;background:#fff;border:1px solid #eee6f0;border-bottom-left-radius:6px;color:#514458;box-shadow:var(--shadow)}
+.aur-bubble-label{display:block;font-size:9px;font-weight:800;letter-spacing:.4px;margin-bottom:4px;opacity:.58}
+.aur-chat-compose{background:#fff;border:1px solid #eae2ed;border-radius:19px;box-shadow:var(--shadow);padding:10px;margin:16px 0 10px}
+.aur-chat-compose textarea{width:100%;border:0;background:transparent;resize:none;min-height:54px;max-height:160px;font-size:16px!important;padding:9px 8px;color:#544460;line-height:1.6}
+.aur-chat-actions{display:flex;align-items:center;justify-content:space-between;padding:0 3px 2px}
+.aur-chat-actions small{font-size:10px;color:#9e94a5}
+.aur-send{height:38px;width:43px;border:0;border-radius:12px;background:#9f7bc5;color:white;display:grid;place-items:center}
+.aur-send:disabled{opacity:.5}
+.aur-thread{display:flex;align-items:center;gap:9px;width:100%;border:1px solid #efe7f0;background:#fff;border-radius:15px;padding:12px;text-align:left;margin:8px 0;color:#55445f}
+.aur-thread .title{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;font-weight:800}
+.aur-thread small{font-size:10px;color:#ab9db1;display:block}
+.aur-ai-note{font-size:10px;color:#a397ac;line-height:1.7;text-align:center;margin:10px 0 20px}
+.aur-list-entry{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid #f0eaf2}
+.aur-list-entry:last-child{border-bottom:0}
+.aur-list-entry .text{flex:1;min-width:0;font-size:12px;overflow-wrap:anywhere}
+.aur-check{width:23px;height:23px;border-radius:8px;border:1px solid #d4c2e1;background:#fff;color:#8c69b2;display:grid;place-items:center;padding:0}
+.aur-check.done{background:#ecdfef}
+.aur-task-done{text-decoration:line-through;color:#a9a1ae}
+.aur-mini-delete{border:0;background:#faf5fa;padding:8px;color:#ab8faf;border-radius:10px}
+.aur-numeric-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.aur-big-number{font-size:24px;font-weight:800;letter-spacing:-.8px}
+.aur-positive{color:#748f78}.aur-negative{color:#ba6983}
+.aur-capsule{display:inline-flex;align-items:center;gap:6px;background:#f4edf8;padding:7px 11px;border-radius:50px;color:#9274ad;font-size:10px;font-weight:800}
+@media(max-width:355px){.shell{padding-left:11px;padding-right:11px}.aur-new-hero h2{font-size:21px}.aur-feature{min-height:108px;padding:12px}.nav-tab{font-size:8px!important}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="shell"><header class="top" id="top"></header><main id="main"></main></div>
+<nav class="bottom"><div class="bottom-inner" id="nav"></div></nav>
+<div id="toast" hidden role="status"></div>
+<div id="modal-root" class="modal-back" hidden></div>
+<input class="hidden-input" id="photo-file" type="file" accept="image/png,image/jpeg,image/webp">
+<input class="hidden-input" id="design-file" type="file" accept="image/png,image/jpeg,image/webp">
+<script>
+'use strict';
+
+/* Aurora Business: prevent accidental page/text zoom on iPhone Telegram.
+   Keep native scrolling and selection/editing inside text fields. */
+(function preventInAppZoom(){
+  const prevent=e=>{if(e.cancelable)e.preventDefault();};
+  for(const eventName of ['gesturestart','gesturechange','gestureend']){
+    document.addEventListener(eventName,prevent,{passive:false,capture:true});
+  }
+  document.addEventListener('touchmove',e=>{
+    if(e.touches.length>1)prevent(e);
+  },{passive:false,capture:true});
+  let lastTapTime=0;
+  document.addEventListener('touchend',e=>{
+    if(e.changedTouches.length!==1)return;
+    const element=e.target instanceof Element?e.target:null;
+    if(element?.closest('input,textarea,select,[contenteditable]')){
+      lastTapTime=0;
+      return; // Keep cursor placement, native copy/paste and text selection.
+    }
+    const now=Date.now();
+    if(now-lastTapTime<300){
+      prevent(e);
+      lastTapTime=0;
+    }else{
+      lastTapTime=now;
+    }
+  },{passive:false,capture:true});
+  document.addEventListener('dblclick',e=>{
+    const element=e.target instanceof Element?e.target:null;
+    if(!element?.closest('input,textarea,select,[contenteditable]'))prevent(e);
+  },{passive:false,capture:true});
+})();
+
+const API='https://aurora-ai.artykartunov.workers.dev';
+const tg=window.Telegram?.WebApp||null;
+try{tg?.ready();tg?.expand();tg?.disableVerticalSwipes?.();tg?.setHeaderColor?.('#faf1ff')}catch{}
+const user=tg?.initDataUnsafe?.user||null;
+// Aurora Business 2.4.1: protect the top of the page in Telegram fullscreen.
+// Some iOS Telegram builds report zero safe-area insets or delay isFullscreen.
+// Detect the fullscreen webview too; never add this offset in the normal Mini App sheet.
+let auroraFullscreenDetected=false;
+function auroraSyncTelegramSafeArea(){
+  const contentTop=Math.max(0,Number(tg?.contentSafeAreaInset?.top)||0);
+  const systemTop=Math.max(0,Number(tg?.safeAreaInset?.top)||0);
+  const screenHeight=Math.max(Number(window.screen?.height)||0,Number(window.screen?.availHeight)||0);
+  // innerHeight is a layout viewport: unlike visualViewport.height it normally
+  // remains stable while the keyboard is visible on iOS.
+  const layoutHeight=Number(window.innerHeight)||0;
+  const fillsScreen=!!tg && screenHeight>0 && layoutHeight>=screenHeight-80;
+  const nativeFullscreen=!!tg?.isFullscreen;
+  const insetShowsOverlay=!!tg && contentTop>=48;
+  if(nativeFullscreen||fillsScreen||insetShowsOverlay)auroraFullscreenDetected=true;
+  // Telegram's native Close/Menu pill occupies more than the iPhone status bar.
+  // Reserve at least 84 CSS px above our brand header in fullscreen.
+  const extra=auroraFullscreenDetected?Math.max(84,contentTop,systemTop):0;
+  document.documentElement.style.setProperty('--aur-tg-top',Math.min(160,Math.round(extra))+'px');
+}
+auroraSyncTelegramSafeArea();
+try{
+  tg?.onEvent?.('safeAreaChanged',auroraSyncTelegramSafeArea);
+  tg?.onEvent?.('contentSafeAreaChanged',auroraSyncTelegramSafeArea);
+  tg?.onEvent?.('fullscreenChanged',auroraSyncTelegramSafeArea);
+  tg?.onEvent?.('viewportChanged',auroraSyncTelegramSafeArea);
+}catch{}
+window.addEventListener('resize',auroraSyncTelegramSafeArea,{passive:true});
+requestAnimationFrame(auroraSyncTelegramSafeArea);
+setTimeout(auroraSyncTelegramSafeArea,350);
+setTimeout(auroraSyncTelegramSafeArea,1100);
+
+const USER_KEY='aurora-studio-v18-'+String(user?.id||'browser');
+const $=id=>document.getElementById(id);
+
+// Hide the fixed navigation while the iOS/Telegram keyboard is being used.
+function aurEditable(el){
+  return el instanceof Element && Boolean(el.closest('input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),textarea,select,[contenteditable="true"]'));
+}
+function aurUpdateKeyboard(){
+  const focused=aurEditable(document.activeElement);
+  const vv=window.visualViewport;
+  const hiddenHeight=vv?Math.max(0,window.innerHeight-vv.height-vv.offsetTop):0;
+  document.documentElement.classList.toggle('aur-keyboard-open',focused||hiddenHeight>130);
+}
+document.addEventListener('focusin',e=>{if(aurEditable(e.target))document.documentElement.classList.add('aur-keyboard-open')});
+document.addEventListener('focusout',()=>{requestAnimationFrame(aurUpdateKeyboard);setTimeout(aurUpdateKeyboard,120)});
+window.visualViewport?.addEventListener('resize',aurUpdateKeyboard);
+window.visualViewport?.addEventListener('scroll',aurUpdateKeyboard);
+window.addEventListener('resize',aurUpdateKeyboard);
+
+const safe=v=>String(v??'').replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]));
+const validImage=s=>typeof s==='string'&&/^data:image\/(png|jpeg|webp);base64,[a-z0-9+/=]+$/i.test(s);
+const kindName={text:'AI-текст',photo:'AI-фото',design:'Карточка'};
+const state={assistant:{threads:[],active:null,messages:[],memory:'',draft:'',loaded:false,loading:false,error:''},planner:{tasks:[],notes:[]},finance:{revenue:'',costs:'',orders:''},documentText:'',photoMode:'product',photoExample:-1,page:'home',folder:'all',kind:'all',search:'',folders:[],projects:[],synced:false,ready:false,working:false,plan:{plan:'free',billingReady:false,stars:0},owner:false,admin:null,writer:{kind:'ad',title:'',facts:'',audience:'',tone:'warm'},writerText:'',aiDesc:{name:'',features:'',tone:'sales',platform:'marketplace'},aiResult:null,photo:{prompt:'',style:'catalog',ratio:'1:1'},photoReference:null,photoResult:null,photoProjectId:null,designer:{title:'',features:'',price:'',badge:'НОВИНКА',theme:'lavender',format:'4:5'},designerImage:null,saved:[],selected:null,giftQuery:'',giftUser:null,giftDays:'30'};
+function notice(s){const el=$('toast');el.textContent=String(s);el.hidden=false;clearTimeout(notice.t);notice.t=setTimeout(()=>el.hidden=true,3400)}
+function busy(v){state.working=v;document.querySelectorAll('[data-busy]').forEach(b=>b.disabled=v)}
+async function api(path,payload={}){
+ if(!tg?.initData)throw Error('Открой Аврору через Telegram-бота, не в обычном браузере.');
+ const r=await fetch(API+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({initData:tg.initData,...payload})});
+ const data=await r.json().catch(()=>({error:'Неизвестный ответ сервера'}));
+ if(!r.ok)throw Error(data.error||`HTTP ${r.status}`);
+ return data;
+}
+function saveLocal(){try{localStorage.setItem(USER_KEY,JSON.stringify({folders:state.folders,projects:state.projects.slice(0,350),planner:state.planner,finance:state.finance}))}catch{}}
+function loadLocal(){try{const d=JSON.parse(localStorage.getItem(USER_KEY)||'{}');state.folders=Array.isArray(d.folders)?d.folders:[];state.projects=Array.isArray(d.projects)?d.projects:[];if(d.planner){state.planner.tasks=Array.isArray(d.planner.tasks)?d.planner.tasks.slice(0,100):[];state.planner.notes=Array.isArray(d.planner.notes)?d.planner.notes.slice(0,50):[]}if(d.finance&&typeof d.finance==='object')state.finance={...state.finance,...d.finance}}catch{}}
+function id(){return crypto.randomUUID?.()||'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>(c==='x'?Math.random()*16|0:(Math.random()*4|8)).toString(16))}
+async function cacheOpen(){return new Promise((resolve,reject)=>{const q=indexedDB.open('AuroraStudioImages',1);q.onupgradeneeded=()=>{if(!q.result.objectStoreNames.contains('images'))q.result.createObjectStore('images')};q.onsuccess=()=>resolve(q.result);q.onerror=()=>reject(q.error)})}
+async function cacheSet(key,value){if(!value)return;try{const db=await cacheOpen();await new Promise((ok,no)=>{const tx=db.transaction('images','readwrite');tx.objectStore('images').put(value,key);tx.oncomplete=ok;tx.onerror=()=>no(tx.error)});db.close()}catch(e){console.warn('Cache',e)}}
+async function cacheGet(key){try{const db=await cacheOpen();const val=await new Promise((ok,no)=>{const tx=db.transaction('images');const q=tx.objectStore('images').get(key);q.onsuccess=()=>ok(q.result||null);q.onerror=()=>no(q.error)});db.close();return val}catch{return null}}
+async function cacheDelete(key){try{const db=await cacheOpen();await new Promise((ok,no)=>{const tx=db.transaction('images','readwrite');tx.objectStore('images').delete(key);tx.oncomplete=ok;tx.onerror=()=>no(tx.error)});db.close()}catch{}}
+function imageLoad(src){return new Promise((ok,no)=>{const im=new Image();im.onload=()=>ok(im);im.onerror=()=>no(Error('Не удалось прочитать фото'));im.src=src})}
+function blobOf(canvas,type,quality){return new Promise(ok=>canvas.toBlob(ok,type,quality))}
+async function dataOf(blob){return new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(r.result);r.onerror=()=>no(Error('Не удалось прочитать файл'));r.readAsDataURL(blob)})}
+async function squeeze(source,maxBytes=350000,maxSide=1050){
+ const image=await imageLoad(source);
+ for(let side=maxSide;side>=440;side=Math.floor(side*.82)){
+  const ratio=Math.min(1,side/Math.max(image.naturalWidth,image.naturalHeight));
+  const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(image.naturalWidth*ratio));canvas.height=Math.max(1,Math.round(image.naturalHeight*ratio));
+  const ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(image,0,0,canvas.width,canvas.height);
+  for(const q of [.82,.7,.58,.45,.32]){const blob=await blobOf(canvas,'image/jpeg',q);if(blob&&blob.size<=maxBytes)return dataOf(blob)}
+ }
+ throw Error('Не удалось сжать фото до 350 КБ');
+}
+async function cropImage(source,ratio){const target={'1:1':1,'4:5':.8,'9:16':9/16}[ratio];if(!target)return source;const im=await imageLoad(source);const c=document.createElement('canvas');const sw=im.naturalWidth,sh=im.naturalHeight;let w=sw,h=sh;if(sw/sh>target)w=Math.round(sh*target);else h=Math.round(sw/target);c.width=w;c.height=h;c.getContext('2d').drawImage(im,Math.round((sw-w)/2),Math.round((sh-h)/2),w,h,0,0,w,h);return c.toDataURL('image/png')}
+async function fileData(file,max=9000000){if(!file||file.size>max||!['image/jpeg','image/png','image/webp'].includes(file.type))throw Error('Нужно JPG, PNG или WEBP до 9 МБ');return dataOf(file)}
+async function projectImage(p){let photo=await cacheGet(p.id);if(!photo&&p.imageKey&&state.synced){try{photo=(await api('/studio/images/get',{imageKey:p.imageKey})).image;if(validImage(photo))await cacheSet(p.id,photo)}catch{}}return validImage(photo)?photo:null}
+async function saveProject(kind,title,content,fullImage=null,existingId=null){
+ const projectId=existingId||id();const previous=state.projects.find(p=>p.id===projectId);
+ if(fullImage)await cacheSet(projectId,fullImage);
+ let imageKey=previous?.imageKey||null;
+ if(fullImage&&state.synced&&!imageKey){
+  try{const compressed=await squeeze(fullImage);const response=await api('/studio/images/save',{image:compressed});imageKey=response.imageKey||null}
+  catch(e){notice('Фото только на устройстве: '+e.message)}
+ }
+ const p={id:projectId,kind,title:String(title||'Без названия').slice(0,120),folderId:previous?.folderId||(state.folder==='all'?'':state.folder),content:content||{},imageKey,createdAt:previous?.createdAt||new Date().toISOString(),updatedAt:new Date().toISOString()};
+ if(state.synced){try{const response=await api('/studio/projects/save',{project:p});p.id=response.id||p.id}catch(e){notice('Проект пока локальный: '+e.message)}}
+ const i=state.projects.findIndex(x=>x.id===p.id);if(i<0)state.projects.unshift(p);else state.projects[i]=p;saveLocal();return p;
+}
+async function refreshLibrary(){if(!tg?.initData)return;try{const d=await api('/studio/library');state.folders=Array.isArray(d.folders)?d.folders:[];state.projects=Array.isArray(d.projects)?d.projects:[];state.synced=true;saveLocal()}catch(e){state.synced=false;notice('Локальный режим: '+e.message)}}
+async function refreshPlan(){if(!tg?.initData)return;try{state.plan=await api('/business/billing/status')}catch{}}
+async function checkOwner(){if(!tg?.initData)return;try{state.admin=await api('/admin/overview');state.owner=true}catch{state.owner=false}}
+function heading(name,sub){return `<header class="page-title"><h1>${safe(name)}</h1><p class="small muted">${safe(sub)}</p></header>`}
+function blank(symbol,title,sub){return `<div class="glass empty"><div class="symbol">${symbol}</div><h3>${safe(title)}</h3><p class="small muted">${safe(sub)}</p></div>`}
+
+function tabs(){
+ const entries=[['home','Главная','home'],['ai','Aurora AI','sparkle'],['tools','Инструменты','grid'],['projects','Проекты','folder'],['profile','Профиль','user']];
+ const active=['description','writer','designer','photos','tools','planner','analytics','documents','marketing','competitors'].includes(state.page)?'tools':['detail','saved','projects'].includes(state.page)?'projects':['pro','support','admin','inbox','profile'].includes(state.page)?'profile':['ai','aiHistory'].includes(state.page)?'ai':'home';
+ return entries.map(([page,label,icon])=>`<button class="nav-tab ${active===page?'active':''}" data-act="page" data-page="${page}" aria-label="${label}" ${active===page?'aria-current="page"':''}><span class="nav-icon">${ico(icon)}</span><span>${label}</span></button>`).join('');
+}
+function feature(page,icon,title,description){return `<button class="aur-feature" data-act="page" data-page="${page}"><span class="symbol">${ico(icon)}</span><strong>${title}</strong>${description?`<small>${description}</small>`:''}</button>`}
+function home(){
+ const name=user?.first_name||'друг';
+ const recent=state.projects.slice(0,2),todo=state.planner.tasks.filter(t=>!t.done).length;
+ return `<div class="aur-kicker">ТВОЁ РАБОЧЕЕ ПРОСТРАНСТВО</div><h1 class="aur-greeting">Привет, <em>${safe(name)}</em> ✦</h1>
+ <p class="aur-subtitle">Одна красивая студия для идей, проектов и ежедневных задач бизнеса.</p>
+ <section class="aur-new-hero"><span class="eyebrow">AURORA INTELLIGENCE</span><h2>Твои идеи.<br>Новые возможности.</h2><p>Спроси Аврору, создай текст или начни новый проект.</p><button class="btn" data-act="page" data-page="ai">Открыть Aurora AI ${ico('arrow','small-icon')}</button></section>
+ <div class="aur-stats"><div class="aur-stat"><strong>${state.projects.length}</strong><small>Мои проекты</small></div><div class="aur-stat"><strong>${todo}</strong><small>Задачи в работе</small></div><div class="aur-stat"><strong>${state.plan.plan==='pro'?'PRO':'FREE'}</strong><small>Мой тариф</small></div></div>
+ <h2 class="aur-section-title">Начни с главного</h2><div class="aur-feature-grid">
+ ${feature('description','pen','Описание товара','Тексты для магазинов')}
+ ${feature('photos','image','AI-фотостудия','Визуал для каталога')}
+ ${feature('planner','check','Мои задачи','План на сегодня')}
+ ${feature('writer','type','Копирайтер','Реклама и посты')}
+ </div>
+ ${recent.length?`<div class="section"><h2>Недавние проекты</h2><button class="aur-plain-link" data-act="page" data-page="projects">Все ${ico('arrow','small-icon')}</button></div><div class="glass aur-recent">${recent.map(projectRow).join('')}</div>`:''}
+ <p class="aur-ai-note">Создавай и сохраняй. AI-запросы требуют доступного баланса OpenAI API.</p>`;
+}
+function ai(){
+ const a=state.assistant,items=a.messages||[];
+ return `<div class="aur-ai-head"><div><h1>Aurora AI <span style="color:#ab85c1">✦</span></h1><small>${a.active?'Личный диалог':'Твой интеллектуальный помощник'}</small></div><div class="aur-ai-buttons"><button class="icon-btn" data-act="ai-history" aria-label="История чатов" title="История">${ico('clock')}</button><button class="icon-btn" data-act="ai-memory" aria-label="Память" title="Память">${ico('layers')}</button><button class="icon-btn" data-act="ai-new" aria-label="Новый чат" title="Новый чат">${ico('plus')}</button></div></div>
+ ${!items.length?`<div class="aur-ai-intro"><div class="aur-ai-mark">✦</div><h2>Чем могу помочь?</h2><p>От идеи до готового текста — я рядом, когда нужна ясность и вдохновение.</p></div><div class="aur-ai-presets">
+ <button data-act="ai-preset" data-prompt="Придумай 5 практичных идей продвижения моего товара.">${ico('sparkle')}Идеи для бизнеса</button>
+ <button data-act="ai-preset" data-prompt="Помоги написать красивый и понятный пост для Telegram-магазина. Сначала уточни товар.">${ico('pen')}Текст для поста</button>
+ <button data-act="ai-preset" data-prompt="Помоги составить простой план задач на ближайшие 7 дней для моего бизнеса.">${ico('clock')}План на неделю</button>
+ <button data-act="ai-preset" data-prompt="Помоги проанализировать конкурента. Сначала попроси у меня данные о его предложении.">${ico('search')}Анализ конкурентов</button></div>`:`<div class="aur-chat-messages" id="aur-chat-messages">${items.map(m=>`<div class="aur-bubble ${m.role==='user'?'user':'assistant'}"><span class="aur-bubble-label">${m.role==='user'?'Ты':'АВРОРА ✦'}</span>${safe(m.content)}</div>`).join('')}${a.loading?'<div class="aur-bubble assistant">Аврора отвечает…</div>':''}</div>`}
+ ${a.error?`<div class="notice" role="alert">${safe(a.error)}</div>`:''}
+ <div class="aur-chat-compose"><textarea id="aur-ai-input" maxlength="1500" placeholder="Напиши сообщение Авроре…" aria-label="Сообщение для Авроры">${safe(a.draft)}</textarea><div class="aur-chat-actions"><small>Только в Telegram · AI на OpenAI</small><button class="aur-send" data-act="ai-send" aria-label="Отправить" ${a.loading?'disabled':''}>${ico('send','small-icon')}</button></div></div>
+ <p class="aur-ai-note">История и память хранятся отдельно для каждого аккаунта Telegram. Проверь ответы AI перед использованием.</p>`;
+}
+function aiHistory(){const a=state.assistant;return `${heading('Мои диалоги','Выбери разговор или начни новый.')}<button class="btn primary block" data-act="ai-new">${ico('plus','small-icon')} Новый диалог</button><div style="margin-top:17px">${a.threads.length?a.threads.map(t=>`<div class="aur-thread"><button data-act="ai-open" data-id="${safe(t.id)}" style="flex:1;min-width:0;text-align:left;border:0;background:transparent;color:inherit"><div class="title">${safe(t.title)}</div><small>${safe(new Date(t.updatedAt).toLocaleDateString('ru-RU'))}</small></button><button class="aur-mini-delete" data-act="ai-rename" data-id="${safe(t.id)}" aria-label="Переименовать диалог">${ico('edit','small-icon')}</button><button class="aur-mini-delete" data-act="ai-delete" data-id="${safe(t.id)}" aria-label="Удалить диалог">${ico('trash','small-icon')}</button></div>`).join(''):blank('✦','Нет диалогов','Начни первый разговор с Авророй.')}</div>`}
+function planner(){
+ const p=state.planner;
+ return `${heading('Планировщик','Задачи и заметки под рукой — даже без AI.')}<div class="glass"><h3>Новая задача</h3><div class="inline-filter"><input id="aur-task-input" class="input" maxlength="180" placeholder="Что нужно сделать?"><button class="btn primary" data-act="task-add" aria-label="Добавить задачу">${ico('plus')}</button></div><div style="margin-top:12px">${p.tasks.length?p.tasks.map(t=>`<div class="aur-list-entry"><button class="aur-check ${t.done?'done':''}" data-act="task-toggle" data-id="${safe(t.id)}" aria-label="Отметить">${t.done?ico('check','small-icon'):''}</button><div class="text ${t.done?'aur-task-done':''}">${safe(t.text)}</div><button class="aur-mini-delete" data-act="task-delete" data-id="${safe(t.id)}" aria-label="Удалить">${ico('trash','small-icon')}</button></div>`).join(''):`<p class="small muted">Пока задач нет. Добавь первую.</p>`}</div></div>
+ <h2 class="aur-section-title">Заметки</h2><div class="glass"><textarea class="input" id="aur-note-input" maxlength="3000" placeholder="Запиши идею или важную информацию…"></textarea><button class="btn primary block" data-act="note-add">Сохранить заметку</button></div>${p.notes.map(n=>`<div class="glass"><div style="display:flex;align-items:start;justify-content:space-between;gap:10px"><p class="textresult" style="flex:1;margin:0">${safe(n.text)}</p><button class="aur-mini-delete" data-act="note-delete" data-id="${safe(n.id)}" aria-label="Удалить заметку">${ico('trash','small-icon')}</button></div><p class="small muted" style="margin-top:9px">${safe(new Date(n.createdAt).toLocaleDateString('ru-RU'))}</p></div>`).join('')}
+ <div class="notice">Задачи и заметки в этой версии сохраняются на текущем устройстве. Облачная синхронизация будет отдельным обновлением.</div>`;
+}
+function analytics(){const f=state.finance,r=Number(f.revenue)||0,c=Number(f.costs)||0,n=Number(f.orders)||0,p=r-c,m=r>0?p/r*100:0;return `${heading('Бизнес-калькулятор','Узнай прибыль, маржу и средний чек без AI.')}<div class="glass"><label class="field"><span>Выручка за период</span><input class="input" type="number" inputmode="decimal" min="0" step="any" data-model="finance.revenue" value="${safe(f.revenue)}" placeholder="Например, 150000"></label><label class="field"><span>Расходы за период</span><input class="input" type="number" inputmode="decimal" min="0" step="any" data-model="finance.costs" value="${safe(f.costs)}" placeholder="Например, 85000"></label><label class="field"><span>Число заказов</span><input class="input" type="number" inputmode="numeric" min="0" step="1" data-model="finance.orders" value="${safe(f.orders)}" placeholder="Например, 40"></label><button class="btn primary block" data-act="finance-calc">Рассчитать показатели</button></div><div class="aur-numeric-grid"><div class="glass"><div class="aur-kicker">Прибыль</div><div class="aur-big-number ${p>=0?'aur-positive':'aur-negative'}">${money(p)}</div></div><div class="glass"><div class="aur-kicker">Маржинальность</div><div class="aur-big-number">${r?m.toFixed(1)+' %':'—'}</div></div><div class="glass"><div class="aur-kicker">Средний чек</div><div class="aur-big-number">${n?money(r/n):'—'}</div></div><div class="glass"><div class="aur-kicker">Заказов</div><div class="aur-big-number">${n||0}</div></div></div><div class="notice">Здесь простая управленческая оценка без налогов, возвратов и сложного учёта. Валюта — любая, если вводишь все суммы в одной валюте.</div>`}
+function money(n){return Number.isFinite(n)?new Intl.NumberFormat('ru-RU',{maximumFractionDigits:2}).format(n):'—'}
+function documents(){return `${heading('Документы','Подготовь текст к анализу в Aurora AI.')}<div class="glass"><div class="aur-kicker">Импорт документа</div><h3>Загрузи текстовый файл</h3><p class="small muted" style="margin:9px 0 13px">Поддерживаются TXT, MD, CSV и JSON до 100 КБ. PDF и Word пока не обрабатываются в этой версии.</p><input class="input" id="aur-document-file" type="file" accept=".txt,.md,.csv,.json,text/plain,text/csv,application/json"><p class="small muted" style="margin-top:9px">${state.documentText?`Загружено ${state.documentText.length} символов.`:'Файл обрабатывается на твоём устройстве.'}</p>${state.documentText?`<textarea class="input" readonly style="margin-top:12px">${safe(state.documentText.slice(0,4500))}</textarea><button class="btn primary block" data-act="document-to-ai">Обсудить документ с AI</button>`:''}</div>`}
+function marketing(){return `${heading('AI-маркетолог','Идеи и продвижение твоего магазина.')}<div class="glass"><div class="aur-kicker">БЫСТРЫЙ СТАРТ</div><h3>Выбери задачу</h3><div class="aur-ai-presets" style="margin-bottom:0"><button data-act="ai-start-prompt" data-prompt="Подготовь контент-план на 7 дней для моего магазина. Сначала уточни нишу и целевую аудиторию.">Контент-план на неделю</button><button data-act="ai-start-prompt" data-prompt="Разработай несколько вариантов рекламной кампании для моего бизнеса. Сначала уточни нишу и бюджет.">Рекламная кампания</button><button data-act="ai-start-prompt" data-prompt="Придумай 10 ненавязчивых идей для постов Telegram-магазина. Сначала уточни тематику.">Идеи постов</button><button data-act="ai-start-prompt" data-prompt="Помоги улучшить конверсию карточки товара. Сначала попроси описание и данные товара.">Улучшить продажи</button></div></div>`}
+function competitors(){return `${heading('Конкуренты','Сравним предложения на основе проверенных данных.')}<div class="glass"><p class="small muted">Вставь описание своего товара и предложения конкурентов. Аврора сравнит их, но не ищет цены в интернете автоматически.</p><textarea class="input" id="aur-competitors-text" maxlength="2500" placeholder="Наш товар: …\nКонкурент 1: …\nКонкурент 2: …" style="margin-top:13px"></textarea><button class="btn primary block" data-act="competitors-to-ai">Проанализировать с AI</button></div>`}
+function description(){const d=state.aiDesc;return `${heading('AI-описания','Профессиональные карточки и тексты для маркетплейсов.')}<div class="glass"><label class="field"><span>Название товара</span><input class="input" data-model="aiDesc.name" value="${safe(d.name)}" maxlength="100" placeholder="Например: увлажняющий крем"></label><label class="field"><span>Проверенные характеристики</span><textarea class="input" data-model="aiDesc.features" maxlength="650" placeholder="Состав, материал, размер, особенности...">${safe(d.features)}</textarea></label><div class="grid2"><label class="field"><span>Площадка</span><select class="input" data-model="aiDesc.platform">${[['marketplace','Универсально'],['wildberries','Wildberries'],['ozon','Ozon'],['yandex','Яндекс Маркет'],['telegram','Telegram']].map(([v,t])=>`<option value="${v}" ${d.platform===v?'selected':''}>${t}</option>`).join('')}</select></label><label class="field"><span>Тон текста</span><select class="input" data-model="aiDesc.tone">${[['sales','Продающий'],['neutral','Нейтральный'],['short','Краткий']].map(([v,t])=>`<option value="${v}" ${d.tone===v?'selected':''}>${t}</option>`).join('')}</select></label></div><button class="btn primary block" data-busy data-act="description-generate">✦ Создать описание</button></div>${state.aiResult?`<div class="glass"><p class="eyebrow">Готовое описание</p><h2>${safe(state.aiResult.title)}</h2><p class="textresult">${safe(state.aiResult.description)}</p><div class="line"></div><h3>Пост для Telegram</h3><p class="textresult">${safe(state.aiResult.post)}</p>${(state.aiResult.needsReview||[]).length?`<div class="notice">Проверь: ${safe(state.aiResult.needsReview.join('; '))}</div>`:''}<div class="btn-row"><button class="btn outline" data-act="description-copy">Копировать</button><button class="btn primary" data-act="description-save">В проекты</button><button class="btn soft" data-act="description-card">В конструктор</button></div></div>`:''}<div class="notice">Аврора не выдумывает характеристики: укажи только то, что точно известно о товаре.</div>`}
+function writer(){const w=state.writer;return `${heading('AI-копирайтер','Реклама, SEO, посты, преимущества и заголовки.')}<div class="glass"><div class="pillrow">${[['ad','Реклама'],['seo','SEO'],['benefits','Преимущества'],['headline','Заголовки'],['social','Пост'],['card','Текст карточки']].map(([v,t])=>`<button class="pill ${w.kind===v?'active':''}" data-act="writer-kind" data-kind="${v}">${t}</button>`).join('')}</div><label class="field"><span>Название товара</span><input class="input" data-model="writer.title" value="${safe(w.title)}" maxlength="120"></label><label class="field"><span>Подтверждённые характеристики</span><textarea class="input" data-model="writer.facts" maxlength="1500" placeholder="Что обязательно упомянуть">${safe(w.facts)}</textarea></label><label class="field"><span>Для кого товар?</span><input class="input" data-model="writer.audience" value="${safe(w.audience)}" maxlength="160" placeholder="Например: молодые мамы"></label><label class="field"><span>Стиль</span><select class="input" data-model="writer.tone">${[['warm','Дружелюбный'],['bold','Энергичный'],['minimal','Минималистичный'],['professional','Деловой']].map(([v,t])=>`<option value="${v}" ${w.tone===v?'selected':''}>${t}</option>`).join('')}</select></label><button class="btn primary block" data-busy data-act="writer-generate">✦ Написать текст</button></div>${state.writerText?`<div class="glass"><h3>Результат</h3><p class="textresult">${safe(state.writerText)}</p><div class="btn-row"><button class="btn outline" data-act="writer-copy">Копировать</button><button class="btn primary" data-act="writer-save">Сохранить</button></div></div>`:''}`}
+function photos(){
+ const p=state.photo,uploaded=!!state.photoReference;
+ const examples=[['perfume','Парфюм','Флакон парфюма на светлом лавандовом пьедестале, премиальный предметный свет'],['headphones','Наушники','Стильные беспроводные наушники на нежном сиреневом фоне, мягкие тени'],['bag','Сумка','Элегантная небольшая сумочка на пастельно-розовом фоне, предметная съемка'],['shoe','Кроссовки','Белые кроссовки на чистом лавандовом фоне, фотореалистичный студийный свет']];
+ return `<div class="aur-subhead"><button class="aur-back" data-act="page" data-page="home">${ico('back')}</button><div><h1>AI-фотостудия</h1><p class="muted small">Преврати снимок в красивую рекламу</p></div><button class="aur-mini-history" data-act="page" data-page="projects">${ico('clock')}</button></div>
+ <div class="aur-photo-tabs">${[['product','Фото товара'],['background','Фон'],['scene','Сцена'],['style','Стиль']].map(([v,t])=>`<button class="${state.photoMode===v?'selected':''}" data-act="photo-mode" data-mode="${v}">${t}</button>`).join('')}</div>
+ <button class="aur-upload-zone" data-act="upload-photo"><span class="aur-upload-icon">${ico('image')}</span><span class="aur-upload-heading">${uploaded?'Фото загружено ✓':'Загрузите фото товара'}</span><small>${uploaded?'Нажми для замены исходной фотографии':'Нажмите, чтобы выбрать изображение'}</small><span class="aur-upload-tags">JPG · PNG · WEBP &nbsp; | &nbsp; до 9 МБ</span></button>
+ <div class="section aur-section" style="margin-top:21px"><h2>Или выберите пример</h2></div><div class="aur-example-row">${examples.map(([type,label,prompt],i)=>`<button class="aur-example ${state.photoExample===i?'chosen':''}" data-act="photo-example" data-index="${i}"><span class="aur-example-emoji ${type}">${{perfume:'🧴',headphones:'🎧',bag:'👜',shoe:'👟'}[type]}</span><small>${label}</small></button>`).join('')}</div>
+ <div class="glass aur-photo-settings"><label class="field" style="margin-top:0"><span>${{product:"Каким должно быть фото?",background:"Опиши новый фон",scene:"Опиши сцену",style:"Опиши желаемый стиль"}[state.photoMode]}</span><textarea class="input" data-model="photo.prompt" maxlength="850" placeholder="Например: флакон духов на лавандовом подиуме, мягкий свет">${safe(p.prompt)}</textarea></label><div class="aur-settings-grid"><label class="field"><span>Стиль</span><select class="input" data-model="photo.style">${[['catalog','Каталог'],['studio','Премиум'],['lifestyle','Интерьер']].map(([v,t])=>`<option value="${v}" ${p.style===v?'selected':''}>${t}</option>`).join('')}</select></label><label class="field"><span>Формат</span><select class="input" data-model="photo.ratio">${[['1:1','1:1'],['4:5','4:5'],['9:16','9:16']].map(([v,t])=>`<option value="${v}" ${p.ratio===v?'selected':''}>${t}</option>`).join('')}</select></label></div><button class="btn primary block aur-generate" data-busy data-act="photo-generate">${ico('sparkle')} Сгенерировать с AI</button><p class="aur-limit-note">FREE: 1 фото в день · PRO: 5 фото в день</p></div>
+ ${state.photoResult?`<div class="glass aur-result"><h2>Твоё AI-фото готово ✦</h2><img class="photo-preview" src="${state.photoResult}" alt="Результат генерации"><div class="btn-row"><button class="btn primary" data-act="photo-design">Создать карточку</button><button class="btn outline" data-act="photo-download">Скачать</button><button class="btn soft" data-act="photo-save">В проекты</button></div></div>`:''}
+ <div class="safe-box">${ico('shield')}<span>AI может изменить детали товара — проверяй результат. Для синхронизации в D1 сохраняется сжатая копия до 350 КБ.</span></div>`;
+}
+function preview(){const d=state.designer;return `<div id="design-preview" class="preview-card ${safe(d.theme)}"><div class="stamp">AURORA ✦ AI STUDIO</div>${state.designerImage?`<img class="product-image" src="${state.designerImage}" alt="Товар">`:'<div class="fake-product">◇</div>'}<div style="margin-top:12px"><span class="tag">${safe(d.badge||'НОВИНКА')}</span><h2>${safe(d.title||'Название товара')}</h2><p class="features">${safe(d.features||'Уникальные преимущества товара')}</p><div class="price">${safe(d.price||'')}</div></div></div>`}
+function designer(){const d=state.designer;return `${heading('Конструктор карточек','Твой дизайн в формате PNG.')}<div class="glass"><div class="notice">Добавь фотографию, заголовок и преимущества. Экспорт работает на устройстве без AI.</div><button class="upload block" data-act="upload-design"><span style="font-size:27px">▧</span>${state.designerImage?'Заменить фотографию':'Добавить фотографию товара'}<small>JPG, PNG или WEBP</small></button><label class="field"><span>Название товара</span><input class="input" data-model="designer.title" maxlength="110" value="${safe(d.title)}"></label><label class="field"><span>Преимущества (через точку с запятой)</span><textarea class="input" data-model="designer.features" maxlength="450">${safe(d.features)}</textarea></label><div class="grid2"><label class="field"><span>Цена / подпись</span><input class="input" data-model="designer.price" maxlength="35" value="${safe(d.price)}"></label><label class="field"><span>Ярлык</span><input class="input" data-model="designer.badge" maxlength="24" value="${safe(d.badge)}"></label><label class="field"><span>Фон</span><select class="input" data-model="designer.theme">${[['lavender','Лаванда'],['pink','Нежно-розовый'],['pearl','Жемчужный']].map(([v,t])=>`<option ${d.theme===v?'selected':''} value="${v}">${t}</option>`).join('')}</select></label><label class="field"><span>Формат PNG</span><select class="input" data-model="designer.format">${[['1:1','1:1'],['3:4','3:4'],['4:5','4:5']].map(([v,t])=>`<option ${d.format===v?'selected':''} value="${v}">${t}</option>`).join('')}</select></label></div><button class="btn outline block" data-busy data-act="designer-ai">✦ Заполнить текст с AI</button></div>${preview()}<div class="btn-row"><button class="btn primary" data-act="designer-export">Скачать PNG</button><button class="btn outline" data-act="designer-save">В проекты</button></div>`}
+function projectRow(p){return `<div class="glass item"><div class="thumb">${({photo:'▣',design:'◇',text:'✎'}[p.kind]||'▤')}</div><div class="item-info"><strong>${safe(p.title)}</strong><small>${safe(kindName[p.kind]||'Проект')} · ${new Date(p.updatedAt||p.createdAt||Date.now()).toLocaleDateString('ru-RU')}</small></div><div class="item-actions"><button class="icon-btn" data-act="project-open" data-id="${safe(p.id)}" title="Открыть">↗</button><button class="icon-btn" data-act="project-delete" data-id="${safe(p.id)}" title="Удалить">×</button></div></div>`}
+function projects(){const folders=state.folders;const items=state.projects.filter(p=>(state.folder==='all'||p.folderId===state.folder)&&(state.kind==='all'||p.kind===state.kind)&&(!state.search||String(p.title).toLowerCase().includes(state.search.toLowerCase())));return `${heading('Мои проекты','Папки, фотографии, тексты и карточки.')}<div class="aur-empty-inline">${ico('shield')} <span>${state.synced?'Проекты синхронизируются с облаком.':'Локальный режим: открой Аврору через Telegram для синхронизации.'}</span></div><div class="glass"><div class="inline-filter"><input class="input" id="new-folder" maxlength="45" placeholder="Новая папка"><button class="btn primary" data-act="folder-add">＋</button></div><div class="pillrow"><button class="pill ${state.folder==='all'?'active':''}" data-act="folder-pick" data-id="all">Все</button>${folders.map(f=>`<button class="pill ${state.folder===f.id?'active':''}" data-act="folder-pick" data-id="${safe(f.id)}">${safe(f.name)}</button>`).join('')}</div>${state.folder!=='all'?`<button class="btn danger" data-act="folder-delete">Удалить эту папку</button>`:''}</div><div class="glass"><input class="input" data-model="search" value="${safe(state.search)}" placeholder="Найти проект"><div class="pillrow">${[['all','Все'],['text','Тексты'],['design','Карточки'],['photo','Фото']].map(([v,t])=>`<button class="pill ${state.kind===v?'active':''}" data-act="kind-pick" data-kind="${v}">${t}</button>`).join('')}</div></div>${items.length?items.map(projectRow).join(''):blank('▤','Пока здесь пусто','Создай первый проект или измени фильтры.')}<button class="btn outline block" data-act="sync">↻ Синхронизировать</button>`}
+function profile(){const pic=user?.photo_url;const name=user?.first_name||'Пользователь';const entry=(icon,title,sub,page)=>`<button class="setting-link" data-act="page" data-page="${page}"><span class="icon-disc">${ico(icon)}</span><span class="meta"><strong>${title}</strong><small>${sub}</small></span>${ico('arrow','small-icon')}</button>`;return `${heading('Мой профиль','Управляй своими данными и возможностями Авроры.')}<div class="glass"><div class="user-strip">${pic?`<img class="profile-picture" src="${safe(pic)}" alt="Аватар">`:`<span class="profile-picture avatar-fallback">${safe(name.slice(0,1))}</span>`}<div class="meta"><strong>${safe(name)} ${safe(user?.last_name||'')}</strong><small>${user?.username?'@'+safe(user.username):'Telegram Mini App'}</small></div><span class="${state.plan.plan==='pro'?'badge-pro':'tag'}">${state.plan.plan==='pro'?'PRO':'FREE'}</span></div></div><p class="eyebrow" style="margin:22px 0 10px">Аккаунт и библиотека</p><div class="glass">${entry('crown','Аврора PRO',state.plan.plan==='pro'?'Подписка активна':'Тарифы и возможности','pro')}${entry('folder','Мои проекты',`${state.projects.length} сохранённых работ`,'projects')}${entry('message','Диалоги Aurora AI','История личных чатов','aiHistory')}${entry('check','Задачи и заметки','Планировщик на устройстве','planner')}${entry('layers','Мои карточки','Ранее созданные описания','saved')}</div><p class="eyebrow" style="margin:22px 0 10px">Помощь</p><div class="glass">${entry('support','Поддержка','Вопросы и обращения','support')}</div>${state.owner?`<p class="eyebrow" style="margin:22px 0 10px">Только для владельца</p><div class="glass">${entry('message','Входящие','Ответы пользователям','inbox')}${entry('settings','Центр владельца','Баланс Stars и управление','admin')}</div>`:''}<div class="safe-box">${ico('shield')}<span>Данные других пользователей недоступны: запросы защищены проверкой Telegram.</span></div>`}
+function pro(){
+ const p=state.plan,proActive=p.plan==='pro';
+ return `<div class="aur-subhead"><button class="aur-back" data-act="page" data-page="profile">${ico('back')}</button><div><h1>PRO-подписка</h1><p class="muted small">Больше возможностей для твоих идей</p></div><span class="aur-mini-history">${ico('crown')}</span></div>
+ <section class="aur-pro-header"><div><span class="aur-pro-symbol">♛</span><h2>Аврора Business <em>PRO</em></h2><p>Больше возможностей для твоего бизнеса</p></div><div class="aur-pro-crown" aria-hidden="true">♕</div></section>
+ <div class="aur-plan-tabs"><span class="selected">Месяц</span><span class="unavailable">Год · позже</span></div>
+ <div class="glass aur-pricing"><span class="aur-price-label">ТАРИФ НА 30 ДНЕЙ</span><div class="aur-price">${proActive?'Активен':p.stars?`${p.stars} <small>⭐ Telegram Stars</small>`:'Цена уточняется'}</div>${proActive&&p.expiresAt?`<p class="muted small">До ${safe(new Date(p.expiresAt).toLocaleDateString('ru-RU'))}</p>`:''}<div class="aur-benefits">${[['30 AI-текстов в день','text'],['5 AI-фотографий в день','image'],['До 300 сохранённых проектов','folder'],['До 40 облачных фотографий','image']].map(([label])=>`<div><span class="aur-check">${ico('check')}</span>${label}</div>`).join('')}</div></div>
+ <button class="btn primary block aur-generate" data-busy data-act="pro-buy" ${p.billingReady?'':'disabled'}>${ico('crown')} ${proActive?'Продлить PRO':'Оформить PRO'}</button>
+ <p class="aur-pro-disclaimer">${p.billingReady?'Оплата в Telegram Stars · доступ на 30 дней':'Оплата временно недоступна. Проверим настройки Telegram Stars.'}</p>
+ <button class="aur-full-link" data-act="page" data-page="support">Нужна помощь с оплатой? ${ico('arrow')}</button>`;
+}
+function support(){
+ return `<div class="aur-subhead"><button class="aur-back" data-act="page" data-page="profile">${ico('back')}</button><div><h1>Поддержка</h1><p class="small muted">Поможем разобраться с Авророй</p></div><span class="aur-mini-history">${ico('message')}</span></div>
+ <div class="aur-support-banner"><span class="aur-support-illustration">${ico('support')}</span><div><h2>Мы рядом 💜</h2><p>Напиши, что случилось — обращение попадёт владельцу Авроры.</p></div></div>
+ <div class="glass aur-support-form"><label class="field" style="margin-top:0"><span>Тема обращения</span><select class="input" id="support-subject"><option value="">Выбери тему</option><option value="Вопрос по подписке PRO">Подписка PRO</option><option value="Вопрос по AI-инструментам">AI-фотографии и тексты</option><option value="Проблема с оплатой">Оплата Stars</option><option value="Техническая проблема">Ошибка или сбой</option><option value="Другой вопрос">Другой вопрос</option></select></label><label class="field"><span>Твоё сообщение</span><textarea class="input" id="support-text" maxlength="1400" placeholder="Расскажи, что произошло и когда…"></textarea></label><button class="btn primary block aur-generate" data-busy data-act="support-send">${ico('send')} Отправить обращение</button></div>
+ <div class="safe-box">${ico('shield')}<span>Не отправляй пароли, токены или платёжные коды. Ответ придёт в Telegram после запуска бота.</span></div>`;
+}
+function saved(){return `${heading('Мои карточки','Ранее сохранённые описания товаров.')}<div id="saved-list">${state.saved.length?state.saved.map(c=>`<div class="glass"><h3>${safe(c.title)}</h3><p class="textresult">${safe(c.description)}</p><div class="btn-row"><button class="btn outline" data-act="saved-copy" data-id="${safe(c.id)}">Копировать</button><button class="btn danger" data-act="saved-delete" data-id="${safe(c.id)}">Удалить</button></div></div>`).join(''):blank('♡','Карточек пока нет','Новые результаты можно сохранять в «Мои проекты».')}</div>`}
+function admin(){const a=state.admin;if(!state.owner||!a)return blank('◈','Доступ ограничен','Раздел доступен владельцу.');const newCount=(a.tickets||[]).filter(t=>t.status==='new').length;return `${heading('Центр владельца','Доступ к финансам и управлению сервисом.')}<div class="section-pair" style="margin-bottom:13px"><div class="dash-kpi"><p class="minimal-label">Баланс бота</p><strong>${a.telegram?.balance?.amount??'—'} ⭐</strong><small>Telegram Stars</small></div><div class="dash-kpi"><p class="minimal-label">Активных PRO</p><strong>${a.revenue?.activePro??0}</strong><small>Подписки</small></div><div class="dash-kpi"><p class="minimal-label">Всего оплат</p><strong>${a.revenue?.lifetimeStars??0} ⭐</strong><small>За всё время</small></div><div class="dash-kpi"><p class="minimal-label">30 дней</p><strong>${a.revenue?.monthStars??0} ⭐</strong><small>Поступления PRO</small></div></div><button class="tool-compact" data-act="page" data-page="inbox"><span class="icon-disc">${ico('message')}</span><span class="meta"><strong>Входящие обращения</strong><small>${newCount?`Новых: ${newCount}`:'Новых обращений нет'} · быстрые ответы</small></span>${ico('arrow')}</button><div class="glass aur-owner-gift"><div class="aur-gift-heading"><span class="icon-disc">${ico('crown')}</span><div><h3>Подарить PRO</h3><p>Выдать подписку бесплатно по Telegram-нику</p></div></div><div class="aur-gift-search"><input class="input" id="gift-username" data-model="giftQuery" type="text" inputmode="text" autocapitalize="off" autocomplete="off" spellcheck="false" maxlength="33" placeholder="@username" value="${safe(state.giftQuery)}"><button class="btn soft" data-act="admin-pro-find">Найти</button></div>${state.giftUser?`<div class="aur-gift-result"><strong>${safe(state.giftUser.firstName||'Пользователь')} · @${safe(state.giftUser.username)}</strong><small>Telegram ID: ${safe(state.giftUser.userId)}</small><small>${state.giftUser.plan==='pro'?'PRO активен до '+new Date(state.giftUser.expiresAt).toLocaleDateString('ru-RU'):'Сейчас FREE'} · Последний вход: ${new Date(state.giftUser.lastSeenAt).toLocaleDateString('ru-RU')}</small><div class="aur-gift-options"><select class="input" data-model="giftDays" aria-label="Срок подарка">${[['7','7 дней'],['30','30 дней'],['90','90 дней']].map(([v,label])=>`<option value="${v}" ${state.giftDays===v?'selected':''}>${label}</option>`).join('')}</select><button class="btn primary" data-act="admin-pro-grant">${ico('crown','small-icon')} Выдать PRO</button></div></div>`:''}<p class="aur-gift-note">Пользователь должен хотя бы раз открыть Аврору после обновления Worker. Перед выдачей ты увидишь его Telegram ID для проверки. Оплата Stars не списывается.</p></div><div class="section"><h2>Доступ и продажи</h2></div><div class="glass">${[['bot_enabled','Аврора доступна','Доступ к мини-приложению'],['public_ai_enabled','Публичный AI','Генерации для пользователей'],['pro_sales_enabled','Продажи PRO','Оплата Stars']].map(([key,label,sub])=>`<div class="setting-row"><div><strong>${label}</strong><small>${sub}</small></div><button class="btn ${a.settings?.[key]?'soft':'danger'}" data-act="admin-toggle" data-key="${key}">${a.settings?.[key]?'Включено':'Выключено'}</button></div>`).join('')}</div><div class="safe-box">${ico('shield')}<span>Баланс и финансовые данные видит только Telegram-аккаунт владельца.</span></div>`}
+function detail(){const p=state.selected;if(!p)return blank('▤','Проект не найден','');return `${heading(p.title,kindName[p.kind]||'Проект')}<div class="glass" id="detail-box"><div class="loading">Загружаю проект…</div></div><div class="btn-row"><button class="btn outline" data-act="page" data-page="projects">К проектам</button><button class="btn primary" data-act="project-edit">Продолжить</button><button class="btn danger" data-act="project-delete" data-id="${safe(p.id)}">Удалить</button></div>`}
+
+
+function tools(){return `${heading('Инструменты','Всё для контента, аналитики и организации работы.')}<div class="aur-kicker">КОНТЕНТ И ПРОДВИЖЕНИЕ</div>
+ <button class="tool-compact" data-act="page" data-page="description"><span class="icon-disc">${ico('pen')}</span><span class="meta"><strong>AI-описания</strong><small>Тексты для Wildberries, Ozon и Telegram</small></span>${ico('arrow')}</button>
+ <button class="tool-compact" data-act="page" data-page="writer"><span class="icon-disc">${ico('type')}</span><span class="meta"><strong>Копирайтер</strong><small>Реклама, SEO, заголовки и посты</small></span>${ico('arrow')}</button>
+ <button class="tool-compact" data-act="page" data-page="marketing"><span class="icon-disc">${ico('sparkle')}</span><span class="meta"><strong>AI-маркетолог</strong><small>Контент-план и стратегия продвижения</small></span>${ico('arrow')}</button>
+ <div class="aur-kicker" style="margin-top:21px">ФОТО И ДИЗАЙН</div>
+ <button class="tool-compact" data-act="page" data-page="photos"><span class="icon-disc">${ico('image')}</span><span class="meta"><strong>AI-фотостудия</strong><small>Предметная съёмка и смена фона</small></span>${ico('arrow')}</button>
+ <button class="tool-compact" data-act="page" data-page="designer"><span class="icon-disc">${ico('layers')}</span><span class="meta"><strong>Конструктор карточек</strong><small>Макеты, оформление и экспорт PNG</small></span>${ico('arrow')}</button>
+ <div class="aur-kicker" style="margin-top:21px">БИЗНЕС И ОРГАНИЗАЦИЯ</div>
+ <button class="tool-compact" data-act="page" data-page="planner"><span class="icon-disc">${ico('check')}</span><span class="meta"><strong>Задачи и заметки</strong><small>Планируй и сохраняй идеи</small></span>${ico('arrow')}</button>
+ <button class="tool-compact" data-act="page" data-page="analytics"><span class="icon-disc">${ico('grid')}</span><span class="meta"><strong>Бизнес-калькулятор</strong><small>Прибыль, маржа, средний чек</small></span>${ico('arrow')}</button>
+ <button class="tool-compact" data-act="page" data-page="competitors"><span class="icon-disc">${ico('search')}</span><span class="meta"><strong>Анализ конкурентов</strong><small>Сравнение по введённым данным</small></span>${ico('arrow')}</button>
+ <button class="tool-compact" data-act="page" data-page="documents"><span class="icon-disc">${ico('folder')}</span><span class="meta"><strong>Анализ текстовых файлов</strong><small>TXT, CSV, MD и JSON → Aurora AI</small></span>${ico('arrow')}</button>
+ <div class="notice" style="margin-top:18px">AI-чат и генерация доступны после настройки оплаты OpenAI и соблюдения региональных требований. Задачи, заметки, калькулятор и конструктор работают без AI.</div>`}
+const REPLY_PRESETS=[
+ ['Здравствуйте! Подписку PRO можно подключить в разделе «Профиль → Аврора PRO». Если кнопка оплаты недоступна, напишите нам, и мы проверим настройки.', 'PRO'],
+ ['Спасибо за сообщение! Проверьте интернет и повторите генерацию. Если ошибка повторится, пришлите её текст и укажите, какой инструмент вы использовали.', 'AI'],
+ ['Если оплата прошла, а PRO не активировался, пожалуйста, напишите примерное время платежа. Не отправляйте пароли и платёжные коды.', 'Оплата'],
+ ['Спасибо, мы получили ваше обращение. Проверим ситуацию и вернёмся с ответом, когда появится информация.', 'Принято']
+];
+function inbox(){if(!state.owner||!state.admin)return blank('◈','Доступ ограничен','Только для владельца');const arr=state.admin.tickets||[];const filter=state.inboxFilter||'new';const list=arr.filter(t=>filter==='all'||t.status===filter);return `${heading('Входящие','Все обращения пользователей в одном месте.')}<div class="glass"><div class="simple-stat"><span class="muted small">Новые</span><strong>${arr.filter(t=>t.status==='new').length}</strong></div><div class="simple-stat"><span class="muted small">В работе</span><strong>${arr.filter(t=>t.status==='in_progress').length}</strong></div><div class="simple-stat" style="border:0"><span class="muted small">Закрыто</span><strong>${arr.filter(t=>t.status==='closed').length}</strong></div></div><div class="pillrow">${[['new','Новые'],['in_progress','В работе'],['closed','Закрытые'],['all','Все']].map(([v,t])=>`<button class="pill ${filter===v?'active':''}" data-act="inbox-filter" data-value="${v}">${t}</button>`).join('')}</div>${list.length?list.map(t=>`<article class="quick-ticket"><div class="ticket-top"><span class="small muted">Пользователь #${safe(t.userId)}</span><span class="ticket-status ${t.status==='closed'?'closed':''}">${t.status==='new'?'Новое':t.status==='in_progress'?'В работе':'Закрыто'}</span></div><h3>${safe(t.subject)}</h3><p>${safe(t.message)}</p>${t.lastReply?`<div class="safe-box" style="margin:12px 0">${ico('message')}<span>Последний ответ: ${safe(t.lastReply)}</span></div>`:''}<div class="btn-row"><button class="btn primary" data-act="admin-reply" data-id="${safe(t.id)}">${ico('send','small-icon')} Ответить</button>${t.status!=='closed'?`<button class="btn outline" data-act="admin-close" data-id="${safe(t.id)}">${ico('check','small-icon')} Закрыть</button>`:''}</div></article>`).join(''):blank('✓','Нет обращений','В этой категории пока пусто.')}<button class="btn outline block" data-act="admin-refresh">${ico('refresh','small-icon')} Обновить список</button>`}
+function modalClose(){const root=$('modal-root');root.hidden=true;root.replaceChildren()}
+function uiConfirm(message){return new Promise(resolve=>{const root=$('modal-root');const done=value=>{modalClose();resolve(value)};root.hidden=false;root.innerHTML=`<div class="modal-sheet" role="dialog" aria-modal="true"><div class="modal-head"><h2>Подтвердить действие</h2><button class="icon-btn" id="modal-close" aria-label="Закрыть">${ico('close')}</button></div><p class="modal-copy">${safe(message)}</p><div class="modal-actions"><button class="btn outline" id="modal-cancel">Отмена</button><button class="btn danger" id="modal-ok">Подтвердить</button></div></div>`;root.onclick=e=>{if(e.target===root||e.target.closest('#modal-cancel,#modal-close'))done(false);else if(e.target.closest('#modal-ok'))done(true)};root.querySelector('#modal-ok')?.focus()})}
+function replyDialog(ticket){return new Promise(resolve=>{
+ const root=$('modal-root');const done=value=>{modalClose();resolve(value)};
+ root.hidden=false;root.innerHTML=`<div class="modal-sheet aur-reply-sheet" role="dialog" aria-modal="true" aria-label="Быстрый ответ"><div class="aur-sheet-grip"></div><div class="modal-head"><div><span class="aur-reply-spark">⚡</span><h2>Быстрый ответ</h2><p class="small muted">Выбери готовый шаблон или напиши свой</p></div><button class="icon-btn" id="modal-close" aria-label="Закрыть">${ico('close')}</button></div><div class="aur-ticket-question"><strong>${safe(ticket.subject)}</strong><p>${safe(ticket.message)}</p></div><div class="aur-reply-list">${REPLY_PRESETS.map(([_,label],i)=>`<button data-preset="${i}" class="aur-reply-choice"><span>${ico('message')}</span>${safe(label)} ${ico('arrow','small-icon')}</button>`).join('')}</div><label class="field"><span>Твой ответ</span><textarea class="input" id="modal-message" maxlength="800" placeholder="Или напиши свой ответ…" style="min-height:100px"></textarea></label><button class="btn primary block aur-generate" id="modal-ok">${ico('send')} Отправить ответ</button><p class="aur-limit-note">Ответ отправится пользователю в Telegram, если он запустил бота.</p></div>`;
+ root.onclick=e=>{if(e.target===root||e.target.closest('#modal-close'))return done(null);
+ const b=e.target.closest('[data-preset]');if(b){const field=root.querySelector('#modal-message');field.value=REPLY_PRESETS[Number(b.dataset.preset)][0];root.querySelectorAll('[data-preset]').forEach(x=>x.classList.toggle('chosen',x===b));field.focus();return}
+ if(e.target.closest('#modal-ok')){const value=root.querySelector('#modal-message').value.trim();if(!value)return notice('Напиши ответ или выбери шаблон');done(value)}};
+ root.querySelector('#modal-message')?.focus();
+})}
+function ico(name,cl=''){
+ const shapes={
+ home:'<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',
+ sparkle:'<path d="m12 3 1.9 6.1L20 11l-6.1 1.9L12 19l-1.9-6.1L4 11l6.1-1.9z"/><path d="m19 17 .7 2.3L22 20l-2.3.7L19 23l-.7-2.3L16 20l2.3-.7z"/>',
+ folder:'<path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+ user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+ arrow:'<path d="m9 18 6-6-6-6"/>',
+ back:'<path d="m15 18-6-6 6-6"/>',
+ image:'<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/>',
+ pen:'<path d="m16 4 4 4-11 11-5 1 1-5z"/><path d="m14 6 4 4"/>',
+ layers:'<path d="m12 2 9 5-9 5-9-5z"/><path d="m3 12 9 5 9-5M3 17l9 5 9-5"/>',
+ type:'<path d="M4 7V4h16v3M12 4v16m-4 0h8"/>',
+ crown:'<path d="m2 8 5 5 5-8 5 8 5-5-2 12H4z"/>',
+ support:'<path d="M4 11a8 8 0 0 1 16 0v6a2 2 0 0 1-2 2h-3"/><rect x="2" y="11" width="4" height="7" rx="2"/><rect x="18" y="11" width="4" height="7" rx="2"/><path d="M10 21h4"/>',
+ send:'<path d="m22 2-7 20-4-9-9-4zM22 2 11 13"/>',
+ search:'<circle cx="10.5" cy="10.5" r="7.5"/><path d="m16 16 5 5"/>',
+ trash:'<path d="M3 6h18M8 6V4h8v2m3 0-1 15H6L5 6m5 4v7m4-7v7"/>',
+ plus:'<path d="M12 5v14M5 12h14"/>',
+ check:'<path d="m4 12 5 5L20 6"/>',
+ close:'<path d="M18 6 6 18M6 6l12 12"/>',
+ refresh:'<path d="M20 6v6h-6M4 18v-6h6"/><path d="M5 9a8 8 0 0 1 14-3M19 15A8 8 0 0 1 5 18"/>',
+ settings:'<path d="M12 2v3m0 14v3M2 12h3m14 0h3M4.9 4.9 7 7m10 10 2.1 2.1m0-14.2L17 7M7 17l-2.1 2.1"/><circle cx="12" cy="12" r="4"/>',
+ shield:'<path d="m12 22-1.6-.6C5.8 19.6 4 16 4 11V5l8-3 8 3v6c0 5-1.8 8.6-6.4 10.4z"/><path d="m9 12 2 2 4-4"/>',
+ clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+ message:'<path d="M21 11a8 8 0 0 1-8 8H7l-4 3v-7a8 8 0 1 1 18-4z"/>',
+ grid:'<rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/>',
+ download:'<path d="M12 3v13m-5-5 5 5 5-5M4 18v3h16v-3"/>',
+ copy:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>'
+ };
+ return `<svg class="ui-icon ${cl}" viewBox="0 0 24 24" aria-hidden="true">${shapes[name]||shapes.sparkle}</svg>`;
+}
+
+function render(){
+ const pic=user?.photo_url;
+ $('top').innerHTML=`<div class="logo"><span class="logo-icon">A</span><div><strong>Аврора <span class="aur-brand-accent">Business</span><sup class="aur-brand-version">2.5</sup></strong><small>Сделано для твоих идей</small></div></div><div class="aur-top-right"><span class="aur-top-label">SOFT PRESTIGE</span><button class="aur-header-avatar" data-act="page" data-page="profile" aria-label="Профиль">${pic?`<img src="${safe(pic)}" alt="Аватар">`:safe((user?.first_name||'A').slice(0,1))}</button></div>`;
+ $('nav').innerHTML=tabs();
+ const fn={home,ai,aiHistory,tools,planner,analytics,documents,marketing,competitors,description,writer,photos,designer,projects,profile,pro,support,saved,admin,inbox,detail};
+ $('main').innerHTML=(fn[state.page]||home)();
+ if(state.page==='detail')renderDetail();
+ requestAnimationFrame(aurUpdateKeyboard);
+}
+async function renderDetail(){const p=state.selected;if(!p)return;const box=$('detail-box');if(!box)return;const photo=await projectImage(p);if(state.page!=='detail'||state.selected?.id!==p.id)return;const content=p.content||{};box.innerHTML=`${photo?`<img class="photo-preview" src="${photo}">`:''}${p.kind==='text'?`<p class="textresult">${safe(content.result||content.description||'Текст не найден')}</p>`:`<p class="small muted">${safe(content.prompt||content.title||'')}</p>`}<div class="btn-row">${photo?'<button class="btn outline" data-act="detail-download">Скачать фото</button>':''}${p.kind==='text'?'<button class="btn outline" data-act="detail-copy">Копировать текст</button>':''}</div>`}
+function setPage(page){state.page=page;render();scrollTo({top:0,behavior:'smooth'});if(['ai','aiHistory'].includes(page)&&!state.assistant.loaded)assistantLoad();if(page==='saved')loadSaved();if(page==='admin'||page==='inbox')loadAdmin()}
+async function run(fn){if(state.working)return;busy(true);try{await fn()}catch(e){notice(e.message||'Ошибка')}finally{busy(false)}}
+async function clipboard(text){try{await navigator.clipboard.writeText(text);notice('Скопировано')}catch{const el=document.createElement('textarea');el.value=text;document.body.append(el);el.select();document.execCommand('copy');el.remove();notice('Скопировано')}}
+function download(src,name){const a=document.createElement('a');a.href=src;a.download=name;document.body.append(a);a.click();a.remove()}
+function wrapText(ctx,text,maxWidth){const lines=[];let curr='';for(const word of String(text).split(/\s+/)){const line=curr?curr+' '+word:word;if(ctx.measureText(line).width>maxWidth&&curr){lines.push(curr);curr=word}else curr=line}if(curr)lines.push(curr);return lines}
+async function designCanvas(){const d=state.designer;const dims={'1:1':[900,900],'3:4':[900,1200],'4:5':[900,1125]};const [w,h]=dims[d.format]||dims['4:5'];const c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d');const colors=d.theme==='pink'?['#ffecf6','#f4bddc']:d.theme==='pearl'?['#fffaff','#e7ddf5']:['#f0ddff','#e0c9f8'];const grad=ctx.createLinearGradient(0,0,w,h);grad.addColorStop(0,colors[0]);grad.addColorStop(1,colors[1]);ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);ctx.fillStyle='#7449a5';ctx.font='800 24px Manrope, sans-serif';ctx.fillText('AURORA  ✦  AI STUDIO',55,66);
+ const y=100,imgH=Math.round(h*.51);ctx.fillStyle='#ffffffbb';ctx.beginPath();ctx.roundRect(44,y,w-88,imgH,28);ctx.fill();if(state.designerImage){const im=await imageLoad(state.designerImage);const scale=Math.min((w-126)/im.width,(imgH-40)/im.height);const ww=im.width*scale,hh=im.height*scale;ctx.drawImage(im,(w-ww)/2,y+(imgH-hh)/2,ww,hh)}
+ const start=y+imgH+49;ctx.fillStyle='#9b66bf';ctx.font='800 24px Manrope,sans-serif';ctx.fillText((d.badge||'НОВИНКА').slice(0,24).toUpperCase(),55,start);ctx.fillStyle='#39234d';ctx.font='800 44px Manrope,sans-serif';let yy=start+62;for(const line of wrapText(ctx,d.title||'Название товара',w-105).slice(0,2)){ctx.fillText(line,55,yy);yy+=52}ctx.font='600 24px Manrope,sans-serif';ctx.fillStyle='#6c537c';for(const line of wrapText(ctx,String(d.features||'').replace(/;/g,'  •  '),w-106).slice(0,d.format==='1:1'?2:4)){ctx.fillText(line,55,yy+15);yy+=35}if(d.price){ctx.fillStyle='#8748b5';ctx.font='800 38px Manrope,sans-serif';ctx.fillText(d.price.slice(0,35),55,Math.min(h-77,yy+35))}ctx.fillStyle='#927caa';ctx.font='600 19px Manrope,sans-serif';ctx.fillText('Создано в Аврора Бизнес',55,h-28);return c}
+async function loadSaved(){if(!tg?.initData)return;try{const x=await api('/business/cards/list');state.saved=x.cards||[]}catch{state.saved=[]}if(state.page==='saved')render()}
+async function loadAdmin(){if(!state.owner)return;try{state.admin=await api('/admin/overview');if(state.page==='admin'||state.page==='inbox')render()}catch(e){notice(e.message)}}
+async function openProject(pid){const p=state.projects.find(x=>x.id===pid);if(!p)return;state.selected=p;setPage('detail')}
+
+async function assistantLoad(){
+ const a=state.assistant;
+ if(!tg?.initData)return;
+ try{const data=await api('/assistant/list');a.threads=data.threads||[];a.memory=data.memory||'';a.loaded=true;render()}
+ catch(e){a.error=e.message;a.loaded=true;if(state.page==='ai'||state.page==='aiHistory')render()}
+}
+async function assistantOpen(threadId){
+ const a=state.assistant;a.error='';const d=await api('/assistant/get',{threadId});a.active=threadId;a.messages=d.messages||[];setPage('ai');requestAnimationFrame(()=>$('aur-chat-messages')?.scrollIntoView({block:'end'}));
+}
+async function assistantSend(message){
+ const a=state.assistant;
+ const text=String(message||$('aur-ai-input')?.value||'').trim();
+ if(!text)return notice('Напиши сообщение');
+ if(text.length>1500)throw Error('Сообщение слишком длинное');
+ if(a.loading)return;
+ const threadId=a.active||id();a.draft='';a.error='';a.loading=true;
+ a.messages.push({role:'user',content:text});render();
+ try{
+  const data=await api('/assistant/send',{threadId,message:text});
+  a.active=data.threadId||threadId;a.messages.push({role:'assistant',content:data.answer});
+  const old=a.threads.find(x=>x.id===a.active);
+  if(old){old.updatedAt=new Date().toISOString()}else{a.threads.unshift({id:a.active,title:text.slice(0,55),updatedAt:new Date().toISOString()})}
+ }catch(e){a.messages.pop();a.draft=text;a.error=e.message||'AI недоступен'}
+ finally{a.loading=false;render();requestAnimationFrame(()=>{$('aur-chat-messages')?.scrollIntoView({block:'end'});if(a.error)$('aur-ai-input')?.focus()})}
+}
+function assistantPrefill(text){state.assistant.draft=String(text).slice(0,1500);state.assistant.active=null;state.assistant.messages=[];state.assistant.error='';setPage('ai');$('aur-ai-input')?.focus()}
+function editChatTitle(previous){return new Promise(resolve=>{
+ const root=$('modal-root'),close=v=>{modalClose();resolve(v)};
+ root.hidden=false;root.innerHTML=`<div class="modal-sheet" role="dialog" aria-modal="true"><div class="modal-head"><h2>Название диалога</h2><button class="icon-btn" id="modal-close" aria-label="Закрыть">${ico('close')}</button></div><label class="field"><span>Новое название</span><input class="input" id="aur-thread-title" maxlength="70" value="${safe(previous)}" placeholder="Например: Идеи для магазина"></label><div class="modal-actions"><button class="btn outline" id="modal-cancel">Отмена</button><button class="btn primary" id="modal-save">Сохранить</button></div></div>`;
+ root.onclick=e=>{if(e.target===root||e.target.closest('#modal-close,#modal-cancel'))close(null);else if(e.target.closest('#modal-save'))close(root.querySelector('#aur-thread-title').value.trim())};
+ root.querySelector('#aur-thread-title')?.focus();
+})}
+function editMemory(){return new Promise(resolve=>{
+ const root=$('modal-root'),close=v=>{modalClose();resolve(v)};
+ root.hidden=false;root.innerHTML=`<div class="modal-sheet" role="dialog" aria-modal="true"><div class="modal-head"><div><h2>Память Авроры</h2><p class="small muted">Укажи, что AI важно учитывать в будущих разговорах.</p></div><button class="icon-btn" id="modal-close">${ico('close')}</button></div><label class="field"><span>Мои предпочтения (до 1200 символов)</span><textarea class="input" id="aur-memory-text" maxlength="1200" style="min-height:150px" placeholder="Например: Я продаю аксессуары, люблю короткие ответы…">${safe(state.assistant.memory)}</textarea></label><div class="btn-row"><button class="btn outline" id="modal-cancel">Отмена</button><button class="btn primary" id="modal-save">Сохранить</button></div><p class="small muted" style="margin-top:12px">Эту память можно очистить в любой момент. Не сохраняй пароли, коды и банковские данные.</p></div>`;
+ root.onclick=e=>{if(e.target===root||e.target.closest('#modal-close,#modal-cancel'))close(null);else if(e.target.closest('#modal-save'))close(root.querySelector('#aur-memory-text').value)};
+})}
+document.addEventListener('input',e=>{const key=e.target.dataset.model;if(!key)return;const parts=key.split('.');if(parts.length===1)state[key]=e.target.value;else if(state[parts[0]])state[parts[0]][parts[1]]=e.target.value;if(key==='search'){const pos=e.target.selectionStart;render();const x=document.querySelector('[data-model=search]');x?.focus();if(x&&pos!==null)x.setSelectionRange(pos,pos);return}if(parts[0]==='finance')saveLocal();if(parts[0]==='designer'){$('design-preview')?.replaceWith((()=>{const t=document.createElement('div');t.innerHTML=preview();return t.firstElementChild})())}});
+document.addEventListener('change',e=>{if(e.target.dataset.model){e.target.dispatchEvent(new Event('input',{bubbles:true}))}if(e.target.id==='aur-document-file'){const file=e.target.files?.[0];if(!file)return;if(file.size>100000)return notice('Файл должен быть до 100 КБ');if(!/\.(txt|md|csv|json)$/i.test(file.name))return notice('Поддерживаются только TXT, MD, CSV и JSON');file.text().then(v=>{state.documentText=v.slice(0,30000);render();notice('Документ прочитан')}).catch(()=>notice('Не удалось прочитать файл'));return}if(e.target.id==='photo-file'||e.target.id==='design-file'){run(async()=>{const data=await fileData(e.target.files?.[0]);if(e.target.id==='photo-file'){state.photoReference=await squeeze(data,680000,1300)}else{state.designerImage=data}render()});e.target.value=''}});
+document.addEventListener('click',e=>{const btn=e.target.closest('[data-act]');if(!btn)return;const a=btn.dataset.act;const arg=btn.dataset;const act=async()=>{
+
+ if(a==='ai-send'){await assistantSend($('aur-ai-input')?.value);return}
+ if(a==='ai-history'){setPage('aiHistory');if(!state.assistant.loaded)await assistantLoad();return}
+ if(a==='ai-new'){state.assistant.active=null;state.assistant.messages=[];state.assistant.draft='';state.assistant.error='';setPage('ai');return}
+ if(a==='ai-open'){await assistantOpen(arg.id);return}
+ if(a==='ai-rename'){const thread=state.assistant.threads.find(x=>x.id===arg.id);if(!thread)return;const title=await editChatTitle(thread.title);if(title===null)return;if(title.length<2)throw Error('Название: от 2 до 70 символов');await api('/assistant/rename',{threadId:arg.id,title});thread.title=title;render();notice('Диалог переименован');return}
+ if(a==='ai-delete'){if(!await uiConfirm('Удалить этот диалог и все его сообщения?'))return;await api('/assistant/delete',{threadId:arg.id});state.assistant.threads=state.assistant.threads.filter(x=>x.id!==arg.id);if(state.assistant.active===arg.id){state.assistant.active=null;state.assistant.messages=[]}render();return}
+ if(a==='ai-memory'){const memory=await editMemory();if(memory===null)return;const response=await api('/assistant/memory/save',{memory});state.assistant.memory=response.memory||'';notice('Память сохранена');return}
+ if(a==='ai-preset'){await assistantSend(arg.prompt);return}
+ if(a==='ai-start-prompt'){assistantPrefill(arg.prompt);return}
+ if(a==='task-add'){const v=$('aur-task-input')?.value.trim();if(!v)throw Error('Напиши задачу');if(state.planner.tasks.length>=100)throw Error('Максимум 100 задач');state.planner.tasks.unshift({id:id(),text:v.slice(0,180),done:false});saveLocal();render();return}
+ if(a==='task-toggle'){const t=state.planner.tasks.find(t=>t.id===arg.id);if(t)t.done=!t.done;saveLocal();render();return}
+ if(a==='task-delete'){state.planner.tasks=state.planner.tasks.filter(t=>t.id!==arg.id);saveLocal();render();return}
+ if(a==='note-add'){const text=$('aur-note-input')?.value.trim();if(!text)throw Error('Напиши заметку');if(state.planner.notes.length>=50)throw Error('Максимум 50 заметок');state.planner.notes.unshift({id:id(),text:text.slice(0,3000),createdAt:new Date().toISOString()});saveLocal();render();return}
+ if(a==='note-delete'){state.planner.notes=state.planner.notes.filter(t=>t.id!==arg.id);saveLocal();render();return}
+ if(a==='finance-calc'){for(const key of ['revenue','costs','orders']){const el=document.querySelector('[data-model="finance.'+key+'"]');if(el)state.finance[key]=el.value}saveLocal();render();return}
+ if(a==='document-to-ai'){if(!state.documentText)throw Error('Сначала загрузи документ');assistantPrefill('Проанализируй текст документа. Выдели основные мысли, риски и следующие шаги.\n\n'+state.documentText.slice(0,1150));return}
+ if(a==='competitors-to-ai'){const v=$('aur-competitors-text')?.value.trim();if(!v||v.length<20)throw Error('Введи данные о предложениях для сравнения');assistantPrefill('Сравни мои предложения с конкурентами по указанным данным. Не придумывай цены или свойства. Предложи улучшения.\n\n'+v.slice(0,1150));return}
+ if(a==='page'){setPage(arg.page);return}
+ if(a==='upload-photo'){$('photo-file').click();return}
+ if(a==='photo-mode'){state.photoMode=arg.mode;if(arg.mode==='scene')state.photo.style='lifestyle';if(arg.mode==='background'||arg.mode==='style')state.photo.style='studio';render();return}
+ if(a==='photo-example'){const presets=['Флакон парфюма на светлом лавандовом пьедестале, премиальный предметный свет','Стильные беспроводные наушники на нежном сиреневом фоне, мягкие тени','Элегантная небольшая сумочка на пастельно-розовом фоне, предметная съёмка','Белые кроссовки на чистом лавандовом фоне, фотореалистичный студийный свет'];state.photoExample=Number(arg.index)||0;state.photo.prompt=presets[state.photoExample];render();return}
+ if(a==='upload-design'){$('design-file').click();return}
+ if(a==='writer-kind'){state.writer.kind=arg.kind;render();return}
+ if(a==='folder-pick'){state.folder=arg.id;render();return}
+ if(a==='kind-pick'){state.kind=arg.kind;render();return}
+ if(a==='inbox-filter'){state.inboxFilter=arg.value;render();return}
+ if(a==='admin-refresh'){await loadAdmin();render();notice('Обращения обновлены');return}
+ if(a==='sync'){await refreshLibrary();render();notice('Библиотека обновлена');return}
+ if(a==='description-generate'){const x=await api('/business/generate',state.aiDesc);state.aiResult=x;render();return}
+ if(a==='description-copy'){await clipboard(`${state.aiResult.title}\n\n${state.aiResult.description}\n\n${state.aiResult.post}`);return}
+ if(a==='description-save'){await saveProject('text',state.aiResult.title,{source:'description',result:state.aiResult.description,post:state.aiResult.post,platform:state.aiDesc.platform,name:state.aiDesc.name,features:state.aiDesc.features,tone:state.aiDesc.tone});notice('Описание сохранено');return}
+ if(a==='description-card'){state.designer.title=state.aiResult.title;state.designer.features=state.aiResult.description.slice(0,420);setPage('designer');return}
+ if(a==='writer-generate'){const x=await api('/studio/write',state.writer);state.writerText=x.text||JSON.stringify(x.data||{},null,2);render();return}
+ if(a==='writer-copy'){await clipboard(state.writerText);return}
+ if(a==='writer-save'){await saveProject('text',state.writer.title||'AI-текст',{source:'writer',result:state.writerText,...state.writer});notice('Текст сохранён');return}
+ if(a==='photo-generate'){if(state.photoMode==='background'&&!state.photoReference)throw Error('Для изменения фона сначала загрузи исходную фотографию товара');if(state.photo.prompt.trim().length<12)throw Error('Опиши желаемую фотографию подробнее');const x=await api('/studio/images/generate',{prompt:state.photo.prompt,style:state.photo.style,aspectRatio:state.photo.ratio,...(state.photoReference?{referenceImage:state.photoReference}:{})});if(!validImage(x.image))throw Error('AI вернул неверное изображение');state.photoResult=await cropImage(x.image,state.photo.ratio);state.photoProjectId=null;const saved=await saveProject('photo',state.photo.prompt.slice(0,70),{prompt:state.photo.prompt,style:state.photo.style,ratio:state.photo.ratio},state.photoResult);state.photoProjectId=saved.id;render();notice('AI-фото создано и добавлено в историю');return}
+ if(a==='photo-save'){const p=await saveProject('photo',state.photo.prompt.slice(0,70),{prompt:state.photo.prompt,style:state.photo.style,ratio:state.photo.ratio},state.photoResult,state.photoProjectId);state.photoProjectId=p.id;notice('AI-фото добавлено в проекты');return}
+ if(a==='photo-design'){state.designerImage=state.photoResult;setPage('designer');return}
+ if(a==='photo-download'){download(state.photoResult,'aurora-ai-photo.png');return}
+ if(a==='designer-ai'){const x=await api('/studio/write',{kind:'card',title:state.designer.title,facts:state.designer.features});if(x.data){state.designer.title=x.data.title||state.designer.title;state.designer.features=x.data.features||state.designer.features;state.designer.badge=x.data.badge||state.designer.badge}render();return}
+ if(a==='designer-export'){const canvas=await designCanvas();download(canvas.toDataURL('image/png'),'aurora-card-'+state.designer.format.replace(':','x')+'.png');return}
+ if(a==='designer-save'){const canvas=await designCanvas();const image=canvas.toDataURL('image/png');const p=await saveProject('design',state.designer.title||'Новая карточка',{...state.designer},image);if(state.designerImage)await cacheSet(p.id+':original',state.designerImage);notice('Карточка сохранена');return}
+ if(a==='folder-add'){const name=$('new-folder')?.value.trim()||'';if(name.length<2||name.length>45)throw Error('Название папки: 2–45 символов');const folder={id:id(),name,createdAt:new Date().toISOString()};if(state.synced){const x=await api('/studio/folders/save',folder);folder.id=x.id||folder.id}state.folders.push(folder);saveLocal();render();notice('Папка создана');return}
+ if(a==='folder-delete'){if(!await uiConfirm('Удалить папку? Проекты останутся в библиотеке без папки.'))return;const pid=state.folder;if(state.synced)await api('/studio/folders/delete',{id:pid});state.folders=state.folders.filter(f=>f.id!==pid);state.projects.forEach(p=>{if(p.folderId===pid)p.folderId='' });state.folder='all';saveLocal();render();return}
+ if(a==='project-open'){await openProject(arg.id);return}
+ if(a==='project-edit'){const p=state.selected;if(!p)return;const c=p.content||{};if(p.kind==='photo'){const image=await projectImage(p);state.photoResult=image;state.photoProjectId=p.id;state.photo={prompt:c.prompt||p.title,style:c.style||'catalog',ratio:c.ratio||'1:1'};setPage('photos')}else if(p.kind==='design'){state.designer={...state.designer,...c};state.designerImage=await cacheGet(p.id+':original');setPage('designer');if(!state.designerImage)notice('Исходное фото недоступно на этом устройстве: загрузи его снова')}else{if(c.source==='description'){state.aiDesc={...state.aiDesc,name:c.name||p.title,features:c.features||'',platform:c.platform||'marketplace',tone:c.tone||'sales'};state.aiResult={title:p.title,description:c.result||'',post:c.post||'',needsReview:[]};setPage('description')}else{state.writer={...state.writer,title:c.title||p.title,facts:c.facts||'',audience:c.audience||'',tone:c.tone||'warm',kind:c.kind||'ad'};state.writerText=c.result||'';setPage('writer')}}return}
+ if(a==='project-delete'){if(!await uiConfirm('Удалить проект? Это действие нельзя отменить.'))return;const p=state.projects.find(p=>p.id===arg.id);if(state.synced)await api('/studio/projects/delete',{id:arg.id});state.projects=state.projects.filter(p=>p.id!==arg.id);await cacheDelete(arg.id);saveLocal();setPage(state.page==='detail'?'projects':state.page);notice('Проект удалён');return}
+ if(a==='detail-download'){const image=await projectImage(state.selected);if(image)download(image,'aurora-'+state.selected.id+'.png');return}
+ if(a==='detail-copy'){await clipboard(state.selected?.content?.result||'');return}
+ if(a==='saved-copy'){const card=state.saved.find(x=>x.id===arg.id);if(card)await clipboard(card.title+'\n\n'+card.description+'\n\n'+card.post);return}
+ if(a==='saved-delete'){if(!await uiConfirm('Удалить сохранённую карточку?'))return;await api('/business/cards/delete',{id:arg.id});await loadSaved();return}
+ if(a==='pro-buy'){if(!state.plan.billingReady)throw Error('Оплата PRO пока не настроена');if(!tg?.openInvoice)throw Error('Открой Аврору в Telegram');const x=await api('/business/billing/invoice',{product:'pro_30d'});tg.openInvoice(x.invoiceLink,async status=>{if(status==='paid'){await refreshPlan();render();notice('Оплата отправлена, проверяем статус')}else if(status==='failed')notice('Платёж не прошёл')});return}
+ if(a==='support-send'){const subject=$('support-subject')?.value.trim();const message=$('support-text')?.value.trim();await api('/support/create',{subject,message});$('support-subject').value='';$('support-text').value='';notice('Обращение отправлено');return}
+ if(a==='admin-pro-find'){
+   const username=($('gift-username')?.value||'').trim();
+   state.giftQuery=username;state.giftUser=null;
+   if(!/^@?[A-Za-z0-9_]{5,32}$/.test(username))throw Error('Укажи Telegram-ник, например @username');
+   document.activeElement?.blur?.();
+   const result=await api('/admin/pro/lookup',{username});
+   state.giftUser=result.user;render();notice('Пользователь найден. Проверь Telegram ID.');return;
+ }
+ if(a==='admin-pro-grant'){
+   const target=state.giftUser;
+   if(!target)throw Error('Сначала найди пользователя');
+   const days=Number(state.giftDays);
+   if(![7,30,90].includes(days))throw Error('Выбери срок подписки');
+   if(!await uiConfirm(`Бесплатно выдать PRO на ${days} дней пользователю @${target.username} (Telegram ID ${target.userId})?`))return;
+   const result=await api('/admin/pro/grant',{username:target.username,expectedUserId:target.userId,days,requestId:id()});
+   state.giftUser=null;await loadAdmin();
+   notice('PRO выдан до '+new Date(result.expiresAt).toLocaleDateString('ru-RU'));return;
+ }
+ if(a==='admin-toggle'){const next=!state.admin.settings[arg.key];if(!await uiConfirm('Изменить эту настройку сервиса?'))return;await api('/admin/update',{key:arg.key,value:next});await loadAdmin();notice('Настройка изменена');return}
+ if(a==='admin-reply'){const ticket=(state.admin?.tickets||[]).find(t=>t.id===arg.id);if(!ticket)throw Error('Обращение не найдено');const text=await replyDialog(ticket);if(!text)return;await api('/admin/ticket/reply',{id:arg.id,message:text});await loadAdmin();notice('Ответ отправлен');return}
+ if(a==='admin-close'){await api('/admin/ticket/status',{id:arg.id,status:'closed'});await loadAdmin();return}
+ };run(act)});
+async function start(){loadLocal();render();if(tg?.initData){await Promise.all([refreshLibrary(),refreshPlan(),checkOwner()]);}state.ready=true;render()}
+start().catch(e=>notice(e.message));
+</script>
+</body>
+</html>
