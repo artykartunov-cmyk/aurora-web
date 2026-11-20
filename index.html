@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#f5e6fc">
+<title>Аврора Бизнес 1.5 — магазин, CRM и AI</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+:root{--ink:#2b204b;--muted:#83759d;--violet:#8755d2;--magenta:#e05dc2;--pink:#faacd9;--line:#e7d9f1;--card:rgba(255,255,255,.80);--bg:#f8eefd;--shade:0 9px 29px rgba(119,58,152,.10);--safe:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%}body{font-family:Manrope,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--ink);background:radial-gradient(ellipse 76% 34% at 95% -4%,#efb4fb 0%,transparent 72%),radial-gradient(ellipse 58% 24% at 0 48%,#f9cfec 0%,transparent 86%),linear-gradient(152deg,#fff3fa,#f6ebff 55%,#efe5ff);background-attachment:fixed;-webkit-tap-highlight-color:transparent}
+button,input,textarea,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;cursor:default}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #b485ee;outline-offset:2px}
+#app{max-width:610px;margin:0 auto;padding:18px 18px calc(104px + var(--safe));min-height:100vh;position:relative}#app:before{content:'✦';position:fixed;pointer-events:none;top:19%;right:5%;color:#e1baf8;font-size:38px;filter:blur(.5px);opacity:.3}.brand{display:flex;justify-content:space-between;align-items:center;margin:4px 0 22px;gap:12px}.mark{display:flex;align-items:center;gap:11px}.mark-icon{width:45px;height:45px;border-radius:16px;display:grid;place-items:center;color:white;font-size:27px;font-weight:800;font-style:italic;background:linear-gradient(135deg,#fe91cc,#9b59df 70%,#735bdb);box-shadow:0 8px 22px #d69adfaa}.brand strong{font-size:17px;line-height:1.2;letter-spacing:-.5px}.brand small{display:block;color:var(--muted);font-size:10px;margin-top:2px;font-weight:600}.circle-btn{display:grid;place-items:center;width:43px;height:43px;border-radius:15px;background:rgba(255,255,255,.78);border:1px solid white;color:var(--violet);box-shadow:var(--shade)}
+h1{font-size:30px;letter-spacing:-1.1px;margin:0;font-weight:800;line-height:1.2}h2{font-size:19px;letter-spacing:-.5px;margin:0;font-weight:800}h3{font-size:16px;margin:0;font-weight:800}p{line-height:1.55}.muted{color:var(--muted)}.subtitle{font-size:13px;margin:6px 0 22px;color:var(--muted)}.section-line{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:26px 0 13px}.eyebrow{font-size:10px;letter-spacing:1.2px;text-transform:uppercase;font-weight:800;color:#9974bd}.view-all{background:none;border:0;color:#8852ce;font-size:12px;font-weight:800}.glass{background:var(--card);border:1px solid rgba(255,255,255,.92);box-shadow:var(--shade);border-radius:22px}.hero{background:radial-gradient(circle at 82% 15%,rgba(255,255,255,.7),transparent 28%),linear-gradient(120deg,#f8c5ea 0%,#e6c8fc 54%,#bda5f5 100%);border:1px solid #fff8ff;box-shadow:0 17px 35px rgba(149,85,180,.18);padding:23px 18px;display:flex;position:relative;min-height:185px;overflow:hidden;border-radius:28px}.hero .hero-copy{position:relative;z-index:1;max-width:65%}.hero h2{font-size:24px;line-height:1.14;margin:8px 0}.hero p{font-size:12px;margin:0 0 15px;color:#664d80}.hero .orb{position:absolute;right:-21px;top:16px;width:150px;height:145px;border-radius:50%;background:linear-gradient(135deg,#fff8ff90,#f5a2dc80);filter:drop-shadow(0 10px 12px #ad71c056);display:grid;place-items:center;transform:rotate(-13deg)}.orb svg{width:91px;height:91px;stroke:#8958be;stroke-width:1.1;filter:drop-shadow(0 7px 5px #9b5fbe55)}.pill{font-size:10px;border-radius:100px;display:inline-flex;gap:5px;align-items:center;padding:6px 10px;color:#75358c;background:#ffffffa9;font-weight:800}.btn{display:inline-flex;justify-content:center;align-items:center;gap:8px;border:0;border-radius:15px;padding:13px 15px;font-size:13px;font-weight:800;text-align:center;min-height:45px}.primary{color:white;background:linear-gradient(105deg,#f270ba,#ad65de 65%,#825fe0);box-shadow:0 8px 18px #cc81cf70}.soft{background:#f4e9fc;color:#7c4ec2;border:1px solid #ead7fa}.light{color:#713c94;background:#fff8ff}.outline{background:#fffafedc;color:#714caa;border:1px solid #ebd7f4}.danger{color:#c75085;background:#ffebf1}.btn.block{width:100%}.button-row{display:flex;gap:10px;flex-wrap:wrap}.button-row .btn{flex:1}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.tile{min-height:135px;display:flex;flex-direction:column;gap:11px;align-items:flex-start;padding:17px;border:1px solid white;border-radius:23px;background:linear-gradient(150deg,#fffaffed,#f5e5fded);box-shadow:var(--shade);text-align:left;color:var(--ink)}.tile .ico,.item-ico{display:grid;place-items:center;width:45px;height:45px;border-radius:14px;background:linear-gradient(135deg,#ffcef0,#d9bafa);box-shadow:inset 0 1px 0 #fff;color:#8953c5}.tile .ico svg,.item-ico svg{width:23px;height:23px;stroke-width:1.9}.tile strong{font-size:13px;line-height:1.24}.tile small{font-size:10px;color:var(--muted);line-height:1.4}.tile .row{display:flex;align-items:center;gap:11px}.numbers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.metric{padding:13px 8px;background:#fffafdce;border:1px solid #fff;border-radius:18px;text-align:center;box-shadow:var(--shade)}.metric strong{font-size:18px;display:block;letter-spacing:-.5px}.metric span{font-size:10px;color:var(--muted)}.list{display:grid;gap:10px}.list-item{display:flex;align-items:center;gap:12px;padding:12px;border-radius:19px;background:#ffffffbf;border:1px solid white;box-shadow:0 6px 18px #ab86bb15}.list-item .grow{flex:1;min-width:0}.list-item strong{display:block;font-size:13px}.list-item small{display:block;font-size:11px;color:var(--muted);margin-top:4px;word-break:break-word}.thumb{width:60px;height:60px;flex:0 0 60px;border-radius:15px;object-fit:cover;background:linear-gradient(140deg,#f8d9f2,#e5cffa);display:grid;place-items:center;color:#9f7bb6}.thumb svg{width:25px;height:25px}.chev{color:#9e7eb5}.panel{padding:17px;border-radius:24px;background:#fffaffdd;border:1px solid white;box-shadow:var(--shade);margin-top:12px}.form-grid{display:grid;gap:14px}label.field{display:block;font-size:12px;font-weight:800}.field span{display:block;margin-bottom:7px}.input,select.input,textarea.input{display:block;width:100%;margin-top:6px;padding:13px 14px;color:var(--ink);border:1px solid #e6d8f3;border-radius:14px;background:#fff;outline:0;font-size:13px;min-height:46px}.input::placeholder{color:#ac9aba}.input:focus{border-color:#a57ae7;box-shadow:0 0 0 3px #ab83ea25}textarea.input{min-height:110px;resize:vertical}.hint{font-size:11px;line-height:1.5;color:#8b7aa0}.drop{border:1.5px dashed #cb94e9;border-radius:22px;background:linear-gradient(135deg,#fff1fa,#f3e8ff);padding:24px 15px;text-align:center;color:#815bb1;display:grid;justify-items:center;gap:8px;cursor:pointer}.drop svg{width:34px;height:34px}.drop strong{font-size:13px}.drop span{font-size:11px}.drop img{max-height:155px;max-width:100%;border-radius:13px;object-fit:contain}.chip-row{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}.chip{border-radius:100px;border:1px solid #ead6f6;background:#fffafeee;color:#8253b5;padding:9px 12px;font-size:11px;font-weight:800}.chip.active{background:linear-gradient(115deg,#f39dce,#bd8cea);color:#4a275d;border-color:#f5c9e5}.tag{font-size:10px;padding:5px 8px;border-radius:100px;background:#f6e4fb;color:#8859af;font-weight:800}.tag.green{background:#def7ec;color:#32886b}.tag.orange{background:#fff1db;color:#b77d38}.tag.gray{background:#f1ebf4;color:#7b7186}.empty{text-align:center;padding:34px 18px;background:#ffffff7f;border:1px solid white;border-radius:23px}.empty-icon{width:60px;height:60px;border-radius:19px;margin:0 auto 12px;display:grid;place-items:center;background:#f4def9;color:#aa73ce}.empty-icon svg{width:30px;height:30px}.empty strong{display:block;font-size:15px}.empty p{font-size:12px;color:var(--muted);margin:7px 0 18px}.notice{padding:12px 14px;background:#fff9ed;border:1px solid #efdcb6;border-radius:14px;color:#895f36;font-size:11px;line-height:1.55;margin:0 0 18px}.notice.live{background:#effff5;border-color:#d1eedb;color:#468365}.notice.error{background:#fff0f5;border-color:#f2c3d7;color:#a63f74}.divider{height:1px;background:#eaddef;margin:15px 0}.product-card{display:flex;gap:13px;padding:12px;background:#fffaffdb;border:1px solid white;border-radius:20px;box-shadow:var(--shade);margin-bottom:10px}.product-card .grow{min-width:0;flex:1}.product-card h3{font-size:13px}.product-card p{font-size:11px;color:var(--muted);margin:4px 0 7px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.price{font-weight:800;color:#7951b4;font-size:15px}.tiny{border:0;background:transparent;color:#875cb0;padding:7px;font-size:12px;font-weight:800}.tiny.red{color:#cb6088}.cover{width:91px;height:100px;flex:0 0 91px;border-radius:15px;object-fit:cover;background:linear-gradient(145deg,#f3d6ef,#d5c4f7);display:grid;place-items:center;color:#996fbc}.cover svg{width:35px;height:35px}.status{text-transform:none}.floating-cart{position:fixed;bottom:calc(93px + var(--safe));left:50%;transform:translateX(-50%);width:min(92%,530px);z-index:10}.bottom{position:fixed;z-index:15;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,610px);display:flex;justify-content:space-around;gap:2px;padding:9px 8px calc(10px + var(--safe));border-radius:25px 25px 0 0;border:1px solid #fff9;box-shadow:0 -10px 28px #ac79bd20;background:#fff6ffed;backdrop-filter:blur(23px)}.nav-btn{min-width:0;flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;background:none;border:none;color:#9c81b3;padding:7px 2px 4px;font-size:9px;font-weight:800}.nav-btn .nav-svg{display:grid;place-items:center;border-radius:14px;min-height:28px}.nav-btn svg{width:22px;height:22px;stroke-width:1.9}.nav-btn.active{color:#a254be}.nav-btn.active .nav-svg{background:#f2d5fa;padding:6px;margin:-6px}.nav-btn.add .nav-svg{width:47px;height:47px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(125deg,#f28bc8,#a467e0);color:white;box-shadow:0 6px 14px #b68adc55;margin-top:-24px;margin-bottom:-4px}.nav-btn.add svg{width:27px;height:27px}.toast{position:fixed;z-index:99;top:18px;left:50%;transform:translateX(-50%);background:#37244eea;color:white;font-size:12px;padding:11px 16px;border-radius:13px;box-shadow:0 10px 22px #715f7947;max-width:88%;text-align:center}.split{display:grid;grid-template-columns:1fr 1fr;gap:12px}.split .panel{margin:0}.shop-banner{border-radius:24px;padding:24px 18px;background:linear-gradient(125deg,#f9cee8,#d9b8fa);text-align:center;margin:14px 0}.shop-banner .big{font-weight:800;font-size:25px}.button-compact{padding:9px 12px;font-size:11px;min-height:36px}.readonly{word-break:break-all;padding:11px;background:#f8efff;border-radius:12px;font-size:11px;color:#7859a1}.footnote{font-size:11px;color:#937ea2;line-height:1.55;margin-top:24px}.order-details{display:grid;gap:7px;margin:10px 0 0;font-size:11px;color:#75668d}.order-details b{color:var(--ink)}.chartbar{display:flex;height:12px;background:#f1e1f7;border-radius:12px;overflow:hidden}.chartbar>div{background:linear-gradient(100deg,#f88bd0,#a779e1)}
+@media(min-width:500px){#app{padding:25px 25px 120px}.hero{min-height:205px;padding:29px 25px}.hero .orb{right:22px;top:26px}.tile{min-height:140px}.brand{margin-bottom:28px}}
+
+/* Telegram’s native chrome overlaps the top of iOS web views.
+   Put our brand below the chrome without moving the bottom navigation. */
+.tg-ios #app{padding-top:calc(100px + env(safe-area-inset-top,0px))}
+.tg-ios .brand{margin-bottom:18px}
+@media(max-width:390px){.tg-ios #app{padding-top:calc(92px + env(safe-area-inset-top,0px))}}
+/* Aurora Business: iPhone / Telegram mobile layout */
+html { width:100%; overflow-x:hidden; -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+body { width:100%; max-width:100%; overflow-x:hidden; touch-action:pan-y; }
+#app { width:100%; max-width:610px; min-width:0; overflow-x:clip; padding-left:clamp(14px,4vw,22px); padding-right:clamp(14px,4vw,22px); }
+#app *, .bottom * { min-width:0; }
+img, video, svg { max-width:100%; }
+h1,h2,h3,p,.subtitle { overflow-wrap:break-word; }
+input,textarea,select { max-width:100%; font-size:16px; }
+@media (max-width:390px) {
+  h1 { font-size:clamp(24px,7vw,30px); }
+  .hero { padding:20px 16px; }
+  .brand strong { font-size:16px; }
+}
+
+
+/* Aurora Business 1.1 — AI product studio */
+.ai-progress{display:flex;gap:8px;margin:0 0 16px;align-items:center}
+.ai-progress .step{flex:1;border-radius:13px;background:#fff9ffba;border:1px solid #fff7ff;padding:10px 8px;font-size:11px;font-weight:800;color:#8a6b9c;text-align:center}
+.ai-progress .step.active{background:linear-gradient(115deg,#f8cce8,#e5d0fb);color:#703ba5;border-color:#edc4f5}
+.ai-progress .step.done{color:#538565;background:#f2fff6}
+.ai-studio{background:linear-gradient(145deg,#fffafd,#fff7ffdc);}
+.ai-preview-head{display:flex;align-items:center;gap:13px;margin-bottom:14px}
+.ai-preview-head img{width:86px;height:86px;object-fit:cover;border-radius:18px;border:1px solid #f5daf2}
+.ai-preview-head .ai-icon{width:72px;height:72px;display:grid;place-items:center;border-radius:18px;background:linear-gradient(120deg,#ffd4ee,#d6bef8);color:#8e58ba}
+.ai-preview-head .ai-icon svg{width:31px;height:31px}
+.ai-result .field{margin:12px 0}
+.ai-result .field textarea.input{min-height:90px}
+.ai-result .field textarea#genPost{min-height:122px}
+.ai-result .field .input{font-size:14px}
+.ai-result .publish{background:linear-gradient(135deg,#f8e5f8,#e8d5ff);border:1px solid #f5dfff;padding:14px;border-radius:18px;display:grid;gap:12px;margin-top:13px}
+.ai-result .publish strong{font-size:13px}
+.ai-result .publish .split{margin-top:2px}
+.ai-result .publish .hint{margin:0}
+.ai-badge{font-size:11px;font-weight:800;color:#9657a6;background:#fce6f8;padding:7px 11px;border-radius:100px;display:inline-flex;gap:7px;align-items:center}
+@media(max-width:350px){.ai-result .button-row{display:grid;grid-template-columns:1fr 1fr}.ai-result .button-row .btn{min-width:0;padding:10px 8px;font-size:11px}}
+
+
+/* Aurora Business 1.2 — удобная AI-студия */
+:root{--nav-visual-height:114px;--soft-keyboard:0px}
+html{scroll-padding-bottom:calc(var(--nav-visual-height) + 28px + var(--safe))}
+#app{padding-bottom:calc(var(--nav-visual-height) + 118px + var(--safe) + var(--soft-keyboard))}
+#view{min-width:0;overflow-wrap:break-word}
+.ai-result{overflow:visible;padding-bottom:22px;margin-bottom:34px}
+.ai-result .field{display:block;min-width:0}
+.ai-result .field>span{line-height:1.5}
+.ai-result .input{max-width:100%;font-size:16px;line-height:1.55;overflow-wrap:break-word}
+.ai-result textarea.input{display:block;min-height:125px;overflow-y:auto;resize:vertical;scrollbar-width:thin}
+.ai-result textarea#genPost{min-height:190px;white-space:pre-wrap;line-height:1.65}
+.ai-result textarea#genTitle{min-height:100px;font-size:16px;font-weight:800;letter-spacing:-.25px;line-height:1.55}
+.ai-title-help{display:block;margin-top:7px;font-size:11px;line-height:1.45;color:#876c9c}
+.ai-review{border:1px solid #e8c7f1;background:linear-gradient(140deg,#fff7fa,#f4ecff);border-radius:20px;padding:15px;margin:16px 0}
+.ai-review-heading{font-weight:800;color:#70489d;display:flex;align-items:center;gap:8px;font-size:14px}
+.ai-review ul{margin:8px 0 10px;padding-left:20px;color:#645075;font-size:12px;line-height:1.65}
+.ai-review li{margin:5px 0}
+.ai-review p{color:#7d688f;font-size:12px;line-height:1.55;margin:8px 0}
+.ai-review .field-check{display:flex;align-items:flex-start;gap:10px;padding:12px;border-radius:15px;background:#ffffffb9;margin-top:12px;font-size:12px;line-height:1.45;font-weight:700;cursor:pointer}
+.field-check input{appearance:auto;-webkit-appearance:checkbox;margin:2px 0 0;width:19px;height:19px;min-width:19px;accent-color:#a663d7}
+.post-preview{background:#fff;border:1px solid #ecdaf2;border-radius:16px;padding:15px;margin:10px 0 14px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.8;font-size:13px;color:#3b2c54;max-height:290px;overflow-y:auto;box-shadow:inset 0 2px 9px #e8c3eb1b}
+.preview-label{font-size:11px;font-weight:800;color:#8054aa;margin:14px 0 7px}
+#gen-result{scroll-margin-top:calc(22px + env(safe-area-inset-top,0px))}
+@media(max-width:390px){.ai-result{padding:14px}.ai-review{padding:13px}.ai-result .publish{padding:12px}.ai-result .button-row{gap:8px}.ai-result .button-row .btn{font-size:12px;padding:10px 8px}}
+/* Пока открыта клавиатура, нижнее меню не заслоняет текст и кнопки. */
+body.editing-input .bottom{opacity:0;transform:translate(-50%,130%);pointer-events:none}
+body.editing-input #app{padding-bottom:calc(150px + var(--safe) + var(--soft-keyboard))}
+
+
+/* Aurora Business 1.3 — роли + универсальные карточки */
+.role-ribbon{display:inline-flex;align-items:center;gap:7px;background:#fff8ff;border:1px solid #f2d5fa;border-radius:999px;padding:8px 12px;color:#8558a5;font-size:11px;font-weight:800;margin-bottom:12px}
+.role-ribbon svg{width:15px;height:15px}
+.creator-hero{position:relative;overflow:hidden;min-height:232px;border:1px solid rgba(255,255,255,.87);border-radius:29px;padding:25px 22px;background:linear-gradient(138deg,#ffd5ef 0%,#eed8ff 57%,#c5b0fb 100%);box-shadow:var(--shade);display:flex;align-items:center;margin:24px 0}
+.creator-hero h2{font-size:clamp(24px,6.7vw,31px);line-height:1.16;letter-spacing:-.9px;max-width:230px}
+.creator-hero p{font-size:12px;line-height:1.6;max-width:215px;color:#765c8f;margin-bottom:18px}
+.creator-hero .orb{position:absolute;right:-16px;top:28px;width:145px;height:145px;display:grid;place-items:center;border-radius:50%;background:linear-gradient(150deg,#fff3f8a8,#d8aaf7);color:#9c55be;opacity:.8;pointer-events:none}
+.creator-hero .orb svg{width:68px;height:68px}
+.creator-hero .creator-copy{z-index:1;position:relative}
+.role-cta{display:flex;align-items:flex-start;gap:12px;background:#fff9ffbf;border-radius:24px;padding:18px;border:1px solid #fff;box-shadow:var(--shade);margin:18px 0}
+.role-cta>span{display:grid;place-items:center;background:#f6dffa;color:#9d58c0;border-radius:16px;padding:12px;flex:none}
+.role-cta h3{margin-bottom:5px}.role-cta p{margin:0 0 12px;font-size:12px;color:#7f6c93}
+.role-cta .btn{min-height:40px}
+.platform-note{border:1px solid #eed8f3;background:#fff9ffbe;padding:12px 14px;border-radius:17px;color:#736288;line-height:1.6;font-size:12px;margin:8px 0 14px}
+.platform-tags{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
+.platform-tags span{padding:7px 11px;background:#fff8ff;border:1px solid #f0d7f5;border-radius:99px;font-size:11px;color:#8859a2;font-weight:700}
+.saved-card{background:#fffaffde;border:1px solid white;box-shadow:var(--shade);border-radius:23px;padding:16px;margin:12px 0}
+.saved-card h3{line-height:1.4;overflow-wrap:anywhere;margin-bottom:6px}.saved-card .hint{margin:8px 0;line-height:1.6}
+.saved-card .tiny{font-size:12px}
+.creator-actions{display:flex;flex-wrap:wrap;gap:10px;margin:13px 0 8px}
+.creator-actions .btn{flex:1;min-width:155px}
+.creator-help{font-size:12px;color:#7d638e;line-height:1.6}
+body.customer-store .bottom{display:none}body.customer-store #app{padding-bottom:calc(120px + var(--safe))}
+@media(max-width:360px){.creator-hero{padding:19px 14px}.creator-hero .orb{width:110px;height:110px;right:-10px}.creator-hero h2{font-size:24px}.role-cta{padding:14px}}
+
+
+.saved-photo{width:100%;max-height:185px;object-fit:cover;border-radius:17px;margin:4px 0 12px;display:block;background:#f7e6fb}
+.saved-card .creator-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.saved-card .creator-actions .btn{flex:none;width:100%;min-width:0;min-height:44px;font-size:12px;padding:10px 7px}
+.ai-result #genTitle{height:auto;min-height:100px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
+.ai-result textarea{padding-bottom:16px}
+@media(max-width:420px){#app{padding-bottom:calc(145px + var(--safe))}.ai-result{padding:15px 13px}.creator-actions{flex-direction:column}.creator-actions>.btn{width:100%;flex:auto}}
+
+
+/* Aurora Business 1.4.1: keep the primary CTA comfortably above Telegram's bottom dock. */
+:root { --mobile-bottom-nav: 114px; }
+html.tg-ios #app {
+  /* The native Telegram header is already drawn above the web view. */
+  padding-top: calc(48px + env(safe-area-inset-top, 0px));
+}
+@media (max-width: 390px) {
+  html.tg-ios #app { padding-top: calc(44px + env(safe-area-inset-top, 0px)); }
+}
+#app {
+  padding-bottom: calc(var(--mobile-bottom-nav) + 70px + var(--safe) + var(--soft-keyboard));
+}
+#view { padding-bottom: 16px; }
+.creator-hero {
+  min-height: 0;
+  margin: 18px 0 20px;
+  padding: 20px 18px 22px;
+  align-items: flex-start;
+}
+.creator-hero .creator-copy { max-width: 71%; min-width: 0; }
+.creator-hero h2 {
+  font-size: clamp(22px, 6.2vw, 27px);
+  max-width: 220px;
+  line-height: 1.16;
+  margin: 10px 0 12px;
+}
+.creator-hero p { max-width: 230px; margin: 0 0 15px; }
+.creator-hero .orb { width: 113px; height: 113px; right: -9px; top: 30px; }
+.creator-hero .orb svg { width: 57px; height: 57px; }
+.creator-hero .btn {
+  position: relative;
+  z-index: 2;
+  max-width: 100%;
+  min-width: 0;
+  white-space: nowrap;
+  font-size: 12px;
+  padding: 11px 13px;
+  min-height: 44px;
+}
+@media (max-width: 420px) {
+  .creator-hero { padding: 19px 15px 21px; }
+  .creator-hero .creator-copy { max-width: 76%; }
+  .creator-hero .orb { width: 108px; height: 108px; right: -12px; }
+  #app { padding-bottom: calc(var(--mobile-bottom-nav) + 65px + var(--safe) + var(--soft-keyboard)); }
+}
+@media (max-width: 350px) {
+  .creator-hero .creator-copy { max-width: 80%; }
+  .creator-hero h2 { font-size: 21px; }
+  .creator-hero .orb { width: 90px; height: 90px; opacity: .48; }
+}
+
+/* Aurora Business 1.4.2 — all bottom navigation icons share the same baseline. */
+.bottom {
+  align-items: stretch;
+}
+.nav-btn {
+  justify-content: flex-start;
+  align-items: center;
+  gap: 6px;
+  padding-top: 7px;
+  padding-bottom: 6px;
+  line-height: 1.25;
+  min-height: 69px;
+}
+.nav-btn .nav-svg,
+.nav-btn.add .nav-svg,
+.nav-btn.active .nav-svg {
+  box-sizing: border-box;
+  width: 46px;
+  height: 46px;
+  min-width: 46px;
+  min-height: 46px;
+  flex: 0 0 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  padding: 0;
+  margin: 0;
+}
+.nav-btn.add .nav-svg {
+  background: linear-gradient(125deg,#f28bc8,#a467e0);
+  color: #fff;
+  box-shadow: 0 5px 14px #b68adc45;
+}
+.nav-btn.add svg {width: 26px; height: 26px;}
+.nav-btn.active .nav-svg {background: #f2d5fa;}
+.nav-btn.add.active .nav-svg {
+  background: linear-gradient(125deg,#f28bc8,#a467e0);
+}
+/* Keep all labels aligned even when Telegram scales text. */
+.nav-btn {font-size: clamp(9px, 2.6vw, 11px);}
+@media(max-width:350px){
+  .nav-btn .nav-svg,.nav-btn.add .nav-svg,.nav-btn.active .nav-svg {
+    width: 42px; height: 42px; min-width: 42px; min-height: 42px; flex-basis: 42px;
+  }
+  .nav-btn {min-height:65px;}
+}
+
+
+/* Aurora Business 1.4.3 — brand-forward shop sharing display. */
+.shop-link-preview{display:flex;align-items:center;gap:12px;min-width:0;padding:13px 15px;border:1px solid #ead5f0;border-radius:17px;background:linear-gradient(110deg,#fff5fc,#f3eaff);color:#50326d}
+.shop-link-preview>svg{flex:none;width:23px;height:23px;color:#a155c6}
+.shop-link-meta{min-width:0;display:flex;flex-direction:column;gap:3px}
+.shop-link-meta strong{font-weight:800;font-size:14px;overflow-wrap:anywhere}
+.shop-link-meta span{font-size:12px;color:#80659b;overflow-wrap:anywhere}
+
+
+/* Aurora Business 1.5 — premium visual system, CRM, subscription interface */
+:root{--ink:#342043;--muted:#846c91;--violet:#8752ce;--line:#ead8f0;--shade:0 10px 32px rgba(127,67,156,.10)}
+body{background:radial-gradient(ellipse 72% 42% at 104% 2%,#e9ccffad,transparent 67%),radial-gradient(ellipse 85% 47% at -22% 34%,#ffe0f0ac,transparent 75%),linear-gradient(160deg,#fdf3fc,#f4eaff 55%,#f9edfc);background-attachment:fixed}
+.hero,.creator-hero{box-shadow:0 19px 37px #b789d02e;border-color:#fff}
+.hero{background:radial-gradient(circle at 82% 7%,#fff9ffac,transparent 32%),linear-gradient(125deg,#fed2ed,#e8cffa 62%,#bba5fa)}
+.panel,.tile,.list-item,.metric,.saved-card{border:1px solid #fff;box-shadow:0 8px 24px #aa80bd17}
+.tile:active,.list-item[data-action]:active,.btn:active{transform:scale(.988)}
+.tile,.btn,.list-item{transition:transform .14s ease,box-shadow .15s ease}
+.section-kicker{font-size:11px;font-weight:800;letter-spacing:.13em;color:#a46abd;text-transform:uppercase;margin:16px 0 9px}
+.ribbon{display:flex;gap:9px;align-items:center;background:linear-gradient(105deg,#fff9ff,#f6e6ff);border:1px solid #edd4fa;padding:11px 13px;border-radius:17px;color:#8a5ab5;font-size:11px;font-weight:800;margin-bottom:16px}
+.ribbon svg{width:17px;height:17px;flex:none}
+.premium-profile{display:flex;align-items:center;gap:14px;padding:20px;background:linear-gradient(115deg,#ffe0f0,#eedafd 75%,#e6daff);border-radius:25px;border:1px solid #fff;box-shadow:var(--shade)}
+.premium-profile .profile-avatar{width:58px;height:58px;flex:none;border:3px solid #fff;border-radius:21px;background:linear-gradient(135deg,#ee83c5,#9862d5);color:#fff;display:grid;place-items:center;font-size:23px;font-weight:800;box-shadow:0 7px 18px #bc87cc6b}
+.premium-profile .profile-data{min-width:0;flex:1}
+.premium-profile .profile-data strong{display:block;font-size:17px;overflow-wrap:anywhere}
+.premium-profile .profile-data small{display:block;color:#805d91;font-size:11px;margin-top:4px;overflow-wrap:anywhere}
+.premium-profile .profile-tier{background:#fff8ff;color:#8d51b6;border:1px solid #fff;border-radius:99px;padding:6px 9px;font-size:10px;font-weight:800}
+.plan-grid{display:grid;gap:13px}.plan-card{padding:21px;border:1px solid #fff;border-radius:25px;background:#fffaffdc;box-shadow:var(--shade)}
+.plan-card.premium{background:radial-gradient(circle at 100% 0%,#f5ddff,transparent 44%),linear-gradient(145deg,#ffedf8,#eee1ff);border-color:#fff}
+.plan-card .head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.plan-card h2{font-size:22px}.plan-card .plan-benefit{padding:9px 0;border-bottom:1px solid #ead5f177;display:flex;gap:9px;align-items:center;font-size:12px;color:#654b7e}
+.plan-card .plan-benefit svg{width:16px;height:16px;color:#8c58c2;flex:none}
+.stat-strip{display:flex;gap:10px;flex-wrap:wrap;margin:9px 0 16px}.stat-chip{padding:8px 11px;border-radius:999px;background:#fff9ff;border:1px solid #ecdafa;font-size:11px;font-weight:800;color:#8055a5}
+.searchbar{margin:4px 0 13px}.mini-note{padding:12px 13px;border:1px solid #ebd7f2;background:#fffaffbc;border-radius:16px;margin:12px 0;color:#76628a;font-size:11px;line-height:1.6}
+.client-card{display:flex;align-items:center;gap:12px;background:#fffaffd8;border:1px solid #fff;border-radius:20px;padding:13px;margin-bottom:9px;box-shadow:var(--shade)}
+.client-card .client-meta{flex:1;min-width:0}.client-card .client-meta strong{font-size:13px}.client-card .client-meta small{display:block;font-size:11px;color:var(--muted);line-height:1.5;margin-top:4px}
+.client-card .client-total{font-weight:800;color:#8656bd;font-size:12px;white-space:nowrap}
+.onboarding-steps{display:grid;gap:8px;margin:18px 0}.onboarding-step{display:flex;align-items:center;gap:12px;padding:12px 13px;border-radius:16px;background:#ffffffae;border:1px solid white;font-size:12px;color:#74538c;font-weight:700}.onboarding-step .count{width:28px;height:28px;border-radius:10px;display:grid;place-items:center;background:#edd9fb;color:#915fc4;font-weight:800;flex:none}
+.quick-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.quick-actions button{display:grid;justify-items:center;gap:7px;text-align:center;background:#fffaffd8;border:1px solid white;border-radius:17px;padding:14px 7px;color:#76519d;font-size:10px;font-weight:800;box-shadow:var(--shade)}.quick-actions button svg{width:23px;height:23px}
+.mini-switch{display:inline-flex;align-items:center;gap:6px;border-radius:14px;padding:10px 12px;background:#f8eafa;color:#8250ac;font-size:11px;font-weight:800;border:1px solid #edd9f3}
+@media(max-width:370px){.premium-profile{padding:15px}.plan-card{padding:16px}.client-card{gap:8px}.quick-actions button{padding:12px 4px}}
+
+</style>
+</head>
+<body>
+<div id="app"><div id="shell"></div><div id="view"></div></div><nav class="bottom" id="nav"></nav><div id="toast" class="toast" hidden></div>
+<script>
+'use strict';
+const API='https://aurora-ai.artykartunov.workers.dev'; // Existing Aurora Cloudflare Worker.
+// Укажи подтверждённый username Telegram-бота БЕЗ @.
+// Пример: 'YourRealBotName' (не используй пример как настоящий адрес).
+// Пока имя не заполнено, старые GitHub-ссылки продолжат работать.
+const BOT_USERNAME = 'AuroraNestSpaceBot';
+
+const tg=window.Telegram?.WebApp; try{tg?.ready();tg?.expand();tg?.setHeaderColor?.('#f7e8f8');tg?.setBackgroundColor?.('#f8eefd')}catch{}
+if(tg?.initData&&/iPhone|iPad|iPod/i.test(navigator.userAgent))document.documentElement.classList.add('tg-ios');
+const viewer=tg?.initDataUnsafe?.user||null;
+const STORE_KEY='aurora-business-v1-'+String(viewer?.id||'browser');
+const iconPaths={home:'<path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 21v-8h6v8"/>',shop:'<path d="M3 9l2-5h14l2 5v2a3 3 0 0 1-5 2 3 3 0 0 1-4 0 3 3 0 0 1-4 0 3 3 0 0 1-5-2z"/><path d="M5 14v7h14v-7"/>',box:'<rect x="3" y="7" width="18" height="14" rx="2"/><path d="M3 12h18M9 7V3h6v4"/>',orders:'<path d="M8 3h8l2 3h3v15H3V6h3z"/><path d="M8 12h8M8 16h6"/>',users:'<circle cx="9" cy="8" r="3"/><path d="M2 21v-2a7 7 0 0 1 14 0v2M17 7a3 3 0 0 1 0 6M18 16a5 5 0 0 1 4 5"/>',chart:'<path d="M4 20V11m5 9V4m5 16v-7m5 7V8"/>',spark:'<path d="m12 2 1.9 6.1L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.9z"/><path d="m20 17 .7 2.3L23 20l-2.3.7L20 23l-.7-2.3L17 20l2.3-.7z"/>',camera:'<path d="M4 7h3l2-3h6l2 3h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z"/><circle cx="12" cy="13" r="4"/>',plus:'<path d="M12 5v14M5 12h14"/>',person:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',arrow:'<path d="M5 12h14m-6-6 6 6-6 6"/>',back:'<path d="m15 18-6-6 6-6"/>',copy:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>',star:'<path d="m12 2 3.2 6.5 7.2 1-5.2 5.1 1.2 7.2-6.4-3.4-6.4 3.4 1.2-7.2-5.2-5.1 7.2-1z"/>',check:'<path d="m4 12 5 5L20 6"/>',edit:'<path d="m16 4 4 4-12 12H4v-4z"/>',trash:'<path d="M3 6h18M8 6V4h8v2m3 0-1 15H6L5 6M10 10v7m4-7v7"/>',lock:'<rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>',link:'<path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1.5 1.5M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1.5-1.5"/>',heart:'<path d="M20.8 4.6a5 5 0 0 0-7.1 0L12 6.3l-1.7-1.7a5 5 0 0 0-7.1 7.1L12 21l8.8-9.3a5 5 0 0 0 0-7.1z"/>',info:'<circle cx="12" cy="12" r="10"/><path d="M12 11v6m0-10v1"/>',shopping:'<path d="M2 3h2l2.5 12h12l2.5-9H5M8 21h.01M18 21h.01"/>',search:'<circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/>',send:'<path d="m22 2-7 20-4-9-9-4zM22 2 11 13"/>',wallet:'<rect x="2" y="5" width="20" height="15" rx="3"/><path d="M2 10h20"/>'};
+function ico(n,cls=''){return `<svg class="${cls}" aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${iconPaths[n]||iconPaths.spark}</svg>`}
+function E(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function money(n,currency='₽'){return new Intl.NumberFormat('ru-RU',{maximumFractionDigits:2}).format((Number(n)||0)/100)+' '+currency}
+function uid(){return globalThis.crypto?.randomUUID?.()||'id-'+Date.now()+'-'+Math.random().toString(36).slice(2)}
+const defaultShop=()=>({name:'Мой магазин',slug:'',description:'Товары и новинки в Telegram',currency:'₽'});
+let state={mode:'local',page:'home',hasShop:false,shop:defaultShop(),products:[],orders:[],savedCards:[],cardsSynced:false,editing:null,upload:null,generated:null,aiInput:{name:'',features:'',tone:'sales',platform:'marketplace'},filter:'all',search:'',statusFilter:'all',buyer:null,cart:[],busy:false,notice:'',buyerName:'',planInfo:{plan:'free',expiresAt:null,billingReady:false},clientSearch:'',orderSearch:'',dashboardGoal:0};
+function localLoad(){try{const d=JSON.parse(localStorage.getItem(STORE_KEY)||'{}');state.shop={...defaultShop(),...(d.shop||{})};state.products=Array.isArray(d.products)?d.products:[];state.orders=Array.isArray(d.orders)?d.orders:[];state.savedCards=Array.isArray(d.savedCards)?d.savedCards.slice(0,20):[];state.dashboardGoal=Number(d.dashboardGoal)||0}catch{}}
+function localSave(){try{localStorage.setItem(STORE_KEY,JSON.stringify({shop:state.shop,products:state.products,orders:state.orders,savedCards:state.savedCards,dashboardGoal:state.dashboardGoal}))}catch{toast('Место в памяти браузера закончилось')}}
+function toast(s){const t=document.getElementById('toast');t.textContent=String(s);t.hidden=false;clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.hidden=true,3200)}
+async function api(path,data={},method='POST'){
+ const url=API+path;
+ const r=await fetch(url,{method,headers:{'Content-Type':'application/json'},body:method==='POST'?JSON.stringify({initData:tg?.initData||'',...data}):undefined});
+ const value=await r.json().catch(()=>({error:'Непонятный ответ сервера'}));
+ if(!r.ok)throw Error(value.error||'Ошибка сервера '+r.status);
+ return value;
+}
+function friendlyDate(x){try{return new Date(x).toLocaleDateString('ru-RU',{day:'numeric',month:'short'})}catch{return ''}}
+function imgUrl(p){if(p?.imageKey&&/^[a-z0-9-]{12,64}\.jpg$/.test(p.imageKey))return API+'/business/media/'+encodeURIComponent(p.imageKey);if(p?.imageData&&/^data:image\/jpeg;base64,/i.test(p.imageData))return p.imageData;return ''}
+function photo(p,large=false){const src=imgUrl(p);return src?`<img class="${large?'cover':'thumb'}" src="${E(src)}" alt="Фото товара" loading="lazy">`:`<div class="${large?'cover':'thumb'}">${ico('box')}</div>`}
+function nav(){
+ document.body.classList.toggle('customer-store',!!state.buyer);
+ if(state.buyer){document.getElementById('nav').innerHTML='';return;}
+ const entries=state.hasShop
+ ?[['home','Главная','home'],['shop','Магазин','shop'],['ai','Создать','plus'],['orders','Заказы','orders'],['profile','Профиль','person']]
+ :[['home','Главная','home'],['ai','Создать','plus'],['saved','Карточки','box'],['profile','Профиль','person']];
+ document.getElementById('nav').innerHTML=entries.map(([id,name,i])=>`<button type="button" class="nav-btn ${id==='ai'?'add':''} ${state.page===id?'active':''}" data-action="page" data-page="${id}" aria-label="${name}"><span class="nav-svg">${ico(i)}</span>${name}</button>`).join('');
+}
+function header(){document.getElementById('shell').innerHTML=`<div class="brand"><div class="mark"><div class="mark-icon">A</div><div><strong>Аврора <span style="color:#a45ace">Business</span></strong><small>${state.hasShop?'Магазин и AI в Telegram':'AI-карточки для маркетплейсов'}</small></div></div><button type="button" class="circle-btn" data-action="page" data-page="profile" aria-label="Профиль">${ico('person')}</button></div>`}
+function title(text,sub){return `<h1>${E(text)}</h1><p class="subtitle">${E(sub)}</p>`}
+function section(title,action='',name=''){return `<div class="section-line"><h2>${E(title)}</h2>${action?`<button type="button" class="view-all" data-action="page" data-page="${action}">${E(name||'Все')} →</button>`:''}</div>`}
+function panelEmpty(icon,title,sub,btn='',action=''){return `<div class="empty"><div class="empty-icon">${ico(icon)}</div><strong>${E(title)}</strong><p>${E(sub)}</p>${btn?`<button class="btn primary" data-action="page" data-page="${action}">${E(btn)}</button>`:''}</div>`}
+function statusLabel(s){return ({new:'Новый',processing:'В работе',done:'Завершён',cancelled:'Отменён'})[s]||'Новый'}
+function statusTag(s){return s==='done'?'green':s==='new'?'orange':'gray'}
+function activeOrders(){return state.orders.filter(x=>x.status!=='cancelled')}
+function stats(){const a=activeOrders();return {products:state.products.length,orders:state.orders.length,sales:a.filter(x=>x.status==='done').reduce((sum,o)=>sum+Number(o.totalMinor||0),0),clients:new Set(state.orders.map(o=>o.buyerId||o.phone).filter(Boolean)).size}}
+function metric(name,value){return `<div class="metric"><strong>${E(value)}</strong><span>${E(name)}</span></div>`}
+function creatorHomeLegacy(){
+ const greeting=viewer?.first_name?`Привет, ${E(viewer.first_name)}!`:'Добро пожаловать!';
+ return `<div class="role-ribbon">${ico('spark')} Режим автора · без магазина</div><h1>${greeting}</h1><p class="subtitle">Создавай карточки товаров для маркетплейсов и объявлений с помощью AI.</p>
+ <div class="creator-hero"><div class="creator-copy"><span class="pill">${ico('spark')} AI-помощник</span><h2>Фото товара —<br>готовое описание</h2><p>Wildberries, Ozon, Яндекс Маркет и другие площадки.</p><button type="button" class="btn primary button-compact" data-action="page" data-page="ai">Создать карточку ${ico('arrow')}</button></div><div class="orb">${ico('box')}</div></div>
+ <div class="platform-tags"><span>Wildberries</span><span>Ozon</span><span>Яндекс Маркет</span><span>Объявления</span></div>
+ ${section('Твои возможности')}<div class="grid">
+ ${tile('spark','AI-генератор','Описание по фотографии','ai')}
+ ${tile('box','Мои карточки','Сохранённые тексты','saved')}
+ </div>
+ <div class="role-cta"><span>${ico('shop')}</span><div><h3>Хочешь свой магазин?</h3><p>Создай бесплатную витрину в Telegram. Это необязательно для работы AI.</p><button type="button" class="btn soft" data-action="page" data-page="shop">Создать магазин ${ico('arrow')}</button></div></div>
+ <p class="creator-help">${state.cardsSynced?'Сохранённые карточки привязаны к твоему Telegram и доступны на других устройствах.':state.mode==='server'?'Чтобы синхронизировать карточки, включи таблицу D1 business_saved_cards. Пока записи локальные.':'Для AI открой Аврору через Telegram; без подключения сервера доступен лишь просмотр интерфейса.'}</p>`;
+}
+function homeLegacy(){if(!state.hasShop)return creatorHome();const s=stats();const who=viewer?.first_name?'Привет, '+viewer.first_name+'!':'Добро пожаловать!';return `<div class="eyebrow">ТВОЙ БИЗНЕС-ПОМОЩНИК ✦</div>${title(who,'Создавай товары, принимай заявки и развивай магазин.')}
+${state.mode==='local'?`<div class="notice">Режим предпросмотра: изменения хранятся только на этом устройстве. Для общего Telegram-магазина подключи Cloudflare D1 и Worker.</div>`:''}
+<div class="hero"><div class="hero-copy"><span class="pill">${ico('spark')} AI-помощник продавца</span><h2>Твой магазин.<br>Твои правила.</h2><p>Создай карточку товара за пару нажатий.</p><button class="btn primary button-compact" data-action="page" data-page="ai">Создать карточку ${ico('arrow')}</button></div><div class="orb">${ico('shopping')}</div></div>
+${section('Обзор магазина')}<div class="numbers">${metric('Товары',s.products)}${metric('Заказы',s.orders)}${metric('Выручка',money(s.sales))}</div>
+${section('Быстрый доступ')}<div class="grid">
+${tile('spark','AI генератор','Описания и посты','ai')}${tile('shop','Мой магазин','Витрина и настройки','shop')}${tile('box','Каталог','Добавить товар','catalog')}${tile('orders','Заказы','Заявки покупателей','orders')}${tile('users','Клиенты','Покупатели и история','clients')}${tile('chart','Аналитика','Цифры по продажам','analytics')}
+</div>${section('Последние заказы','orders','Смотреть')} ${state.orders.length?state.orders.slice(0,3).map(orderSnippet).join(''):panelEmpty('orders','Пока нет заказов','Когда покупатель отправит заявку, она появится здесь.')}`}
+function tile(i,name,sub,page){return `<button type="button" class="tile" data-action="page" data-page="${page}"><span class="ico">${ico(i)}</span><div><strong>${E(name)}</strong><small style="display:block;margin-top:5px">${E(sub)}</small></div></button>`}
+function ai(){const aiInput=state.aiInput||{name:'',features:'',tone:'sales',platform:'marketplace'};const hasResult=!!state.generated;const d=state.generated||{};return `${title('AI-студия товаров',state.hasShop?'Готовь карточки для магазина или маркетплейсов.':'Создавай описания для маркетплейсов без своего магазина.')}
+<div class="ai-progress"><span class="step ${hasResult?'done':'active'}">1 · Создать</span><span class="step ${hasResult?'active':''}">2 · Проверить</span><span class="step">3 · Сохранить</span></div>
+<div class="panel ai-studio"><div class="ai-badge">${ico('spark')} Помощник продавца</div><p class="hint">Добавь фото и только проверенные сведения о товаре. Аврора подготовит черновик — внимательно проверь текст перед публикацией.</p>
+<form id="aiForm" class="form-grid"><label class="field"><span>Для какой площадки создаём?</span><select class="input" id="aiPlatform">${[['marketplace','Универсальная карточка'],['wildberries','Wildberries'],['ozon','Ozon'],['yandex','Яндекс Маркет'],['telegram','Telegram / объявления']].map(([value,text])=>`<option value="${value}" ${aiInput.platform===value?'selected':''}>${text}</option>`).join('')}</select></label><label class="drop" for="aiPhoto"><span id="aiPhotoPreview">${state.upload?`<img src="${E(state.upload)}" alt="Фото для AI">`:ico('camera')}</span><strong>${state.upload?'Заменить фотографию':'Загрузить фото товара'}</strong><span>JPG, PNG или WEBP · до 5 МБ</span></label><input type="file" id="aiPhoto" accept="image/jpeg,image/png,image/webp" hidden>
+<label class="field"><span>Название или тип товара</span><input class="input" id="aiName" value="${E(aiInput.name)}" maxlength="100" placeholder="Например, беспроводные наушники"></label>
+<label class="field"><span>Проверенные характеристики</span><textarea id="aiFeatures" class="input" maxlength="650" placeholder="Бренд, модель, материал, размер, цвет…">${E(aiInput.features)}</textarea></label>
+<label class="field"><span>Стиль описания</span><select class="input" id="aiTone">${[['sales','Продающий'],['neutral','Нейтральный'],['short','Короткий']].map(([v,t])=>`<option value="${v}" ${aiInput.tone===v?'selected':''}>${t}</option>`).join('')}</select></label>
+<button type="submit" class="btn primary block" ${state.busy?'disabled':''}>${ico('spark')} ${hasResult?'Сгенерировать заново':'Создать карточку товара'}</button>
+<div class="hint">Фото показывает только внешний вид. Модель, пробег, техническое состояние и комплектацию подтверждай документами или собственными данными — AI их не проверяет.</div></form></div>
+${hasResult?`<div class="panel ai-result" id="gen-result">
+<div class="section-line" style="margin-top:0"><h2>Готовая карточка</h2><span class="tag green">Текст создан</span></div>
+<div class="ai-preview-head">${state.upload||d.imageKey?`<img src="${E(state.upload||imgUrl({imageKey:d.imageKey}))}" alt="Фото товара">`:`<span class="ai-icon">${ico('box')}</span>`}<div><strong>Можно редактировать</strong><p class="hint">Подправь название и текст. Для экспорта цена и магазин не обязательны.</p></div></div>
+<label class="field"><span>Название товара</span><textarea class="input" id="genTitle" rows="2" maxlength="120" placeholder="Название товара">${E(d.title)}</textarea><small class="ai-title-help">Длинное название переносится на новую строку и целиком доступно для редактирования.</small></label>
+<label class="field"><span>Описание товара</span><textarea class="input" id="genDesc" maxlength="2000">${E(d.description)}</textarea></label>
+<label class="field"><span>${d.platform==='telegram'?'Пост для Telegram':'Рекламный текст / объявление'}</span><textarea class="input" id="genPost" maxlength="2500">${E(d.post)}</textarea></label>
+<div class="button-row"><button type="button" class="btn outline" data-action="formatPost">${ico('spark')} Оформить текст</button></div>
+<div class="preview-label">Предпросмотр рекламного текста</div>
+<div class="post-preview" id="postPreview">${E(d.post)}</div>
+<div class="ai-review" id="ai-fact-review"><div class="ai-review-heading">${ico('check')} Что проверить перед продажей</div>
+<p>AI анализирует изображение, но <strong>не устанавливает достоверность характеристик</strong>. Не указывай неподтверждённые факты.</p>
+<ul>${(Array.isArray(d.needsReview)&&d.needsReview.length?d.needsReview:['Марка, модель и год выпуска','Состояние, комплектация и технические данные','Цена, наличие и условия продажи']).slice(0,5).map(x=>`<li>${E(x)}</li>`).join('')}</ul>
+<label class="field-check"><input type="checkbox" id="confirmFacts"><span>Я проверил название, описание, рекламный текст и условия продажи.</span></label>
+</div>
+<div class="button-row"><button type="button" class="btn soft" data-action="copyDescription">${ico('copy')} Описание</button><button type="button" class="btn soft" data-action="copyPost">${ico('copy')} Реклама</button></div>
+<div class="publish" style="${!state.hasShop?'display:none':''}"><strong>Добавить товар в каталог</strong>
+<div class="split"><label class="field"><span>Цена (₽)</span><input id="genPrice" type="number" min="0" max="99999999" step="0.01" class="input" value="${E(d.price??'')}" placeholder="Напр. 4990"></label><label class="field"><span>Количество</span><input id="genStock" type="number" min="0" max="999999" step="1" class="input" value="${E(d.stock??1)}"></label></div>
+<label class="field"><span>Категория</span><input id="genCategory" class="input" maxlength="50" value="${E(d.category??'')}" placeholder="Например, электроника"></label>
+<div class="hint">Черновик не виден покупателям. Публикация сразу добавит товар в твою витрину, если магазин настроен.</div>
+<div class="button-row"><button type="button" class="btn outline" data-action="saveGeneratedDraft">Сохранить черновик</button><button type="button" class="btn primary" data-action="publishGenerated">${ico('check')} Опубликовать</button></div></div>
+ <div class="creator-actions"><button type="button" class="btn soft" data-action="saveTextCard">${ico('check')} Сохранить карточку</button><button type="button" class="btn soft" data-action="copyCard">${ico('copy')} Скопировать</button><button type="button" class="btn outline" data-action="exportCard">${ico('box')} Скачать .txt</button></div>
+ ${!state.hasShop?`<p class="creator-help">Магазин создавать не нужно. Сохрани карточку в «Карточках» или скачай текст для своей площадки. Для синхронизации нужна таблица D1.</p>`:''}
+ </div>`:''}`}
+function saved(){
+ const cards=state.savedCards||[];
+ return `${title('Мои карточки',state.cardsSynced?'Сохранённые карточки синхронизируются с твоим Telegram.':'Сохранённые карточки на этом устройстве.')}
+ ${cards.length?cards.map(c=>`<div class="saved-card"><div class="role-ribbon">${ico('box')} ${E(platformLabel(c.platform))}</div>
+ ${c.imageKey?`<img src="${E(imgUrl(c))}" alt="Фото товара" class="saved-photo" loading="lazy">`:''}
+ <h3>${E(c.title)}</h3><p class="hint">${E(c.description).slice(0,220)}${c.description.length>220?'…':''}</p>
+ <div class="creator-actions"><button type="button" class="btn soft" data-action="openSaved" data-id="${E(c.id)}">${ico('edit')} Открыть</button><button type="button" class="btn outline" data-action="copySaved" data-id="${E(c.id)}">${ico('copy')} Копировать</button><button type="button" class="btn outline" data-action="exportSaved" data-id="${E(c.id)}">${ico('box')} .txt</button><button type="button" class="btn danger" data-action="deleteSaved" data-id="${E(c.id)}">Удалить</button></div></div>`).join(''):panelEmpty('box','Здесь пока пусто','Создай карточку в AI-студии и нажми «Сохранить карточку».','Создать карточку','ai')}
+ <div class="platform-note">${state.cardsSynced?'Карточки сохранены в Cloudflare D1 отдельно для твоего Telegram-аккаунта. Фото доступны по непредсказуемой ссылке.':'Карточки сейчас хранятся только в памяти этого устройства и могут исчезнуть при очистке Telegram. Скопируй или скачай важные тексты.'}</div>`;
+}
+function platformLabel(v){return ({marketplace:'Универсальная карточка',wildberries:'Wildberries',ozon:'Ozon',yandex:'Яндекс Маркет',telegram:'Telegram'})[v]||'Карточка товара'}
+function currentCard(){if(!state.generated)throw Error('Сначала создай карточку');
+ const t=id=>document.getElementById(id)?.value?.trim()||'';
+ const title=t('genTitle'),description=t('genDesc'),post=t('genPost');
+ if(!title||!description)throw Error('Заполни название и описание');
+ return {title,description,post,platform:state.generated.platform||'marketplace',needsReview:state.generated.needsReview||[]};
+}
+function cardPlain(c){return `${c.title}\n\n${c.description}${c.post?'\n\nРекламный текст:\n'+c.post:''}\n\nПодготовлено в Авроре. Перед публикацией проверь факты и требования площадки.`}
+function exportCardData(c){
+ const filename='aurora-'+String(c.platform||'card')+'-'+new Date().toISOString().slice(0,10)+'.txt';
+ const blob=new Blob(['\ufeff'+cardPlain(c)],{type:'text/plain;charset=utf-8'});
+ const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);
+ toast('Файл подготовлен. Если Telegram не скачал его — используй «Копировать».');
+}
+async function saveTextCard(){
+ if(state.busy)return;
+ state.busy=true;
+ try{
+  const data=currentCard();
+  let imageKey=state.generated?.imageKey||null;
+  if(state.mode==='server'&&state.cardsSynced){
+   if(state.upload&&!imageKey){const uploaded=await api('/business/media/upload',{image:state.upload});imageKey=uploaded.imageKey;state.generated.imageKey=imageKey;}
+   const response=await api('/business/cards/save',{card:{...data,imageKey}});
+   state.savedCards=[response.card,...state.savedCards.filter(c=>c.id!==response.card.id)].slice(0,30);
+   toast('Карточка сохранена в твоём Telegram-аккаунте');
+  }else{
+   const card={...data,imageKey:null,id:uid(),createdAt:new Date().toISOString()};
+   state.savedCards=[card,...state.savedCards].slice(0,20);localSave();toast('Карточка сохранена только на этом устройстве');
+  }
+ }finally{state.busy=false;}
+}
+function copyCard(){clipboard(cardPlain(currentCard()));}
+function savedById(id){return state.savedCards.find(c=>c.id===id)}
+function openSaved(id){const c=savedById(id);if(!c)return;
+ state.aiInput.platform=c.platform||'marketplace';state.upload=null;
+ state.generated={...c,price:'',stock:1,category:''};state.page='ai';render();requestAnimationFrame(()=>document.getElementById('gen-result')?.scrollIntoView({behavior:'smooth',block:'start'}));}
+async function deleteSaved(id){
+ if(!savedById(id))return;
+ if(state.cardsSynced&&state.mode==='server')await api('/business/cards/delete',{id});
+ state.savedCards=state.savedCards.filter(c=>c.id!==id);localSave();render();toast('Карточка удалена');
+}
+
+function shop(){const s=stats();return `${title(state.hasShop?'Мой магазин':'Создать свой магазин',state.hasShop?'Управляй витриной и приглашай покупателей.':'Это необязательно: AI-генератор доступен и без магазина.')}
+${state.hasShop?`<div class="shop-banner"><div class="mark-icon" style="margin:0 auto 10px">${ico('shop')}</div><div class="big">${E(state.shop.name)}</div><div class="muted" style="font-size:12px">${E(state.shop.description)}</div></div>
+<div class="numbers">${metric('Товары',s.products)}${metric('Заказы',s.orders)}${metric('Клиенты',s.clients)}</div>`:`<div class="platform-note">Создание магазина откроет кабинет продавца: каталог, витрину и заказы. Если нужен только текст для Wildberries, Ozon или другой площадки — магазин не требуется.</div>`}
+${section('Настройки магазина')}<div class="panel"><form id="shopForm" class="form-grid">
+<label class="field"><span>Название</span><input id="shopName" class="input" value="${E(state.shop.name)}" maxlength="60" required></label>
+<label class="field"><span>Адрес магазина латиницей</span><input id="shopSlug" class="input" value="${E(state.shop.slug)}" placeholder="my-store" pattern="[a-z0-9_-]{4,28}" minlength="4" maxlength="28" required></label>
+<label class="field"><span>Описание</span><textarea id="shopDesc" maxlength="280" class="input">${E(state.shop.description)}</textarea></label>
+<button type="submit" class="btn primary block">Сохранить магазин</button></form></div>
+${state.hasShop&&state.shop.slug?`<div class="panel"><h3>Витрина магазина</h3><p class="hint">Открывай свою витрину и приглашай покупателей — без технического адреса на экране.</p><div class="shop-link-preview">${ico('shop')}<div class="shop-link-meta"><strong>${E(state.shop.name)}</strong><span>Витрина · ${E(state.shop.slug)}</span></div></div><div class="button-row" style="margin-top:12px"><button class="btn soft" data-action="copyLink">${ico('copy')} Копировать ссылку</button><button class="btn primary" data-action="previewStore">${ico('shop')} Открыть</button></div></div>`:''}
+${state.hasShop?`${section('Товары','catalog','Все')} ${state.products.length?state.products.slice(0,2).map(productRow).join(''):panelEmpty('box','Каталог пуст','Добавь первый товар — вручную или через AI.','Добавить товар','edit')}`:''}`}
+function productRow(p){return `<div class="product-card">${photo(p,true)}<div class="grow"><h3>${E(p.title)}</h3><p>${E(p.description)}</p><span class="price">${money(p.priceMinor)}</span><div class="hint">Остаток: ${E(p.stock)} · ${p.published?'На витрине':'Черновик'}</div><div style="display:flex;gap:10px;margin-top:7px"><button type="button" class="tiny" data-action="edit" data-id="${E(p.id)}">${ico('edit')} Изменить</button><button type="button" class="tiny red" data-action="delete" data-id="${E(p.id)}">Удалить</button></div></div></div>`}
+function catalog(){const products=state.products.filter(p=>(state.filter==='all'||(state.filter==='published'?p.published:!p.published))&&`${p.title} ${p.category||''}`.toLowerCase().includes(state.search.toLowerCase()));return `${title('Каталог товаров','Управление товарами твоего магазина.')}
+<button class="btn primary block" data-action="newProduct">${ico('plus')} Добавить товар</button>
+<div class="chip-row">${[['all','Все'],['published','Опубликованы'],['draft','Черновики']].map(([v,t])=>`<button class="chip ${state.filter===v?'active':''}" data-action="filter" data-val="${v}">${t}</button>`).join('')}</div>
+<input class="input" id="catalogSearch" placeholder="Поиск товаров" value="${E(state.search)}" aria-label="Поиск товаров" style="margin-bottom:15px">
+<div id="catalogResults">${products.length?products.map(productRow).join(''):panelEmpty('box','Товары не найдены','Измени фильтр или добавь новый товар.')}</div>`}
+function editor(){const p=state.editing?state.products.find(x=>x.id===state.editing):null;const d=p||{title:state.generated?.title||'',description:state.generated?.description||'',priceMinor:0,stock:1,category:'',published:true,imageData:state.upload||''};return `${title(p?'Редактировать товар':'Новый товар','Добавь фотографию, цену и описание.')}
+<div class="panel"><form id="productForm" class="form-grid"><label for="prodPhoto" class="drop"><span id="prodPhotoPreview">${state.upload||imgUrl(d)?`<img src="${E(state.upload||imgUrl(d))}" alt="Фото товара">`:ico('camera')}</span><strong>Добавить фотографию</strong><span>До 5 МБ, автоматически уменьшим</span></label><input type="file" id="prodPhoto" accept="image/jpeg,image/png,image/webp" hidden>
+<label class="field"><span>Название товара</span><input id="prodTitle" class="input" maxlength="120" value="${E(d.title)}" required></label>
+<label class="field"><span>Описание</span><textarea id="prodDesc" class="input" maxlength="2000">${E(d.description)}</textarea></label>
+<div class="split"><label class="field"><span>Цена (₽)</span><input type="number" id="prodPrice" min="0" max="99999999" step="0.01" class="input" value="${E((Number(d.priceMinor)||0)/100)}" required></label><label class="field"><span>Количество</span><input type="number" id="prodStock" min="0" max="999999" step="1" class="input" value="${E(d.stock)}" required></label></div>
+<label class="field"><span>Категория</span><input id="prodCategory" class="input" maxlength="50" value="${E(d.category||'')}" placeholder="Например, электроника"></label>
+<label style="font-size:12px;display:flex;align-items:center;gap:10px;font-weight:800"><input id="prodPublished" type="checkbox" ${d.published?'checked':''} style="accent-color:#aa68d5;width:19px;height:19px"> Показывать в магазине</label>
+<button class="btn primary block" type="submit">${ico('check')} Сохранить товар</button></form></div>`}
+function orderSnippet(o){return `<div class="list-item"><span class="item-ico">${ico('orders')}</span><div class="grow"><strong>Заказ #${E(o.id.slice(0,8).toUpperCase())}</strong><small>${E(o.customerName||'Покупатель')} · ${friendlyDate(o.createdAt)}</small></div><div style="text-align:right"><strong style="font-size:12px">${money(o.totalMinor)}</strong><span class="tag ${statusTag(o.status)}">${statusLabel(o.status)}</span></div></div>`}
+function orders(){const arr=state.orders.filter(o=>state.statusFilter==='all'||o.status===state.statusFilter);return `${title('Заказы','Заявки покупателей и их статусы.')}
+<div class="chip-row">${[['all','Все'],['new','Новые'],['processing','В работе'],['done','Готово']].map(([v,t])=>`<button class="chip ${state.statusFilter===v?'active':''}" data-action="orderFilter" data-val="${v}">${t}</button>`).join('')}</div>
+${arr.length?arr.map(o=>`<div class="panel"><div style="display:flex;justify-content:space-between;gap:10px;align-items:start"><div><strong>Заказ #${E(o.id.slice(0,8).toUpperCase())}</strong><div class="hint">${friendlyDate(o.createdAt)}</div></div><span class="tag ${statusTag(o.status)}">${statusLabel(o.status)}</span></div>
+<div class="order-details"><div>Покупатель: <b>${E(o.customerName)}</b></div><div>Телефон: <b>${E(o.phone||'—')}</b></div>${o.comment?`<div>Комментарий: <b>${E(o.comment)}</b></div>`:''}<div>Товары: <b>${E((o.items||[]).map(x=>(x.title||'Товар')+' ×'+x.qty).join(', '))}</b></div></div><div class="section-line" style="margin:12px 0 0"><div class="price">${money(o.totalMinor)}</div><select class="input" aria-label="Статус заказа" data-order-status="${E(o.id)}" style="width:145px;min-height:38px;padding:8px 9px"><option value="new" ${o.status==='new'?'selected':''}>Новый</option><option value="processing" ${o.status==='processing'?'selected':''}>В работе</option><option value="done" ${o.status==='done'?'selected':''}>Завершён</option><option value="cancelled" ${o.status==='cancelled'?'selected':''}>Отменён</option></select></div></div>`).join(''):panelEmpty('orders','Заказов пока нет','Когда появятся заявки с витрины, ты увидишь их здесь.')}`}
+function clients(){const m=new Map();for(const o of state.orders){const key=o.buyerId||o.phone||o.customerName||o.id;let x=m.get(key);if(!x){x={name:o.customerName,phone:o.phone,orders:0,total:0};m.set(key,x)}x.orders++;if(o.status==='done')x.total+=Number(o.totalMinor||0)}return `${title('Клиенты','Покупатели из реальных заявок магазина.')}${m.size?`<div class="list">${[...m.values()].map(c=>`<div class="list-item"><span class="item-ico">${ico('person')}</span><div class="grow"><strong>${E(c.name||'Покупатель')}</strong><small>${E(c.phone||'Без телефона')} · Заказов: ${c.orders}</small></div><strong style="font-size:12px">${money(c.total)}</strong></div>`).join('')}</div>`:panelEmpty('users','Покупателей пока нет','Здесь автоматически появятся клиенты после первых заказов.')}`}
+function analytics(){const s=stats();const counts={new:0,processing:0,done:0,cancelled:0};for(const o of state.orders)counts[o.status]=(counts[o.status]||0)+1;const max=Math.max(1,...Object.values(counts));return `${title('Аналитика','Показатели на основе сохранённых заказов.')}
+<div class="numbers">${metric('Заказы',s.orders)}${metric('Клиенты',s.clients)}${metric('Выручка',money(s.sales))}</div><div class="panel"><h2>Статусы заказов</h2><p class="hint">Выручка учитывает только завершённые заявки — это не подтверждение оплаты.</p>${Object.entries(counts).map(([name,num])=>`<div style="margin:15px 0"><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:800;margin-bottom:6px"><span>${statusLabel(name)}</span><span>${num}</span></div><div class="chartbar"><div style="width:${(num/max)*100}%"></div></div></div>`).join('')}</div>`}
+function profile(){return `${title('Профиль','Настройки Aurora Business и подключения.')}
+<div class="panel"><div style="display:flex;align-items:center;gap:13px"><div class="mark-icon">${E((viewer?.first_name||'A').slice(0,1))}</div><div><strong>${E([viewer?.first_name,viewer?.last_name].filter(Boolean).join(' ')||'Пользователь')}</strong><div class="hint">${viewer?.username?'@'+E(viewer.username):'Аккаунт Telegram'} · ${state.mode==='server'?'Синхронизация включена':'Локальный режим'}</div></div></div></div>
+${section('Возможности')}<div class="list">${(state.hasShop?[['shop','Мой магазин','Настройка витрины'],['ai','AI-генератор','Тексты по фото'],['saved','Мои карточки','Для любых маркетплейсов'],['clients','Клиенты','История покупателей']]:[['ai','AI-генератор','Тексты для маркетплейсов'],['saved','Мои карточки','Сохранённые тексты'],['shop','Создать магазин','По желанию']]).map(([p,t,s])=>`<button type="button" class="list-item" data-action="page" data-page="${p}" style="text-align:left;border:1px solid white"><span class="item-ico">${ico(p==='ai'?'spark':p==='clients'?'users':p==='saved'?'box':'shop')}</span><span class="grow"><strong>${t}</strong><small>${s}</small></span>${ico('arrow')}</button>`).join('')}</div>
+${state.hasShop?`<div class="panel"><h3>Подключение магазина</h3><p class="hint">Данные продавца должны сохраняться в Cloudflare D1. Фотографии хранятся в Cloudflare D1; для AI нужны ключ Яндекса и разрешённый доступ. Для покупателей магазин открывается внутри Telegram.</p><p class="hint">Платежи, PRO-тарифы и автопостинг будут отдельными модулями. Сейчас кнопка «Заказать» создаёт заявку без списания денег.</p><button class="btn soft block" data-action="reload">Проверить подключение</button></div>`:`<div class="platform-note">Карточки из раздела «Мои карточки» сохраняются локально. Тариф и лимит AI зависят от настроек сервера.</div>`}`}
+function legacyShopLink(){
+  if(!state.shop.slug)return '';
+  return location.origin+location.pathname+'?shop='+encodeURIComponent(state.shop.slug);
+}
+function shopLink(){
+  if(!state.shop.slug)return '';
+  const bot=String(BOT_USERNAME||'').trim().replace(/^@/,'');
+  // Не создаём нерабочую Telegram-ссылку, пока username не указан.
+  if(!/^[A-Za-z][A-Za-z0-9_]{4,31}$/.test(bot))return legacyShopLink();
+  return 'https://t.me/'+bot+'?startapp=shop_'+encodeURIComponent(state.shop.slug);
+}
+function launchShopSlug(){
+  const params=new URLSearchParams(location.search);
+  const fromSite=params.get('shop');
+  if(fromSite && /^[a-z0-9_-]{4,28}$/.test(fromSite))return fromSite;
+  // Direct Main Mini App links may pass start_param through initDataUnsafe,
+  // tgWebAppStartParam or startapp in the URL.
+  const raw=String(tg?.initDataUnsafe?.start_param ||
+       params.get('tgWebAppStartParam') || params.get('startapp') || '');
+  const matched=/^shop_([a-z0-9_-]{4,28})$/.exec(raw);
+  return matched ? matched[1] : '';
+}
+function storeScreen(){const d=state.buyer||{};const q=state.cart.reduce((sum,x)=>sum+x.qty,0);const total=state.cart.reduce((sum,x)=>sum+x.qty*x.priceMinor,0);const products=(d.products||[]).filter(x=>x.published!==false);return `<div class="eyebrow">ВИТРИНА TELEGRAM-МАГАЗИНА</div>${title(d.shop?.name||'Магазин',d.shop?.description||'Товары и новинки')}
+${!state.buyer?.live?'<div class="notice">Предпросмотр витрины. Это не опубликованный магазин — заказы здесь не принимаются.</div>':''}
+<div class="grid">${products.length?products.map(p=>`<div class="tile" style="min-height:260px;padding:12px;display:flex;flex-direction:column"><div style="width:100%;height:126px;overflow:hidden;border-radius:17px;background:#eedcf7;display:grid;place-items:center">${imgUrl(p)?`<img src="${E(imgUrl(p))}" alt="Фото товара" style="width:100%;height:100%;object-fit:cover">`:ico('box')}</div><strong>${E(p.title)}</strong><small style="display:block;flex:1">${E(p.description||'').slice(0,110)}</small><div class="price">${money(p.priceMinor)}</div><button class="btn primary block button-compact" data-action="cartAdd" data-id="${E(p.id)}" ${Number(p.stock)===0?'disabled':''}>${Number(p.stock)===0?'Нет в наличии':'В корзину +'}</button></div>`).join(''):panelEmpty('box','Товаров нет','В магазине ещё нет опубликованных товаров.')}</div>
+${q?`<div class="floating-cart"><button class="btn primary block" data-action="showCheckout">${ico('shopping')} Корзина · ${q} шт. · ${money(total)}</button></div>`:''}`}
+function checkout(){const total=state.cart.reduce((sum,x)=>sum+x.qty*x.priceMinor,0);return `${title('Оформить заявку','Это заказ без онлайн-оплаты.')}
+<div class="panel"><div class="list">${state.cart.map(c=>`<div class="list-item"><span class="grow"><strong>${E(c.title)}</strong><small>${c.qty} шт.</small></span><div class="price">${money(c.priceMinor*c.qty)}</div><button type="button" class="tiny red" data-action="cartRemove" data-id="${E(c.id)}">×</button></div>`).join('')}</div><div class="section-line"><h3>Итого</h3><span class="price">${money(total)}</span></div><form id="checkoutForm" class="form-grid"><label class="field"><span>Как к тебе обращаться?</span><input class="input" name="name" maxlength="65" value="${E(state.buyerName||viewer?.first_name||'')}" required></label><label class="field"><span>Телефон для связи</span><input name="phone" type="tel" class="input" maxlength="30" placeholder="+7..." required></label><label class="field"><span>Комментарий</span><textarea name="comment" class="input" maxlength="500" placeholder="Доставка, вопросы по заказу"></textarea></label><button class="btn primary block" type="submit">Отправить заявку</button></form></div>
+<div class="notice">Магазин получит ваши данные для обработки заявки. Оплата на этом этапе не производится.</div>`}
+
+function onboarding(){
+ if(state.hasShop)return '';
+ return `<div class="onboarding-steps"><div class="onboarding-step"><span class="count">1</span>Создай первую AI-карточку</div><div class="onboarding-step"><span class="count">2</span>Оформи магазин с уникальным адресом</div><div class="onboarding-step"><span class="count">3</span>Добавь товары и поделись витриной</div></div>`;
+}
+function creatorHome(){
+ return creatorHomeLegacy().replace('<div class="role-cta">',onboarding()+'<div class="role-cta">');
+}
+function home(){
+ const base=homeLegacy();
+ if(!state.hasShop)return base;
+ const latest=state.orders.filter(o=>o.status==='new').length;
+ const ribbon=`<div class="ribbon">${ico('spark')} Рабочее пространство · Aurora Business 1.5</div>`;
+ const quick=`${section('Быстрые действия')}<div class="quick-actions"><button data-action="newProduct">${ico('plus')}<span>Новый товар</span></button><button data-action="page" data-page="clients">${ico('users')}<span>Клиенты</span></button><button data-action="page" data-page="plans">${ico('star')}<span>PRO-тариф</span></button></div>`;
+ const status=latest?`<div class="mini-note">${ico('orders')} Новых заявок: <strong>${latest}</strong>. Открой «Заказы», чтобы их обработать.</div>`:'';
+ return ribbon+base+quick+status;
+}
+function clientGroups(){
+ const m=new Map();
+ for(const o of state.orders){
+  const key=String(o.buyerId||o.phone||o.customerName||o.id);
+  let c=m.get(key);
+  if(!c){c={key,name:o.customerName||'Покупатель',phone:o.phone||'',orders:0,total:0,lastDate:o.createdAt||'',statuses:new Set()};m.set(key,c)}
+  c.orders++;if(o.status==='done')c.total+=Number(o.totalMinor)||0;
+  if(o.createdAt&&(!c.lastDate||new Date(o.createdAt)>new Date(c.lastDate)))c.lastDate=o.createdAt;
+  c.statuses.add(o.status);
+ }
+ return [...m.values()].sort((a,b)=>new Date(b.lastDate||0)-new Date(a.lastDate||0));
+}
+function clients(){
+ const all=clientGroups();const q=state.clientSearch.trim().toLowerCase();
+ const arr=all.filter(c=>(c.name+' '+c.phone).toLowerCase().includes(q));
+ return `${title('Клиенты','Покупатели, которые отправили заявки в твоём магазине.')}
+ <div class="stat-strip"><span class="stat-chip">Всего клиентов: ${all.length}</span><span class="stat-chip">Повторные: ${all.filter(c=>c.orders>1).length}</span></div>
+ <input id="clientSearch" class="input searchbar" placeholder="Поиск по имени или телефону" value="${E(state.clientSearch)}" aria-label="Поиск клиентов">
+ <div id="clientResults">${arr.length?arr.map(c=>`<div class="client-card"><span class="item-ico">${ico('person')}</span><div class="client-meta"><strong>${E(c.name)}</strong><small>${E(c.phone||'Без телефона')} · Заказов: ${c.orders}<br>Последний: ${friendlyDate(c.lastDate)||'—'}</small><button class="tiny" data-action="copyPhone" data-phone="${E(c.phone)}" ${c.phone?'':'disabled'}>${ico('copy')} Телефон</button></div><div class="client-total">${money(c.total)}</div></div>`).join(''):panelEmpty('users','Покупателей не найдено',q?'Попробуй другой запрос':'Покупатели появятся после первой заявки.')}</div>
+ <div class="mini-note">История заказов и телефоны доступны только продавцу после входа в Telegram. Не публикуй личные данные покупателей.</div>`;
+}
+function orders(){
+ const q=state.orderSearch.trim().toLowerCase();
+ const filtered=state.orders.filter(o=>(state.statusFilter==='all'||o.status===state.statusFilter)&&[o.customerName,o.phone,o.id].join(' ').toLowerCase().includes(q));
+ const chips=[['all','Все'],['new','Новые'],['processing','В работе'],['done','Завершены'],['cancelled','Отменены']];
+ return `${title('Заказы','Заявки, статусы и история покупателей.')}
+ <div class="stat-strip"><span class="stat-chip">Всего: ${state.orders.length}</span><span class="stat-chip">Новых: ${state.orders.filter(o=>o.status==='new').length}</span></div>
+ <div class="button-row"><button class="btn soft" data-action="exportOrders">${ico('copy')} Экспорт CSV</button><button class="btn outline" data-action="reload">Обновить</button></div>
+ <div class="chip-row">${chips.map(([v,t])=>`<button class="chip ${state.statusFilter===v?'active':''}" data-action="orderFilter" data-val="${v}">${t}</button>`).join('')}</div>
+ <input id="orderSearch" class="input searchbar" value="${E(state.orderSearch)}" placeholder="Найти заказ, имя или телефон" aria-label="Поиск заказов">
+ <div id="orderResults">${filtered.length?filtered.map(o=>`<div class="panel"><div style="display:flex;justify-content:space-between;gap:10px;align-items:start"><div><strong>Заказ #${E(String(o.id).slice(0,8).toUpperCase())}</strong><div class="hint">${friendlyDate(o.createdAt)}</div></div><span class="tag ${statusTag(o.status)}">${statusLabel(o.status)}</span></div>
+ <div class="order-details"><div>Покупатель: <b>${E(o.customerName||'—')}</b></div><div>Телефон: <b>${E(o.phone||'—')}</b></div>${o.comment?`<div>Комментарий: <b>${E(o.comment)}</b></div>`:''}<div>Товары: <b>${E((o.items||[]).map(x=>(x.title||'Товар')+' ×'+x.qty).join(', '))}</b></div></div>
+ <div class="section-line" style="margin:12px 0 0"><span class="price">${money(o.totalMinor)}</span><select class="input" data-order-status="${E(o.id)}" aria-label="Статус заказа" style="width:145px;min-height:38px;padding:8px 9px">${['new','processing','done','cancelled'].map(v=>`<option value="${v}" ${o.status===v?'selected':''}>${statusLabel(v)}</option>`).join('')}</select></div></div>`).join(''):panelEmpty('orders','Заказы не найдены','Измени фильтры или дождись первой заявки.')}</div>
+ <div class="mini-note">Сумма «выручки» в аналитике основана на завершённых заказах. Это не подтверждение поступления денег.</div>`;
+}
+function safeCsv(v){let s=String(v??'');if(/^[\s]*[=+@\-]/.test(s))s="'"+s;return '"'+s.replaceAll('"','""')+'"'}
+function downloadData(filename,contents,type='text/csv;charset=utf-8'){
+ const blob=new Blob(['\ufeff',contents],{type});
+ const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);
+ toast('Экспорт подготовлен');
+}
+function exportOrders(){
+ if(!state.orders.length){toast('Нет заказов для экспорта');return}
+ const cols=['ID','Дата','Покупатель','Телефон','Статус','Товары','Сумма в рублях','Комментарий'];
+ const rows=state.orders.map(o=>[o.id,o.createdAt||'',o.customerName||'',o.phone||'',statusLabel(o.status),(o.items||[]).map(x=>(x.title||'Товар')+' x'+x.qty).join('; '),(Number(o.totalMinor)||0)/100,o.comment||'']);
+ downloadData('aurora-orders-'+new Date().toISOString().slice(0,10)+'.csv',[cols,...rows].map(r=>r.map(safeCsv).join(';')).join('\r\n'));
+}
+function profile(){
+ const name=[viewer?.first_name,viewer?.last_name].filter(Boolean).join(' ')||'Пользователь';
+ const isPro=state.planInfo?.plan==='pro'&&state.planInfo?.expiresAt&&new Date(state.planInfo.expiresAt).getTime()>Date.now();
+ const tier=isPro?'PRO':'FREE';
+ return `${title('Мой профиль','Управляй бизнесом и настройками приложения.')}
+ <div class="premium-profile"><div class="profile-avatar">${E(name.slice(0,1).toUpperCase())}</div><div class="profile-data"><strong>${E(name)}</strong><small>${viewer?.username?'@'+E(viewer.username):'Аккаунт Telegram'}<br>${state.mode==='server'?'Подключено к серверу':'Локальный предпросмотр'}</small></div><span class="profile-tier">${tier}</span></div>
+ ${section('Бизнес-панель')}<div class="list">
+ ${[['shop','Мой магазин','Витрина и товары','shop'],['clients','Клиенты','CRM и повторные покупки','users'],['analytics','Аналитика','Выручка и статистика заявок','chart'],['saved','Мои карточки','AI-тексты и экспорт','box']].map(([p,n,d,i])=>`<button type="button" class="list-item" data-action="page" data-page="${p}" style="text-align:left"><span class="item-ico">${ico(i)}</span><span class="grow"><strong>${n}</strong><small>${d}</small></span>${ico('arrow')}</button>`).join('')}</div>
+ ${section('Подписка и приложение')}<div class="list"><button class="list-item" data-action="page" data-page="plans" style="text-align:left"><span class="item-ico">${ico('star')}</span><span class="grow"><strong>Тарифы FREE / PRO</strong><small>Возможности и подключение Telegram Stars</small></span>${ico('arrow')}</button><button class="list-item" data-action="page" data-page="settings" style="text-align:left"><span class="item-ico">${ico('info')}</span><span class="grow"><strong>Настройки и поддержка</strong><small>Подключение и проверка данных</small></span>${ico('arrow')}</button></div>`;
+}
+function plans(){
+ const pi=state.planInfo||{};
+ const isPro=pi.plan==='pro'&&pi.expiresAt&&new Date(pi.expiresAt).getTime()>Date.now();
+ const status=isPro?'PRO активен до '+new Date(pi.expiresAt).toLocaleDateString('ru-RU'):'Текущий тариф: FREE';
+ return `${title('Тарифы Авроры','Удобные инструменты для роста магазина.')}
+ <div class="ribbon">${ico('star')} ${E(status)}</div>
+ <div class="plan-grid"><div class="plan-card"><div class="head"><h2>FREE</h2><span class="tag green">Базовый доступ</span></div><p class="hint">Начни создавать магазин и управлять заявками без сложной настройки.</p>${['Витрина и каталог','До 3 AI-генераций в день при публичном доступе','Клиенты, заказы и базовая аналитика'].map(s=>`<div class="plan-benefit">${ico('check')}${s}</div>`).join('')}<button class="btn soft block" disabled style="margin-top:16px">Базовый тариф</button></div>
+ <div class="plan-card premium"><div class="head"><h2>PRO ✦</h2><span class="tag">Для бизнеса</span></div><p class="hint">${pi.billingReady&&pi.stars?`Стоимость: ${E(pi.stars)} ⭐ за 30 дней. `:'Стоимость появится после её настройки. '}Расширенные лимиты и возможности после подключения серверной части.</p>${['До 30 AI-генераций в день при включённом публичном AI','PRO-статус на 30 дней без автопродления','Оплата через Telegram Stars'].map(s=>`<div class="plan-benefit">${ico('check')}${s}</div>`).join('')}<button class="btn primary block" data-action="proPay" style="margin-top:16px">${ico('star')} ${isPro?'Продлить доступ':'Подключить PRO'}</button></div></div>
+ <div class="mini-note">${pi.billingReady?'Серверный модуль оплаты отвечает. Статус PRO подтверждается сервером после успешной оплаты.':'Оплата ещё не настроена на сервере. Кнопка PRO не списывает деньги, пока не подключён модуль Telegram Stars.'}</div>
+ ${pi.canSetup?`<div class="panel"><h3>Настройка владельца</h3><p class="hint">Если уже добавлены таблицы D1 и задана цена PRO в Cloudflare, подключи webhook к этому Worker. Чужой webhook не будет перезаписан.</p><button class="btn soft block" data-action="setupPro">${ico('check')} Подключить Telegram Stars</button></div>`:''}`;
+}
+function settings(){
+ return `${title('Настройки','Состояние подключения и информация о приложении.')}
+ <div class="panel"><h3>Подключение к Telegram</h3><p class="hint">Бот: @${E(BOT_USERNAME)}<br>Режим данных: ${state.mode==='server'?'Cloudflare Worker / D1':'локальный (данные не синхронизируются)'}</p><div class="button-row"><button class="btn soft" data-action="reload">${ico('check')} Проверить сервер</button><button class="btn outline" data-action="copyBot">${ico('copy')} Ссылка на бота</button></div></div>
+ <div class="panel"><h3>Безопасность данных</h3><p class="hint">Важные данные бизнеса и статусы PRO должны проверяться на сервере. Локальные сохранения браузера нельзя считать надёжной резервной копией.</p><p class="hint">В версии 1.5: магазин, AI, CRM, тарифы, профиль и аналитика. Автоматические платежи требуют отдельной серверной настройки.</p></div>
+ <div class="panel"><h3>Версия приложения</h3><div class="stat-strip"><span class="stat-chip">Aurora Business 1.5.1</span><span class="stat-chip">Telegram Mini App</span></div><button class="btn soft block" data-action="page" data-page="profile">Вернуться в профиль</button></div>`;
+}
+async function refreshBilling(silent=true){
+ if(state.mode!=='server'||!tg?.initData){state.planInfo={plan:'free',expiresAt:null,billingReady:false};return}
+ try{
+  const d=await api('/business/billing/status');
+  state.planInfo={plan:d.plan==='pro'?'pro':'free',expiresAt:d.expiresAt||null,billingReady:d.billingReady===true,stars:Number.isInteger(d.stars)?d.stars:null,canSetup:d.canSetup===true};
+ }catch(e){state.planInfo={plan:'free',expiresAt:null,billingReady:false};if(!silent)toast('Сервер оплаты ещё не подключён')}
+}
+async function startProInvoice(){
+ if(!tg?.initData||state.mode!=='server')throw Error('Открой Аврору через Telegram с подключённым сервером');
+ if(typeof tg.openInvoice!=='function')throw Error('Обнови Telegram для оплаты через Stars');
+ let d;try{d=await api('/business/billing/invoice',{product:'pro_30d'})}catch(e){throw Error('Оплата PRO пока не подключена на сервере')}
+ const link=String(d.invoiceLink||'');
+ if(!/^https:\/\/t\.me\/\$[\w-]+$/.test(link))throw Error('Сервер не вернул действительную ссылку оплаты');
+ tg.openInvoice(link,async status=>{if(status==='paid'){await refreshBilling(false);render();toast(state.planInfo.plan==='pro'?'PRO активирован':'Платёж принят, ожидаем подтверждения сервера')}else if(status==='failed')toast('Платёж не прошёл')});
+}
+
+function render(){header();nav();let html='';if(state.buyer){html=state.page==='checkout'?checkout():storeScreen()}else{html=({home,ai,shop,saved,catalog:state.hasShop?catalog:creatorHome,edit:state.hasShop?editor:creatorHome,orders:state.hasShop?orders:creatorHome,clients:state.hasShop?clients:creatorHome,analytics:state.hasShop?analytics:creatorHome,profile,plans,settings})[state.page]?.()||home()}document.getElementById('view').innerHTML=html;syncPostPreview();sizeAIFields();window.scrollTo({top:0,behavior:'instant'})}
+function switchPage(page){if(page==='ai'&&state.page!=='ai'){state.upload=null;state.generated=null;}state.page=page;state.search='';if(page==='edit'){state.editing=null;state.upload=null}render()}
+async function load(){localLoad();const slug=launchShopSlug();if(slug){state.page='store';try{const response=await fetch(API+'/business/store?slug='+encodeURIComponent(slug));const d=await response.json();if(!response.ok)throw Error(d.error||'Магазин не найден');state.buyer={...d,live:true};state.mode='server'}catch(e){state.buyer={shop:{name:'Магазин недоступен',description:String(e.message)},products:[],live:false}}}else if(tg?.initData){try{const data=await api('/business/bootstrap');state.shop={...defaultShop(),...(data.shop||{})};state.hasShop=!!data.shop?.slug;state.products=data.products||[];state.orders=data.orders||[];state.mode='server';try{const cards=await api('/business/cards/list');state.savedCards=cards.cards||[];state.cardsSynced=true;}catch(err){state.cardsSynced=false;console.warn('Aurora saved cards not enabled',err?.message);}}catch(e){state.notice=e.message;state.mode='local';state.hasShop=false}}render();if(state.mode==='server'&&!state.buyer)refreshBilling().then(()=>{if(['plans','profile'].includes(state.page))render()});}
+async function shrinkPhoto(file){
+ if(!file||!/^image\/(jpeg|png|webp)$/.test(file.type))throw Error('Выбери JPG, PNG или WEBP');
+ if(file.size>5*1024*1024)throw Error('Фото не должно превышать 5 МБ');
+ const image=await createImageBitmap(file);
+ let edge=880, jpeg='';
+ try {
+  for(let attempt=0;attempt<7;attempt++){
+   const scale=Math.min(1,edge/Math.max(image.width,image.height));
+   const c=document.createElement('canvas');
+   c.width=Math.max(1,Math.round(image.width*scale));c.height=Math.max(1,Math.round(image.height*scale));
+   c.getContext('2d').drawImage(image,0,0,c.width,c.height);
+   jpeg=c.toDataURL('image/jpeg',attempt<3?.72:.58);
+   if(jpeg.length<650000)return jpeg;
+   edge=Math.max(280,Math.round(edge*.8));
+  }
+ }finally{image.close?.()}
+ throw Error('Фото слишком подробное — попробуй другое изображение');
+}
+function showPreview(id){const el=document.getElementById(id);if(el&&state.upload)el.innerHTML=`<img src="${E(state.upload)}" alt="Фото">`}
+function safeSlug(raw){return raw.toLowerCase().trim().replace(/[^a-z0-9_-]/g,'')}
+async function saveProduct(form){const title=form.querySelector('#prodTitle').value.trim(),desc=form.querySelector('#prodDesc').value.trim(),price=Number(form.querySelector('#prodPrice').value),stock=Number(form.querySelector('#prodStock').value),published=form.querySelector('#prodPublished').checked,category=form.querySelector('#prodCategory').value.trim();if(!title||!Number.isFinite(price)||price<0||!Number.isSafeInteger(stock)||stock<0)throw Error('Проверь название, цену и остаток');let cur=state.editing?state.products.find(p=>p.id===state.editing):null;let imgData=state.upload||cur?.imageData||null,imageKey=cur?.imageKey||null;if(state.upload&&state.mode==='server'){const result=await api('/business/media/upload',{image:state.upload});imageKey=result.imageKey;imgData=null}const p={id:cur?.id||uid(),title,description:desc,priceMinor:Math.round(price*100),stock,category,published,imageKey,imageData:imgData};if(state.mode==='server'){const d=await api('/business/product/save',{product:p});const i=state.products.findIndex(x=>x.id===p.id);if(i>=0)state.products[i]=d.product;else state.products.unshift(d.product)}else{const i=state.products.findIndex(x=>x.id===p.id);if(i>=0)state.products[i]=p;else state.products.unshift(p);localSave()}state.editing=null;state.upload=null;toast('Товар сохранён');switchPage('catalog')}
+async function saveShop(form){const name=form.querySelector('#shopName').value.trim(),slug=safeSlug(form.querySelector('#shopSlug').value),description=form.querySelector('#shopDesc').value.trim();if(name.length<2||slug.length<4)throw Error('Укажи название и адрес от 4 символов');const payload={name,slug,description};if(state.mode!=='server')throw Error('Для создания магазина открой Аврору в Telegram с подключённым сервером');if(state.mode==='server'){const d=await api('/business/shop/save',payload);state.shop=d.shop;state.hasShop=!!d.shop?.slug}else{state.shop={...state.shop,...payload};state.hasShop=false;localSave()}toast('Магазин сохранён');render()}
+
+function normalizeAIText(value,asPost=false){
+  let v=String(value??'').replace(/\r\n?/g,'\n').trim();
+  // Fix missing spaces such as "состоянии!Серебристый", without changing product facts.
+  v=v.replace(/([!?;:])(?=[А-ЯЁA-Z])/g, '$1 ');
+  v=v.replace(/([а-яёА-ЯЁ])\.(?=[А-ЯЁ])/g,'$1. ');
+  v=v.replace(/[ \t]+\n/g,'\n').replace(/\n[ \t]+/g,'\n');
+  v=v.replace(/[ \t]{2,}/g,' ');
+  if(asPost){
+    v=v.replace(/([.!?]) +(?=[А-ЯЁA-Z])/g,'$1\n\n');
+    v=v.replace(/\n{3,}/g,'\n\n');
+  }
+  return v;
+}
+function syncPostPreview(){const input=document.getElementById('genPost'),preview=document.getElementById('postPreview');if(input&&preview)preview.textContent=input.value}
+function sizeAIFields(){
+ document.querySelectorAll('#genTitle,#genDesc,#genPost').forEach(el=>{
+  el.style.height='auto';const min=el.id==='genTitle'?98:el.id==='genPost'?190:128;
+  const max=el.id==='genTitle'?210:el.id==='genPost'?390:350;
+  el.style.height=Math.max(min,Math.min(max,el.scrollHeight+3))+'px';
+ });
+}
+
+async function generateAI(form){
+ if(!tg?.initData)throw Error('Открой мини-приложение внутри Telegram');
+ if(state.mode!=='server')throw Error('Сначала подключи Cloudflare Worker и базу D1');
+ const name=form.querySelector('#aiName').value.trim(),features=form.querySelector('#aiFeatures').value.trim(),tone=form.querySelector('#aiTone').value,platform=form.querySelector('#aiPlatform').value;
+ if(!name&&!state.upload)throw Error('Добавь фото или название товара');
+ state.aiInput={name,features,tone,platform};
+ const result=await api('/business/generate',{name,features,tone,platform,image:state.upload||undefined});
+ state.generated={title:normalizeAIText(result.title,false),description:normalizeAIText(result.description,false),post:normalizeAIText(result.post,true),needsReview:Array.isArray(result.needsReview)?result.needsReview:[],platform,price:'',stock:1,category:'',imageKey:null};
+ toast('Карточка готова — проверь данные');
+}
+async function saveGenerated(published){
+ if(state.mode!=='server'||!tg?.initData)throw Error('Открой Аврору через Telegram');
+ if(!state.generated)throw Error('Сначала создай карточку');
+ if(published&&!state.shop.slug)throw Error('Сначала настрой адрес магазина в разделе «Магазин»');
+ const title=document.getElementById('genTitle')?.value.trim()||'';
+ const description=document.getElementById('genDesc')?.value.trim()||'';
+ const post=document.getElementById('genPost')?.value.trim()||'';
+ const priceInput=document.getElementById('genPrice')?.value.trim()||'';
+ const category=document.getElementById('genCategory')?.value.trim()||'';
+ const stockText=document.getElementById('genStock')?.value.trim()||'';
+  if(published&&!document.getElementById('confirmFacts')?.checked)throw Error('Сначала проверь факты и поставь галочку подтверждения');
+ state.generated={...state.generated,title,description,post,price:priceInput,stock:stockText,category};
+ const price=Number(priceInput), stock=Number(stockText), priceMinor=Math.round(price*100);
+ if(!title||title.length>120)throw Error('Проверь название товара');
+ if(!priceInput||!Number.isFinite(price)||price<0||!Number.isSafeInteger(priceMinor)||priceMinor>9999999999)throw Error('Укажи корректную цену');
+ if(!stockText||!Number.isSafeInteger(stock)||stock<0||stock>999999)throw Error('Укажи корректный остаток');
+ if(published&&stock===0)throw Error('Для публикации укажи количество больше нуля');
+ let imageKey=null;
+ if(state.upload){const uploaded=await api('/business/media/upload',{image:state.upload});imageKey=uploaded.imageKey}else if(state.generated?.imageKey)imageKey=state.generated.imageKey
+ const product={id:uid(),title,description,priceMinor,stock,category,published,imageKey,imageData:null};
+ const data=await api('/business/product/save',{product});
+ state.products.unshift(data.product);
+ state.generated=null;state.upload=null;
+ switchPage('catalog');toast(published?'Товар опубликован в магазине':'Черновик сохранён');
+}
+async function deleteProduct(id){const p=state.products.find(x=>x.id===id);if(!p)return;if(!confirm('Удалить товар «'+p.title+'»?'))return;if(state.mode==='server')await api('/business/product/delete',{id});state.products=state.products.filter(x=>x.id!==id);localSave();toast('Товар удалён');render()}
+function clipboard(text){if(navigator.clipboard?.writeText)navigator.clipboard.writeText(text).then(()=>toast('Скопировано')).catch(()=>toast('Не удалось скопировать'));else{const ta=document.createElement('textarea');ta.value=text;document.body.append(ta);ta.select();document.execCommand('copy');ta.remove();toast('Скопировано')}}
+async function storePreview(){if(state.mode==='server'&&state.shop.slug){location.href=legacyShopLink();return}state.buyer={shop:{...state.shop},products:state.products.filter(x=>x.published),live:false};state.page='store';state.cart=[];render()}
+async function checkoutOrder(form){if(!state.buyer?.live)throw Error('В режиме предпросмотра заявки не отправляются');if(!tg?.initData)throw Error('Для заказа открой магазин внутри Telegram');const name=form.elements.name.value.trim(),phone=form.elements.phone.value.trim(),comment=form.elements.comment.value.trim();if(name.length<2||phone.length<6)throw Error('Проверь имя и телефон');const d=await api('/business/order/create',{slug:(state.buyer?.shop?.slug||launchShopSlug()),items:state.cart.map(c=>({productId:c.id,qty:c.qty})),customerName:name,phone,comment});state.cart=[];state.buyerName=name;toast('Заявка отправлена: '+d.orderId.slice(0,8));state.page='store';render()}
+function productById(id){return (state.buyer?.products||[]).find(p=>p.id===id)}
+document.addEventListener('click',async e=>{const el=e.target.closest('[data-action]');if(!el)return;const action=el.dataset.action,id=el.dataset.id;try{
+if(action==='page'){state.buyer=null;switchPage(el.dataset.page)}
+else if(action==='saveTextCard')saveTextCard();
+else if(action==='copyCard')copyCard();
+else if(action==='exportCard')exportCardData(currentCard());
+else if(action==='copySaved'){const c=savedById(id);if(c)clipboard(cardPlain(c));}
+else if(action==='exportSaved'){const c=savedById(id);if(c)exportCardData(c);}
+else if(action==='openSaved')openSaved(id);
+else if(action==='deleteSaved')await deleteSaved(id);
+else if(action==='newProduct'){state.generated=null;switchPage('edit')}
+else if(action==='edit'){state.editing=id;state.upload=null;state.page='edit';render()}
+else if(action==='delete')await deleteProduct(id);
+else if(action==='filter'){state.filter=el.dataset.val;render()}
+else if(action==='orderFilter'){state.statusFilter=el.dataset.val;render()}
+else if(action==='formatPost'){
+  const field=document.getElementById('genPost');if(!field)return;
+  field.value=normalizeAIText(field.value,true);
+  if(state.generated)state.generated.post=field.value;
+  syncPostPreview();sizeAIFields();toast('Отступы и переносы текста обновлены');
+ }
+ else if(action==='copyPost')clipboard(document.getElementById('genPost')?.value||state.generated?.post||'');
+else if(action==='copyDescription')clipboard(document.getElementById('genDesc')?.value||state.generated?.description||'');
+else if(action==='saveGeneratedDraft'||action==='publishGenerated'){if(state.busy)return;state.busy=true;el.disabled=true;try{await saveGenerated(action==='publishGenerated')}finally{state.busy=false;el.disabled=false}}
+else if(action==='copyLink')clipboard(shopLink());
+else if(action==='setupPro'){
+ if(!confirm('Подключить Telegram Stars к этому Worker? Если webhook бота настроен на другой адрес, ничего не изменится.'))return;
+ const d=await api('/business/billing/setup',{confirm:true});
+ await refreshBilling(false);render();toast(d.message||'Webhook проверен');
+}
+else if(action==='proPay')await startProInvoice();
+else if(action==='copyBot')clipboard('https://t.me/'+BOT_USERNAME);
+else if(action==='copyPhone')clipboard(el.dataset.phone||'');
+else if(action==='exportOrders')exportOrders();
+else if(action==='addGenerated'){state.editing=null;state.page='edit';render()}
+else if(action==='previewStore')await storePreview();
+else if(action==='reload')await load();
+else if(action==='cartAdd'){const p=productById(id);if(!p)return;const cur=state.cart.find(x=>x.id===id);if(cur){if(cur.qty>=Number(p.stock))throw Error('Больше нет в наличии');cur.qty++}else state.cart.push({id,title:p.title,priceMinor:p.priceMinor,qty:1});render()}
+else if(action==='cartRemove'){state.cart=state.cart.filter(c=>c.id!==id);render()}
+else if(action==='showCheckout'){state.page='checkout';render()}
+}catch(err){toast(err.message||'Ошибка')}});
+document.addEventListener('change',async e=>{try{const t=e.target;if(t.id==='aiPhoto'||t.id==='prodPhoto'){state.upload=await shrinkPhoto(t.files?.[0]);showPreview(t.id==='aiPhoto'?'aiPhotoPreview':'prodPhotoPreview')}else if(t.matches('[data-order-status]')){const o=state.orders.find(x=>x.id===t.dataset.orderStatus);if(!o)return;if(state.mode==='server')await api('/business/order/update',{id:o.id,status:t.value});o.status=t.value;localSave();toast('Статус обновлён');render()}}catch(err){toast(err.message||'Ошибка')}});
+document.addEventListener('input',e=>{if(state.generated){const map={genTitle:'title',genDesc:'description',genPost:'post',genPrice:'price',genStock:'stock',genCategory:'category'};if(map[e.target.id]){state.generated[map[e.target.id]]=e.target.value;if(['genTitle','genDesc','genPost'].includes(e.target.id))sizeAIFields();if(e.target.id==='genPost')syncPostPreview();}}if(e.target.id==='clientSearch'){state.clientSearch=e.target.value;const ui=document.getElementById('clientResults');if(ui){const node=clients();const tmp=document.createElement('div');tmp.innerHTML=node;ui.innerHTML=tmp.querySelector('#clientResults')?.innerHTML||''}}if(e.target.id==='orderSearch'){state.orderSearch=e.target.value;const ui=document.getElementById('orderResults');if(ui){const tmp=document.createElement('div');tmp.innerHTML=orders();ui.innerHTML=tmp.querySelector('#orderResults')?.innerHTML||''}}if(e.target.id==='catalogSearch'){state.search=e.target.value;const el=document.getElementById('catalogResults');if(el){const arr=state.products.filter(p=>(state.filter==='all'||(state.filter==='published'?p.published:!p.published))&&`${p.title} ${p.category||''}`.toLowerCase().includes(state.search.toLowerCase()));el.innerHTML=arr.length?arr.map(productRow).join(''):panelEmpty('box','Не найдено','Попробуй другой запрос')}}});
+document.addEventListener('submit',async e=>{const f=e.target;if(!['shopForm','productForm','aiForm','checkoutForm'].includes(f.id))return;e.preventDefault();if(state.busy)return;state.busy=true;const button=f.querySelector('button[type=submit]');if(button)button.disabled=true;try{if(f.id==='shopForm')await saveShop(f);if(f.id==='productForm')await saveProduct(f);if(f.id==='aiForm'){await generateAI(f);state.busy=false;render();requestAnimationFrame(()=>document.getElementById('gen-result')?.scrollIntoView({behavior:'smooth',block:'start'}))}if(f.id==='checkoutForm')await checkoutOrder(f)}catch(err){toast(err.message||'Ошибка');state.busy=false;if(button)button.disabled=false}finally{state.busy=false}});
+document.addEventListener('focusin',e=>{
+ if(e.target.matches('input:not([type=checkbox]):not([type=file]),textarea,select')){
+  document.body.classList.add('editing-input');
+  document.documentElement.style.setProperty('--soft-keyboard','0px');
+ }
+});
+document.addEventListener('focusout',e=>{
+ if(e.target.matches('input:not([type=checkbox]):not([type=file]),textarea,select')){
+  setTimeout(()=>{if(!document.activeElement?.matches('input:not([type=checkbox]):not([type=file]),textarea,select')){
+   document.body.classList.remove('editing-input');
+   document.documentElement.style.setProperty('--soft-keyboard','0px');
+  }},140);
+ }
+});
+// Visual viewport support: keep editing forms visible above iOS keyboard.
+if(window.visualViewport){
+ window.visualViewport.addEventListener('resize',()=>{
+  if(document.body.classList.contains('editing-input')){
+   const size=Math.max(0,window.innerHeight-window.visualViewport.height-window.visualViewport.offsetTop);
+   document.documentElement.style.setProperty('--soft-keyboard',Math.min(size,450)+'px');
+  }
+ });
+}
+load();
+</script>
+</body></html>
